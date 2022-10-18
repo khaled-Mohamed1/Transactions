@@ -60,13 +60,7 @@
                                 <td>{{ $customer->region }}</td>
                                 <td>{{ $customer->address }}</td>
                                 <td>
-                                    @if($customer->status == 'مقبول')
-                                        <span class="text-success">{{ $customer->status }}</span>
-                                    @elseif($customer->status == 'مرفوض')
-                                        <span class="text-danger">{{ $customer->status }}</span>
-                                    @else
-                                        {{ $customer->status }}
-                                    @endif
+                                    <span class="text-danger">{{ $customer->status }}</span>
                                 </td>
                                 <td>{{ $customer->UserCustomer->full_name }}</td>
                                 <td>{{ $customer->account }}</td>
