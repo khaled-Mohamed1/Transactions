@@ -59,7 +59,15 @@
                                 <td>{{ $transaction->first_payment }}</td>
                                 <td>{{ $transaction->transaction_rest }}</td>
                                 <td>{{$transaction->created_at}}</td>
-                                <td>{{$transaction->CustomerTransaction->status}}</td>
+                                <td>
+                                    @if($transaction->CustomerTransaction->status == 'مقبول' || $transaction->CustomerTransaction->status == 'مكتمل')
+                                        <span class="text-success">{{ $transaction->CustomerTransaction->status }}</span>
+                                    @elseif($transaction->CustomerTransaction->status == 'مرفوض' || $transaction->CustomerTransaction->status == 'متعسر')
+                                        <span class="text-danger">{{ $transaction->CustomerTransaction->status }}</span>
+                                    @else
+                                        {{ $transaction->CustomerTransaction->status }}
+                                    @endif
+                                </td>
                                 <td style="display: flex">
                                     <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"
                                        class="btn btn-primary m-2">
