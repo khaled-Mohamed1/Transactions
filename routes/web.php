@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\DraftController;
+use App\Http\Controllers\IssueController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,5 +102,43 @@ Route::middleware('auth')->prefix('transactions')->name('transactions.')->group(
 //    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
 
     Route::get('export/', [TransactionController::class, 'export'])->name('export');
+
+});
+
+// Draft
+Route::middleware('auth')->prefix('drafts')->name('drafts.')->group(function(){
+    Route::get('/', [DraftController::class, 'index'])->name('index');
+    Route::get('/create', [DraftController::class, 'create'])->name('create');
+    Route::post('/store', [DraftController::class, 'store'])->name('store');
+    Route::get('/edit/{draft}', [DraftController::class, 'edit'])->name('edit');
+    Route::put('/update/{draft}', [DraftController::class, 'update'])->name('update');
+    Route::delete('/delete/{draft}', [DraftController::class, 'delete'])->name('destroy');
+
+    //get customer data
+    Route::post('/get', [DraftController::class, 'get'])->name('get');
+
+//    Route::get('/import-users', [UserController::class, 'importUsers'])->name('import');
+//    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
+
+    Route::get('export/', [DraftController::class, 'export'])->name('export');
+
+});
+
+// Issue
+Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
+    Route::get('/', [IssueController::class, 'index'])->name('index');
+    Route::get('/create', [IssueController::class, 'create'])->name('create');
+    Route::post('/store', [IssueController::class, 'store'])->name('store');
+    Route::get('/edit/{issue}', [IssueController::class, 'edit'])->name('edit');
+    Route::put('/update/{issue}', [IssueController::class, 'update'])->name('update');
+    Route::delete('/delete/{issue}', [IssueController::class, 'delete'])->name('destroy');
+
+    //get customer data
+    Route::post('/get', [IssueController::class, 'get'])->name('get');
+
+//    Route::get('/import-users', [UserController::class, 'importUsers'])->name('import');
+//    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
+
+    Route::get('export/', [IssueController::class, 'export'])->name('export');
 
 });

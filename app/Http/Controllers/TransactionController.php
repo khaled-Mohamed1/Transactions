@@ -13,6 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionController extends Controller
@@ -189,11 +190,19 @@ class TransactionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit(Transaction $transaction)
     {
-        //
+        if(auth()->user()->role_id == 1){
+            $customers = Customer::latest()->get();
+        }else{
+            $customers = Customer::where('updated_by',auth()->user()->id)->where('status', 'متعسر')->latest()->get();
+        }
+        return view('transactions.edit')->with([
+            'customers'  => $customers,
+            'transaction'  => $transaction
+        ]);
     }
 
     /**
@@ -201,11 +210,126 @@ class TransactionController extends Controller
      *
      * @param Request $request
      * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, Transaction $transaction)
     {
-        //
+        // Validations
+        $customer = Customer::FindOrFail($request->customer_id);
+        $request->validate([
+                'customer_id'    => 'required',
+                'transactions_type'     => 'required',
+                'reserve_phone_NO' => 'required|numeric|digits:10|'.Rule::unique('customers')->ignore($customer->id),
+                'date_of_birth'       =>  'required|date',
+                'marital_status'       =>  'required',
+                'number_of_children'       =>  'required',
+                'job'   =>  'required_if:transactions_type,استقطاع',
+                'salary'   =>  'required_if:transactions_type,استقطاع',
+                'bank_name'   =>  'required_if:transactions_type,استقطاع',
+                'bank_branch'   =>  'required_if:transactions_type,استقطاع',
+                'bank_account_NO'   =>  'required_if:transactions_type,استقطاع',
+                'transaction_amount'   =>  'required',
+                'first_payment'   =>  'required',
+                'transaction_rest'   =>  'required',
+                'monthly_payment'   =>  'required',
+                'date_of_first_payment'   =>  'required|date',
+                'draft_NO'   =>  'required',
+                'agency_NO'   =>  'required',
+                'endorsement_NO'   =>  'required',
+                'receipt_NO'   =>  'required',
+
+            ]
+            ,[
+                'customer_id.required' => 'يجب ادخال اسم العميل',
+                'transactions_type.required' => 'يجب ادخال نوع المعاملة',
+                'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
+                'reserve_phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
+                'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
+                'reserve_phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
+                'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
+                'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
+                'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
+                'job.required_if' => 'يجب ادخال الوظيفة العميل',
+                'salary.required_if' => 'يجب ادخال دخل العميل',
+                'bank_name.required_if' => 'يجب ادخال اسم البنك',
+                'bank_branch.required_if' => 'يجب ادخال فرع البنك',
+                'bank_account_NO.required_if' => 'يجب ادخال رقم حساب البنك',
+                'transaction_amount.required' => 'يجب ادخال قيمة المعاملة',
+                'first_payment.required' => 'يجب ادخال الدفعة الأولى',
+                'transaction_rest.required' => 'يجب ادخال باقي قيمة المعاملة',
+                'monthly_payment.required' => 'يجب ادخال قيمة دفعة المعاملة',
+                'date_of_first_payment.required' => 'يجب ادخال تاريخ دفعة أول دفعة',
+                'draft_NO.required' => 'يجب ادخال عدد الكمبيالات',
+                'agency_NO.required' => 'يجب ادخال عدد الوكالات',
+                'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
+                'receipt_NO.required' => 'يجب ادخال عدد الوصل',
+            ]);
+
+        DB::beginTransaction();
+        try {
+
+            $rest = 0;
+
+            if($request->transaction_rest != $transaction->transaction_rest){
+                if($request->transaction_rest > $transaction->transaction_rest){
+                    $rest = $request->transaction_rest - $transaction->transaction_rest;
+                }elseif($request->transaction_rest < $transaction->transaction_rest){
+                    $rest = $request->transaction_rest - $transaction->transaction_rest ;
+                }
+            }
+
+            // Store Data
+            $transaction = Transaction::whereId($transaction->id)->update([
+                'customer_id'    => $request->customer_id,
+                'transactions_type'     => $request->transactions_type,
+                'transaction_amount'         => $request->transaction_amount,
+                'first_payment' => $request->first_payment,
+                'transaction_rest'       => $request->transaction_rest,
+                'monthly_payment'       => $request->monthly_payment,
+                'date_of_first_payment'       => $request->date_of_first_payment,
+                'draft_NO'       => $request->draft_NO,
+                'agency_NO'       => $request->agency_NO,
+                'endorsement_NO'       => $request->endorsement_NO,
+                'receipt_NO'       => $request->receipt_NO,
+            ]);
+
+            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات'){
+                $status = 'مكتمل';
+            }else{
+                $status = 'قيد التوقيع';
+            }
+
+            // Store Data
+
+            $customer->update([
+                'reserve_phone_NO'    => $request->reserve_phone_NO,
+                'date_of_birth'     => $request->date_of_birth,
+                'marital_status'         => $request->marital_status,
+                'number_of_children' => $request->number_of_children,
+                'job'       => $request->job,
+                'salary'       => $request->salary,
+                'bank_name'       => $request->bank_name,
+                'bank_branch'       => $request->bank_branch,
+                'bank_account_NO'       => $request->bank_account_NO,
+                'status'       => $status,
+            ]);
+
+
+
+            // Store Data
+            $customer->update([
+                'account'   => $customer->account + $rest,
+            ]);
+
+            // Commit And Redirected To Listing
+            DB::commit();
+            return redirect()->route('transactions.index')->with('success','Transaction Updated Successfully.');
+
+        } catch (\Throwable $th) {
+            // Rollback and return with Error
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', $th->getMessage());
+        }
     }
 
     /**

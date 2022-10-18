@@ -38,8 +38,16 @@ class PermissionSeeder extends Seeder
             'customer-task',
             'transaction-list',
             'transaction-create',
-            'transaction-delete',
             'transaction-edit',
+            'transaction-delete',
+            'draft-list',
+            'draft-create',
+            'draft-edit',
+            'draft-delete',
+            'issue-list',
+            'issue-create',
+            'issue-edit',
+            'issue-delete',
         ];
 
         foreach($permissions as $permission){

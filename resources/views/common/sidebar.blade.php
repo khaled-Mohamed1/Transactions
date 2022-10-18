@@ -77,7 +77,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Transaction
+        Additions
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
@@ -85,14 +85,14 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Transaction"
            aria-expanded="true" aria-controls="taTpDropDown">
             <i class="fas fa-exchange-alt"></i>
-            <span>Transaction Management</span>
+            <span>Additions Management</span>
         </a>
         <div id="Transaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Transaction Management:</h6>
-                <a class="collapse-item" href="{{route('transactions.index')}}">Transaction</a>
-{{--                <a class="collapse-item" href="{{ route('customers.index.adverser') }}">Adverser</a>--}}
-                {{--                <a class="collapse-item" href="{{ route('users.create') }}">Add New</a>--}}
+                <h6 class="collapse-header">Additions Management:</h6>
+                <a class="collapse-item" href="{{route('transactions.index')}}">Transactions</a>
+                <a class="collapse-item" href="{{ route('drafts.index') }}">Drafts</a>
+                <a class="collapse-item" href="{{ route('issues.index') }}">Issues</a>
                 {{--                <a class="collapse-item" href="{{ route('users.import') }}">Import Data</a>--}}
             </div>
         </div>
