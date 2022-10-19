@@ -147,7 +147,6 @@
                                     <th width="5%">Endorsement_NO</th>
                                     <th width="5%">Receipt_NO</th>
                                     <th width="10%">Created_At</th>
-                                    <th width="5%">Account</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -165,7 +164,6 @@
                                         <td>{{ $transaction->endorsement_NO }}</td>
                                         <td>{{ $transaction->receipt_NO }}</td>
                                         <td>{{ $transaction->created_at }}</td>
-                                        <td>{{ $transaction->account }}</td>
                                     @empty
                                         <td colspan="13">No record</td>
                                     @endforelse
