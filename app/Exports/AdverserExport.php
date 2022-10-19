@@ -3,15 +3,18 @@
 namespace App\Exports;
 
 use App\Models\Customer;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class AdverserExport implements FromCollection
+class AdverserExport implements FromView
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function collection()
+
+    public function view(): View
     {
-        return Customer::where('status','متعسر')->latest()->get();
+
+        return view('exports.customers', [
+            'customers' => Customer::where('status','متعسر')->latest()->get()
+        ]);
     }
 }
+

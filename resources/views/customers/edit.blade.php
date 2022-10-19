@@ -111,10 +111,13 @@
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label> <span style="color:red;">*</span>status</label>
                             <select name="status" class="form-control form-control-user @error('status') is-invalid @enderror">
+                                @if($customer->status == 'مكتمل')
+                                    <option value="{{$customer->status}}">{{$customer->status}}</option>
+                                @else
+                                @endif
                                 <option value="جديد" {{$customer->status == 'جديد' ? 'selected' : ''}}>جديد</option>
                                 <option value="مقبول" {{ $customer->status == 'مقبول' ? 'selected' : ''}}>مقبول</option>
                                 <option value="مرفوض" {{ $customer->status == 'مرفوض' ? 'selected' : ''}}>مرفوض</option>
-
                             </select>
 
                             @error('status')

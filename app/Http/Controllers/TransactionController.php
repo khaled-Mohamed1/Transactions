@@ -46,7 +46,12 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        $customers = Customer::where('updated_by',auth()->user()->id)->where('status', 'متعسر')->latest()->get();
+        if(auth()->user()->role_id == 1){
+            $customers = Customer::where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
+        }else{
+            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
+        }
+
         return view('transactions.create',['customers' => $customers]);
     }
 
@@ -195,9 +200,9 @@ class TransactionController extends Controller
     public function edit(Transaction $transaction)
     {
         if(auth()->user()->role_id == 1){
-            $customers = Customer::latest()->get();
+            $customers = Customer::where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
         }else{
-            $customers = Customer::where('updated_by',auth()->user()->id)->where('status', 'متعسر')->latest()->get();
+            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
         }
         return view('transactions.edit')->with([
             'customers'  => $customers,
