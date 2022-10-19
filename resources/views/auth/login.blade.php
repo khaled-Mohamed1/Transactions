@@ -6,7 +6,7 @@
 <div class="row justify-content-center">
 
     <div class="text-center mt-5">
-        <h1 class="text-white">TEST TEST TEST TEST TEST TEST</h1>
+        <h1 style="color: #4E73DF">TEST TEST TEST TEST TEST TEST</h1>
     </div>
 
     <div class="col-xl-10 col-lg-12 col-md-9">
@@ -68,7 +68,7 @@
     </div>
 
     <div class="text-center mt-5">
-        <h6 class="text-white">Developed By : <a class="text-white" href="https://techtoolindia.com">.....................</a></h6>
+        <h6 style="color: #2C53C5">Developed By : <a style="color: #2C53C5">.....................</a></h6>
     </div>
 
 </div>
