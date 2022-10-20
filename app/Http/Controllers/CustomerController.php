@@ -43,7 +43,6 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $test = 1;
         $customers = Customer::orderBy('customer_NO','desc')->where('status', '!=','مقبول')->paginate(100);
         return view('customers.index', ['customers' => $customers]);
     }

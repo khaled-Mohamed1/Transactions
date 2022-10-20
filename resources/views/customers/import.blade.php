@@ -27,7 +27,7 @@
                     <div class="form-group row">
 
                         <div class="col-md-12 mb-3 mt-3">
-                            <p>يرجى تحميل CSV بتنسيق معين <a href="{{ asset('files/sample-data-sheet.csv') }}" target="_blank">مثال لملف الإكسل</a></p>
+                            <p>يرجى تحميل CSV بتنسيق معين <a href="#">مثال لملف الإكسل</a></p>
                         </div>
                         {{-- File Input --}}
                         <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
