@@ -99,7 +99,7 @@ class UserController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('users.index')->with('success','User Created Successfully.');
+            return redirect()->route('users.index')->with('success','تم انشاء الموظف بنجاح!');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -138,7 +138,7 @@ class UserController extends Controller
 
             // Commit And Redirect on index with Success Message
             DB::commit();
-            return redirect()->route('users.index')->with('success','User Status Updated Successfully!');
+            return redirect()->route('users.index')->with('success','تم تغيير حالة الموظف بنجاح!');
         } catch (\Throwable $th) {
 
             // Rollback & Return Error Message
@@ -201,7 +201,7 @@ class UserController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('users.index')->with('success','User Updated Successfully.');
+            return redirect()->route('users.index')->with('success','تم تعديل الموظف بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -224,7 +224,7 @@ class UserController extends Controller
             User::whereId($user->id)->delete();
 
             DB::commit();
-            return redirect()->route('users.index')->with('success', 'User Deleted Successfully!.');
+            return redirect()->route('users.index')->with('success', 'تم حذف الموظف بنجاح!');
 
         } catch (\Throwable $th) {
             DB::rollBack();

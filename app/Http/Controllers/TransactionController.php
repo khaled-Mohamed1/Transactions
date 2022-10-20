@@ -162,7 +162,7 @@ class TransactionController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('transactions.index')->with('success','Transaction Created Successfully.');
+            return redirect()->route('transactions.index')->with('success','تم انشاء المعاملة بنجاح!');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -328,7 +328,7 @@ class TransactionController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('transactions.index')->with('success','Transaction Updated Successfully.');
+            return redirect()->route('transactions.index')->with('success','تم تعديل المعاملة بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -351,7 +351,7 @@ class TransactionController extends Controller
             Transaction::whereId($transaction->id)->delete();
 
             DB::commit();
-            return redirect()->route('transactions.index')->with('success', 'Transaction Deleted Successfully!.');
+            return redirect()->route('transactions.index')->with('success', 'تم حذف الصلاحية');
 
         } catch (\Throwable $th) {
             DB::rollBack();

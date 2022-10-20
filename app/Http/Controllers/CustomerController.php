@@ -129,7 +129,7 @@ class CustomerController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('customers.index')->with('success','Customer Created Successfully.');
+            return redirect()->route('customers.index')->with('success','تم انشاء العميل بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -213,7 +213,7 @@ class CustomerController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('customers.index')->with('success','Customer Updated Successfully.');
+            return redirect()->route('customers.index')->with('success','تم تعديل العميل بنجاح!');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -236,7 +236,7 @@ class CustomerController extends Controller
             Customer::whereId($customer->id)->delete();
 
             DB::commit();
-            return redirect()->route('customers.index')->with('success', 'Customer Deleted Successfully!.');
+            return redirect()->route('customers.index')->with('success', 'تم حذف العميل بنجاح!');
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -262,7 +262,7 @@ class CustomerController extends Controller
         Excel::import(new CustomerImport(), $request->file(), 'UTF-8');
 
 
-        return redirect()->route('customers.index')->with('success', 'Customers Imported Successfully');
+        return redirect()->route('customers.index')->with('success', 'تم استيراد بيانات العملاء');
     }
 
     public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
@@ -273,6 +273,22 @@ class CustomerController extends Controller
     public function exportAdverser(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return Excel::download(new AdverserExport(), 'adverser.xlsx');
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->filled('search')) {
+            $customers = Customer::query();
+            if ($request->filled('search')) {
+                $customers = $customers->where('ID_NO', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('customer_NO', 'LIKE', '%' . $request->search . '%');
+            }
+            $customers = $customers->get();
+
+        } else {
+            return redirect()->back();
+        }
+        return view('customers.search', compact('customers'));
     }
 
 }

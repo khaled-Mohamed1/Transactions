@@ -84,7 +84,7 @@ class HomeController extends Controller
             DB::commit();
 
             #Return To Profile page with success
-            return back()->with('success', 'Profile Updated Successfully.');
+            return back()->with('success', 'تم تعديل الملف الشخصي بنجاح');
 
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -116,7 +116,7 @@ class HomeController extends Controller
             DB::commit();
 
             #Return To Profile page with success
-            return back()->with('success', 'Password Changed Successfully.');
+            return back()->with('success', 'تم تغيير كلمة السر بنجاح');
 
         } catch (\Throwable $th) {
             DB::rollBack();

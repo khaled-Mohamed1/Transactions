@@ -69,6 +69,10 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     Route::put('/update/{customer}', [CustomerController::class, 'update'])->name('update');
     Route::delete('/delete/{customer}', [CustomerController::class, 'delete'])->name('destroy');
 
+    //search
+    Route::get('/search', [CustomerController::class, 'search'])->name('search');
+
+
     //adverser
     Route::get('/adverser', [CustomerController::class, 'indexAdverser'])->name('index.adverser');
 
