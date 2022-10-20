@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
-use Rap2hpoutre\FastExcel\FastExcel;
 
 
 class CustomerController extends Controller
@@ -45,7 +44,7 @@ class CustomerController extends Controller
     public function index()
     {
         //test
-        $customers = Customer::orderBy('customer_NO')->where('status', '!=','مقبول')->paginate(100);
+        $customers = Customer::orderBy('customer_NO','desc')->where('status', '!=','مقبول')->paginate(100);
         return view('customers.index', ['customers' => $customers]);
     }
 
@@ -113,12 +112,14 @@ class CustomerController extends Controller
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
             ]);
 
+
+
         DB::beginTransaction();
         try {
 
             // Store Data
             $customer = Customer::create([
-                'customer_NO' => Helper::IDGenerator(new Customer, 'customer_NO', 4,4),
+                'customer_NO' => Helper::IDGenerator(new Customer, 'customer_NO', 5,4),
                 'full_name'    => $request->full_name,
                 'ID_NO'     => $request->ID_NO,
                 'phone_NO'         => $request->phone_NO,
@@ -251,7 +252,6 @@ class CustomerController extends Controller
 
     public function uploadCustomers(Request $request): RedirectResponse
     {
-
         $request->validate([
                 'file'    => 'required',
             ]
@@ -259,7 +259,7 @@ class CustomerController extends Controller
                 'file.required' => 'يجب ادخال ملف اكسل',
             ]);
 
-        Excel::import(new CustomerImport(), $request->file(), 'UTF-8');
+        Excel::import(new CustomerImport(), $request->file('file'));
 
 
         return redirect()->route('customers.index')->with('success', 'تم استيراد بيانات العملاء');

@@ -16,7 +16,7 @@
 {{--                </div>--}}
                 <div class="col-md-12">
                         <a href="{{ route('customers.export.adverser') }}" class="btn btn-sm btn-success">
-                            نصدير اكسل <i class="fas fa-check"></i>
+                            تصدير اكسل <i class="fas fa-check"></i>
                     </a>
                 </div>
 

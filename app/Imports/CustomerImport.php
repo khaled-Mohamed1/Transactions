@@ -6,8 +6,9 @@ use App\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
-class CustomerImport implements ToModel, WithHeadingRow
+class CustomerImport implements ToModel, WithHeadingRow, WithCustomCsvSettings
 {
     /**
      * @param array $row
@@ -34,9 +35,17 @@ class CustomerImport implements ToModel, WithHeadingRow
             "bank_account_NO"=>$row['bank_account_no'] ?? null,
             "created_by"=> auth()->user()->id,
             "status"=>$row['status'] ?? 'جديد',
-            "account"=>$row['account'],
+            "account"=>$row['account'] ?? '0',
         ]);
 
         return $customer;
+    }
+
+    public function getCsvSettings(): array
+    {
+        # Define your custom import settings for only this class
+        return [
+            'input_encoding' => 'UTF-8',
+        ];
     }
 }

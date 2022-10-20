@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-6">
                         <a href="{{ route('transactions.export') }}" class="btn btn-sm btn-success">
-                            نصدير اكسل <i class="fas fa-check"></i>
+                            تصدير اكسل <i class="fas fa-check"></i>
                     </a>
                 </div>
 
