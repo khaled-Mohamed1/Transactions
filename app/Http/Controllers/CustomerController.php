@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Rap2hpoutre\FastExcel\FastExcel;
+
 
 class CustomerController extends Controller
 {
@@ -256,7 +258,8 @@ class CustomerController extends Controller
                 'file.required' => 'يجب ادخال ملف اكسل',
             ]);
 
-        Excel::import(new CustomerImport(), $request->file);
+        Excel::import(new CustomerImport(), $request->file(), 'UTF-8');
+
 
         return redirect()->route('customers.index')->with('success', 'Customers Imported Successfully');
     }

@@ -24,6 +24,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             "region"=>$row['region'],
             "address"=>$row['address'],
             "reserve_phone_NO"=>$row['reserve_phone_no'] ?? null,
+            "date_of_birth"=>$row['date_of_birth'] ?? null,
             "marital_status"=>$row['marital_status'] ?? null,
             "number_of_children"=>$row['number_of_children'] ?? null,
             "job"=>$row['job'] ?? null,
@@ -33,7 +34,7 @@ class CustomerImport implements ToModel, WithHeadingRow
             "bank_account_NO"=>$row['bank_account_no'] ?? null,
             "created_by"=> auth()->user()->id,
             "status"=>$row['status'] ?? 'جديد',
-            "account"=>$row['account'] ?? 0,
+            "account"=>$row['account'],
         ]);
 
         return $customer;
