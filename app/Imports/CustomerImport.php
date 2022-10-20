@@ -33,8 +33,8 @@ class CustomerImport implements ToModel, WithHeadingRow
             "bank_branch"=>$row['bank_branch'] ?? null,
             "bank_account_NO"=>$row['bank_account_no'] ?? null,
             "created_by"=> auth()->user()->id,
-            "status"=>$row['status'],
-            "account"=>$row['account'],
+            "status"=>$row['status'] ?? 'جديد',
+            "account"=>$row['account'] ?? 0,
         ]);
 
         return $customer;

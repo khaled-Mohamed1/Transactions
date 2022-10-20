@@ -82,7 +82,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">No record</td>
+                                <td colspan="10">No record</td>
                             </tr>
                         @endforelse
                         </tbody>
