@@ -3,8 +3,9 @@
 
 {{-- Include Head --}}
 @include('common.head')
+<link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
 
-<body id="page-top" >
+<body id="page-top" style="direction: rtl; font-family: Cairo !important;" >
 
     <!-- Page Wrapper -->
     <div id="wrapper">

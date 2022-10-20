@@ -7,14 +7,14 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <h1 class="h3 mb-0 text-gray-800">لوحة التحكم</h1>
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                class="fas fa-download fa-sm text-white-50"></i> انشاء تقرير</a>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-center mb-3">Welcome To Tech-Admin Dashboard!</h2>
+            <h2 class="text-center mb-3">اهلا وسهلا ب لوحة التحكم!</h2>
         </div>
     </div>
 
@@ -22,13 +22,13 @@
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4 text-right">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Customers (Monthly)</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 1.1rem">
+                                عملاء (شهري)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers}}</div>
                         </div>
                         <div class="col-auto">
@@ -40,13 +40,13 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4 text-right">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Adverser (Monthly)</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 1.1rem">
+                                المتعسرين (شهري)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_adverser}}</div>
                         </div>
                         <div class="col-auto">
@@ -58,12 +58,13 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4 text-right">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Transactions (Monthly)
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1" style="font-size: 1.1rem">
+                                المعاملات (شهري)
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
@@ -87,13 +88,13 @@
         </div>
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4 text-right">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Transaction Amount (Monthly)</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="font-size: 1.1rem">
+                                قيمة المعاملات (شهري)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$transaction_amount}}</div>
                         </div>
                         <div class="col-auto">

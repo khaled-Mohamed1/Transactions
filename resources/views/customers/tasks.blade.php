@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Tasks')
+@section('title', 'اضافة المهام')
 
 @section('content')
     <div class="container-fluid">
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Tasks</h1>
+            <h1 class="h3 mb-0 text-gray-800">المهام</h1>
             <div class="row">
                 {{--                <div class="col-md-6">--}}
                 {{--                    <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary">--}}
@@ -29,23 +29,23 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Add Task</h6>
+                <h6 class="m-0 font-weight-bold text-primary text-right">اضافة مهام</h6>
 
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="5%">Customer_NO</th>
-                            <th width="15%">Full_Name</th>
-                            <th width="10%">ID_NO</th>
-                            <th width="10%">Phone_NO</th>
-                            <th width="5%">Region</th>
-                            <th width="15%">Address</th>
-                            <th width="5%">Status</th>
-                            <th width="5%">Account</th>
-                            <th width="20%">Add To</th>
+                            <th width="15%">رقم الإستدلالي</th>
+                            <th width="15%">الإسم كامل</th>
+                            <th width="10%">رقم الهوية</th>
+                            <th width="10%">رقم الجوال</th>
+                            <th width="5%">المنطقة</th>
+                            <th width="15%">العنوان</th>
+                            <th width="5%">الحالة</th>
+                            <th width="5%">الحساب</th>
+                            <th width="10%">اضافة إلى</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -69,7 +69,7 @@
                                     <form action="" method="POST" class="test">
                                         <input type="hidden" name="customer_id" id="customer_id{{$customer->id}}" value="{{$customer->id}}">
                                         <select name="user_id" id="select{{$customer->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
-                                            <option selected disabled value="">Choose...</option>
+                                            <option selected disabled value="">إاختر...</option>
                                             @foreach($users as $user)
                                                 <option id="option{{$customer->id}}" value="{{$user->id}}" {{old('user_id') ? ((old('user_id') == $user->id) ? 'selected' : '')
                                                 : (($user->id == $customer->updated_by) ? 'selected' : '')}}>{{$user->full_name}}</option>
@@ -85,7 +85,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">No record</td>
+                                <td colspan="9">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>

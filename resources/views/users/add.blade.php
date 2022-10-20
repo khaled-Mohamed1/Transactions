@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Add Users')
+@section('title', 'اضافة موظف')
 
 @section('content')
 
@@ -8,18 +8,18 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Add Users</h1>
-        <a href="{{route('users.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-arrow-left fa-sm text-white-50"></i> Back</a>
+        <h1 class="h3 mb-0 text-gray-800">اضافة موظف</h1>
+        <a href="{{route('users.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
+                class="fas fa-arrow-left fa-sm text-white-50"></i></a>
     </div>
 
     {{-- Alert Messages --}}
     @include('common.alert')
-   
+
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 text-right">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Add New User</h6>
+            <h6 class="m-0 font-weight-bold text-primary">اضافة موظف جديد</h6>
         </div>
         <form method="POST" action="{{route('users.store')}}">
             @csrf
@@ -28,13 +28,12 @@
 
                     {{-- First Name --}}
                     <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                        <span style="color:red;">*</span>First Name</label>
-                        <input 
-                            type="text" 
-                            class="form-control form-control-user @error('first_name') is-invalid @enderror" 
+                        <label>الإسم كامل <span style="color:red;">*</span></label>
+                        <input
+                            type="text"
+                            class="form-control form-control-user @error('first_name') is-invalid @enderror"
                             id="exampleFirstName"
-                            placeholder="First Name" 
-                            name="first_name" 
+                            name="first_name"
                             value="{{ old('first_name') }}">
 
                         @error('first_name')
@@ -44,13 +43,12 @@
 
                     {{-- Last Name --}}
                     <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                        <span style="color:red;">*</span>Last Name</label>
-                        <input 
-                            type="text" 
-                            class="form-control form-control-user @error('last_name') is-invalid @enderror" 
+                        <label>الإسم الأخير <span style="color:red;">*</span></label>
+                        <input
+                            type="text"
+                            class="form-control form-control-user @error('last_name') is-invalid @enderror"
                             id="exampleLastName"
-                            placeholder="Last Name" 
-                            name="last_name" 
+                            name="last_name"
                             value="{{ old('last_name') }}">
 
                         @error('last_name')
@@ -60,13 +58,12 @@
 
                     {{-- Email --}}
                     <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                        <span style="color:red;">*</span>Email</label>
-                        <input 
-                            type="email" 
-                            class="form-control form-control-user @error('email') is-invalid @enderror" 
+                        <label>البريد الإلكتروني <span style="color:red;">*</span></label>
+                        <input
+                            type="email"
+                            class="form-control form-control-user @error('email') is-invalid @enderror"
                             id="exampleEmail"
-                            placeholder="Email" 
-                            name="email" 
+                            name="email"
                             value="{{ old('email') }}">
 
                         @error('email')
@@ -76,13 +73,12 @@
 
                     {{-- Mobile Number --}}
                     <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                        <span style="color:red;">*</span>Mobile Number</label>
-                        <input 
-                            type="text" 
-                            class="form-control form-control-user @error('mobile_number') is-invalid @enderror" 
+                        <label>رقم الجوال <span style="color:red;">*</span></label>
+                        <input
+                            type="text"
+                            class="form-control form-control-user @error('mobile_number') is-invalid @enderror"
                             id="exampleMobile"
-                            placeholder="Mobile Number" 
-                            name="mobile_number" 
+                            name="mobile_number"
                             value="{{ old('mobile_number') }}">
 
                         @error('mobile_number')
@@ -92,9 +88,9 @@
 
                     {{-- Role --}}
                     <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                        <span style="color:red;">*</span>Role</label>
-                        <select class="form-control form-control-user @error('role_id') is-invalid @enderror" name="role_id">
-                            <option selected disabled>Select Role</option>
+                        <label>الوظيفة <span style="color:red;">*</span></label>
+                        <select class="form-control form-control-user h-50 @error('role_id') is-invalid @enderror" name="role_id">
+                            <option selected disabled>اختار الوظيفة</option>
                             @foreach ($roles as $role)
                                 <option value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
@@ -106,11 +102,11 @@
 
                     {{-- Status --}}
                     <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                        <span style="color:red;">*</span>Status</label>
-                        <select class="form-control form-control-user @error('status') is-invalid @enderror" name="status">
-                            <option selected disabled>Select Status</option>
-                            <option value="1" selected>Active</option>
-                            <option value="0">Inactive</option>
+                        <label>الحالة <span style="color:red;">*</span></label>
+                        <select class="form-control form-control-user h-50 @error('status') is-invalid @enderror" name="status">
+                            <option selected disabled>اختار الحالة</option>
+                            <option value="1" selected>مفعل</option>
+                            <option value="0">غير مفعل</option>
                         </select>
                         @error('status')
                             <span class="text-danger">{{$message}}</span>
@@ -121,8 +117,8 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-success btn-user float-right mb-3">Save</button>
-                <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('users.index') }}">Cancel</a>
+                <button type="submit" class="btn btn-success btn-user float-right mb-3">اضافة</button>
+                <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('users.index') }}">إلغاء</a>
             </div>
         </form>
     </div>

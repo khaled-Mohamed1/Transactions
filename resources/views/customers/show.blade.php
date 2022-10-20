@@ -7,7 +7,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4 border-bottom">
-            <h1 class="h3 mb-0 text-gray-800">Profile</h1>
+            <h1 class="h3 mb-0 text-gray-800">ملف العميل</h1>
         </div>
 
         {{-- Alert Messages --}}
@@ -18,28 +18,28 @@
             <div class="col-md-12 border-right">
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Main Information</h4>
+                    <h4 class="text-right">معلومات أساسية</h4>
                 </div>
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th width="5%">Customer_NO</th>
-                                    <th width="15%">Full_Name</th>
-                                    <th width="10%">ID_NO</th>
-                                    <th width="10%">Phone_NO</th>
-                                    <th width="5%">Region</th>
-                                    <th width="20%">Address</th>
-                                    <th width="5%">Status</th>
-                                    <th width="15%">Created_At</th>
-                                    <th width="5%">Account</th>
+                                    <th width="15%">رقم الإستدلالي</th>
+                                    <th width="15%">الإسم كامل</th>
+                                    <th width="10%">رقم الهوية</th>
+                                    <th width="10%">رقم الجوال</th>
+                                    <th width="5%">المنطقة</th>
+                                    <th width="15%">العنوان</th>
+                                    <th width="5%">الحالة</th>
+                                    <th width="15%">تاريخ إنشاء</th>
+                                    <th width="5%">الحساب</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -74,28 +74,28 @@
                 <hr>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Secondary Information</h4>
+                    <h4 class="text-right">معلومات ثانوية</h4>
                 </div>
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th width="10%">Reserve_Phone+NO</th>
-                                    <th width="10%">Date_Of_Birth</th>
-                                    <th width="10%">Marital_Status</th>
-                                    <th width="10%">Children</th>
-                                    <th width="10%">Job</th>
-                                    <th width="10%">Salary</th>
-                                    <th width="10%">Bank_Name</th>
-                                    <th width="10%">Bank_Branch</th>
-                                    <th width="10%">Bank_Account_NO</th>
+                                    <th width="10%">رقم جوال البديل</th>
+                                    <th width="10%">تاريخ الميلاد</th>
+                                    <th width="10%">الحالة الإجتماعية</th>
+                                    <th width="10%">الأسرة</th>
+                                    <th width="10%">الوظيفة</th>
+                                    <th width="10%">الدخل</th>
+                                    <th width="10%">اسم البنك</th>
+                                    <th width="10%">فرع البنك</th>
+                                    <th width="10%">رقم حساب البنك</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -122,31 +122,31 @@
                 <hr>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Transaction</h4>
+                    <h4 class="text-right">المعاملات</h4>
                 </div>
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th width="5%">Transaction_NO</th>
-                                    <th width="5%">Transactions_Type</th>
-                                    <th width="5%">Transaction_Amount</th>
-                                    <th width="5%">First_Payment</th>
-                                    <th width="5%">Transaction_Rest</th>
-                                    <th width="5%">Monthly_Payment</th>
-                                    <th width="10%">Date_Of_First_Payment</th>
-                                    <th width="5%">Draft_NO</th>
-                                    <th width="5%">Agency_NO</th>
-                                    <th width="5%">Endorsement_NO</th>
-                                    <th width="5%">Receipt_NO</th>
-                                    <th width="10%">Created_At</th>
+                                    <th width="5%">رقم المعاملة</th>
+                                    <th width="5%">نوع المعاملة</th>
+                                    <th width="5%">قيمة المعاملة</th>
+                                    <th width="5%">الدفعة الأولى</th>
+                                    <th width="5%">باقي قيمة المعاملة</th>
+                                    <th width="5%">دفعة الشهرية</th>
+                                    <th width="10%">تاريخ أول دفعة</th>
+                                    <th width="5%">عدد الكمبيالات</th>
+                                    <th width="5%">عدد الوكالات</th>
+                                    <th width="5%">عدد الإستقراء</th>
+                                    <th width="5%">عدد الوصل</th>
+                                    <th width="5%">تاريخ الإنشاء</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -165,7 +165,7 @@
                                         <td>{{ $transaction->receipt_NO }}</td>
                                         <td>{{ $transaction->created_at }}</td>
                                     @empty
-                                        <td colspan="13">No record</td>
+                                        <td colspan="13">لا يوجد بيانات</td>
                                     @endforelse
                                 </tr>
 
@@ -180,30 +180,30 @@
 
                 {{-- Drafts --}}
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Drafts</h4>
+                    <h4 class="text-right">الكمبيالات</h4>
                 </div>
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th width="5%">#</th>
-                                    <th width="30%">Draft_No</th>
-                                    <th width="20%">Draft_No</th>
-                                    <th width="20%">Draft_No</th>
-                                    <th width="20%">Draft_No</th>
-                                    <th width="15%">Action</th>
+                                    <th width="20%">رقم الكمبيالة</th>
+                                    <th width="20%">رقم الكمبيالة</th>
+                                    <th width="20%">رقم الكمبيالة</th>
+                                    <th width="20%">رقم الكمبيالة</th>
+                                    <th width="15%">العمليات</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td colspan="6">No record</td>
+                                    <td colspan="6">لا يوجد بيانات</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -216,30 +216,30 @@
 
                 {{-- Issue --}}
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Issues</h4>
+                    <h4 class="text-right">القضايا</h4>
                 </div>
 
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th width="5%">#</th>
-                                    <th width="30%">Issue_No</th>
-                                    <th width="20%">Issue_No</th>
-                                    <th width="20%">Issue_No</th>
-                                    <th width="20%">Issue_No</th>
-                                    <th width="15%">Action</th>
+                                    <th width="20%">رقم القضية</th>
+                                    <th width="20%">رقم القضية</th>
+                                    <th width="20%">رقم القضية</th>
+                                    <th width="20%">رقم القضية</th>
+                                    <th width="15%">العمليات</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td colspan="6">No record</td>
+                                    <td colspan="6">لا يوجد بيانات</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -254,10 +254,10 @@
                 {{-- Attachments --}}
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Attachments</h4>
+                        <h4 class="text-right">المرفقات</h4>
                     </div>
                     <div class="row mt-2">
-                        No Attachments
+                        لا يوجد مرفقات
                     </div>
                 </div>
 

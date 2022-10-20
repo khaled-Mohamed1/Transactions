@@ -3,17 +3,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalExample">Are you Sure You wanted to Delete?</h5>
+                <h5 class="modal-title" id="deleteModalExample">هل تريد حذف الموظف؟</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Delete" below if you want to delete User!.</div>
+            <div class="modal-body text-right">اختر "حذف" بالأسفل اذا كنت تريد حذف الموظف.</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">إلغاء</button>
                 <a class="btn btn-danger" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('user-delete-form').submit();">
-                    Delete
+                    حذف
                 </a>
                 <form id="user-delete-form" method="POST" action="{{ route('users.destroy', ['user' => $user->id]) }}">
                     @csrf

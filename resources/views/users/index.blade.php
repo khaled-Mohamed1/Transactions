@@ -7,16 +7,16 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Users</h1>
+            <h1 class="h3 mb-0 text-gray-800">الموظفين</h1>
             <div class="row">
                 <div class="col-md-6">
                     <a href="{{ route('users.create') }}" class="btn btn-sm btn-primary">
-                        <i class="fas fa-plus"></i> Add New
+                         اضافة جديد <i class="fas fa-plus"></i>
                     </a>
                 </div>
                 <div class="col-md-6">
-                    <a href="{{ route('users.export') }}" class="btn btn-sm btn-success">
-                        <i class="fas fa-check"></i> Export To Excel
+                    <a href="{{ route('users.export') }}" class="btn btn-sm btn-success" >
+                        نصدير اكسل <i class="fas fa-check"></i>
                     </a>
                 </div>
 
@@ -30,20 +30,20 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
+                <h6 class="m-0 font-weight-bold text-primary text-right">كل الموظفين</h6>
 
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th width="20%">Name</th>
-                                <th width="25%">Email</th>
-                                <th width="15%">Mobile</th>
-                                <th width="15%">Role</th>
-                                <th width="15%">Status</th>
-                                <th width="10%">Action</th>
+                                <th width="20%">اسم</th>
+                                <th width="25%">البريد الإلكتروني</th>
+                                <th width="15%">رقم الجوال</th>
+                                <th width="15%">الوظيفة</th>
+                                <th width="15%">حالة النشاط</th>
+                                <th width="10%">العمليات</th>
                             </tr>
                         </thead>
                         <tbody>

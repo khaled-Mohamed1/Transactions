@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Exports\AdverserExport;
 use App\Exports\CustomersExport;
-use App\Exports\UsersExport;
 use App\Helpers\Helper;
+use App\Imports\CustomerImport;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
-use Spatie\Permission\Models\Role;
 
 class CustomerController extends Controller
 {
@@ -23,13 +23,14 @@ class CustomerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:customer-list|customer-create|customer-edit|customer-delete|customer-show', ['only' => ['index']]);
+        $this->middleware('permission:customer-list|customer-create|customer-edit|customer-delete|customer-show|customer-import', ['only' => ['index']]);
         $this->middleware('permission:customer-create', ['only' => ['create','store']]);
         $this->middleware('permission:customer-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:customer-delete', ['only' => ['delete']]);
         $this->middleware('permission:customer-show', ['only' => ['show']]);
         $this->middleware('permission:customer-adverser', ['only' => ['indexAdverser']]);
         $this->middleware('permission:customer-task', ['only' => ['indexTask','addTask']]);
+        $this->middleware('permission:customer-import', ['only' => ['importCustomers','uploadCustomers']]);
     }
 
     /**
@@ -83,7 +84,7 @@ class CustomerController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -137,7 +138,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param Customer $customer
      * @return Application|Factory|View
      */
     public function show(Customer $customer)
@@ -150,7 +151,7 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param Customer $customer
      * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function edit(Customer $customer)
@@ -164,8 +165,8 @@ class CustomerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Customer $customer
+     * @return RedirectResponse
      */
     public function update(Request $request, Customer $customer)
     {
@@ -221,10 +222,10 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Customer $customer
+     * @return RedirectResponse
      */
-    public function delete(Customer $customer)
+    public function delete(Customer $customer): RedirectResponse
     {
         DB::beginTransaction();
         try {
@@ -240,12 +241,32 @@ class CustomerController extends Controller
         }
     }
 
-    public function export()
+    public function importCustomers()
+    {
+        return view('customers.import');
+    }
+
+    public function uploadCustomers(Request $request): RedirectResponse
+    {
+
+        $request->validate([
+                'file'    => 'required',
+            ]
+            ,[
+                'file.required' => 'يجب ادخال ملف اكسل',
+            ]);
+
+        Excel::import(new CustomerImport(), $request->file);
+
+        return redirect()->route('customers.index')->with('success', 'Customers Imported Successfully');
+    }
+
+    public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return Excel::download(new CustomersExport(), 'customers.xlsx');
     }
 
-    public function exportAdverser()
+    public function exportAdverser(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return Excel::download(new AdverserExport(), 'adverser.xlsx');
     }

@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Transactions List')
+@section('title', 'بيانات المعاملات')
 
 @section('content')
     <div class="container-fluid">
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Transactions</h1>
+            <h1 class="h3 mb-0 text-gray-800">المعاملات</h1>
             <div class="row">
                 <div class="col-md-6">
-                    <a href="{{ route('transactions.create') }}" class="btn btn-sm btn-primary">
-                        <i class="fas fa-plus"></i> Add New
+                        <a href="{{ route('transactions.create') }}" class="btn btn-sm btn-primary">
+                            اضافة جديد <i class="fas fa-plus"></i>
                     </a>
                 </div>
                 <div class="col-md-6">
-                    <a href="{{ route('transactions.export') }}" class="btn btn-sm btn-success">
-                        <i class="fas fa-check"></i> Export To Excel
+                        <a href="{{ route('transactions.export') }}" class="btn btn-sm btn-success">
+                            نصدير اكسل <i class="fas fa-check"></i>
                     </a>
                 </div>
 
@@ -30,23 +30,23 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">All Transactions</h6>
+                <h6 class="m-0 font-weight-bold text-primary text-right">كل المعاملات</h6>
 
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="5%">Transaction_NO</th>
-                            <th width="15%">Customer Name</th>
-                            <th width="10%">Transactions Type</th>
-                            <th width="15%">Transaction Amount</th>
-                            <th width="15%">First Payment</th>
-                            <th width="15%">Transaction Rest</th>
-                            <th width="15%">Created At</th>
-                            <th width="10%">Status</th>
-                            <th width="10%">Action</th>
+                            <th width="12%">رقم المعاملة</th>
+                            <th width="10%">اسم العميل</th>
+                            <th width="10%">نوع المعاملة</th>
+                            <th width="13%">قيمة المعاملة</th>
+                            <th width="10%">أول دفعة</th>
+                            <th width="15%">باقي قيمة المعاملة</th>
+                            <th width="10%">وقت إنشاء</th>
+                            <th width="10%">حالة العميل</th>
+                            <th width="10%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -80,7 +80,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">No record</td>
+                                <td colspan="9">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>

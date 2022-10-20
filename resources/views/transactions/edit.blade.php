@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Transaction')
+@section('title', 'تعديل المعاملة')
 
 @section('content')
 
@@ -8,18 +8,18 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Edit Transaction</h1>
-            <a href="{{route('transactions.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-arrow-left fa-sm text-white-50"></i>Back</a>
+            <h1 class="h3 mb-0 text-gray-800">تعديل المعاملة</h1>
+            <a href="{{route('transactions.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
+                    class="fas fa-arrow-left fa-sm text-white-50"></i></a>
         </div>
 
         {{-- Alert Messages --}}
         @include('common.alert')
 
         <!-- DataTales Example -->
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4 text-right">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Edit Transaction</h6>
+                <h6 class="m-0 font-weight-bold text-primary">تعديل المعاملة</h6>
             </div>
             <form method="POST" action="{{route('transactions.update', ['transaction' => $transaction->id])}}">
                 @csrf
@@ -30,7 +30,7 @@
 
                         {{-- customer_id --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Customer Name</label>
+                            <label>اسم العميل <span style="color:red;">*</span></label>
                             <select name="customer_id" id="customer_id" class="form-control form-control-user @error('customer_id') is-invalid @enderror">
                                 @foreach($customers as $customer)
                                     <option value="{{$customer->id}}" {{$customer->id == $transaction->customer_id ? 'selected' : ''}}>{{$customer->full_name}}</option>
@@ -44,7 +44,7 @@
 
                         {{-- ID_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>ID NO</label>
+                            <label>رقم الهوية</label>
                             <input
                                 disabled
                                 type="text"
@@ -57,7 +57,7 @@
 
                         {{-- phone_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>Phone NO</label>
+                            <label>رقم الجوال</label>
                             <input
                                 disabled
                                 type="text"
@@ -69,7 +69,7 @@
 
                         {{-- region --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>Region</label>
+                            <label>المنطقة</label>
                             <input
                                 disabled
                                 type="text"
@@ -81,7 +81,7 @@
 
                         {{-- address --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>Address</label>
+                            <label>العنوان</label>
                             <input
                                 disabled
                                 type="text"
@@ -93,7 +93,7 @@
 
                         {{-- account --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>Account</label>
+                            <label>الحساب</label>
                             <input
                                 disabled
                                 type="text"
@@ -105,7 +105,7 @@
 
                         {{-- transactions_type --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Transactions Type</label>
+                            <label>نوع المعاملة <span style="color:red;">*</span></label>
                             <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror">
                                 <option value="ودي" {{ $transaction->transactions_type == 'ودي' ? 'selected' : '' }}>ودي</option>
                                 <option value="استقطاع" {{ $transaction->transactions_type == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
@@ -119,7 +119,7 @@
 
                         {{-- reserve_phone_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Reserve Phone NO</label>
+                            <label>رقم البديل <span style="color:red;">*</span></label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('reserve_phone_NO') is-invalid @enderror"
@@ -134,7 +134,7 @@
 
                         {{-- date_of_birth --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Date Of Birth</label>
+                            <label>تاريخ الميلاد <span style="color:red;">*</span></label>
                             <input
                                 type="date"
                                 class="form-control form-control-user @error('date_of_birth') is-invalid @enderror"
@@ -150,9 +150,8 @@
 
                         {{-- marital_status --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Marital Status</label>
+                            <label>الحالة الإجتماعية <span style="color:red;">*</span></label>
                             <select name="marital_status" class="form-control form-control-user @error('marital_status') is-invalid @enderror">
-                                <option selected disabled value="">Choose...</option>
                                 <option value="اعزب" {{ $transaction->CustomerTransaction->marital_status == 'اعزب' ? 'selected' : '' }}>اعزب</option>
                                 <option value="متزوج" {{ $transaction->CustomerTransaction->marital_status == 'متزوج' ? 'selected' : '' }}>متزوج</option>
                                 <option value="مطلق" {{ $transaction->CustomerTransaction->marital_status == 'مطلق' ? 'selected' : '' }}>مطلق</option>
@@ -165,7 +164,7 @@
 
                         {{-- number_of_children --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label><span style="color:red;">* </span>Number Of Children</label>
+                            <label>أفراد العائلة <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('number_of_children') is-invalid @enderror"
@@ -181,7 +180,7 @@
 
                         {{-- job --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>Job</label>
+                            <label>الوظيفة</label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('job') is-invalid @enderror"
@@ -196,7 +195,7 @@
 
                         {{-- salary --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>Salary</label>
+                            <label>الدخل</label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('salary') is-invalid @enderror"
@@ -212,7 +211,7 @@
 
                         {{-- bank_name --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>Bank Name</label>
+                            <label>اسم البنك</label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('bank_name') is-invalid @enderror"
@@ -227,7 +226,7 @@
 
                         {{-- bank_branch --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>Bank Branch</label>
+                            <label>فرع البنك</label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('bank_branch') is-invalid @enderror"
@@ -242,7 +241,7 @@
 
                         {{-- bank_account_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>Bank Account NO</label>
+                            <label>رقم حساب البنك</label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('bank_account_NO') is-invalid @enderror"
@@ -257,7 +256,7 @@
 
                         {{-- transaction_amount --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Transaction Amount</label>
+                            <label>قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
@@ -273,7 +272,7 @@
 
                         {{-- first_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>First Payment</label>
+                            <label>أول دفعة <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('first_payment') is-invalid @enderror"
@@ -289,7 +288,7 @@
 
                         {{-- transaction_rest --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Transaction Rest</label>
+                            <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('transaction_rest') is-invalid @enderror"
@@ -305,7 +304,7 @@
 
                         {{-- monthly_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Monthly Payment</label>
+                            <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('monthly_payment') is-invalid @enderror"
@@ -321,7 +320,7 @@
 
                         {{-- date_of_first_payment --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Date Of First Payment</label>
+                            <label>تاريخ أول دفعة <span style="color:red;">*</span></label>
                             <input
                                 type="date"
                                 class="form-control form-control-user @error('date_of_first_payment') is-invalid @enderror"
@@ -336,7 +335,7 @@
 
                         {{-- draft_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Draft NO</label>
+                            <label>عدد الكمبيالات <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('draft_NO') is-invalid @enderror"
@@ -353,7 +352,7 @@
 
                         {{-- agency_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Agency NO</label>
+                            <label>عدد الوكالات <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('agency_NO') is-invalid @enderror"
@@ -369,7 +368,7 @@
 
                         {{-- endorsement_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Endorsement NO</label>
+                            <label>عدد الإستقراء <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('endorsement_NO') is-invalid @enderror"
@@ -385,7 +384,7 @@
 
                         {{-- receipt_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label> <span style="color:red;">* </span>Receipt NO</label>
+                            <label>عدد الوصل <span style="color:red;">*</span></label>
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('receipt_NO') is-invalid @enderror"
@@ -404,8 +403,8 @@
                 </div>
 
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-success btn-user float-right mb-3">Save</button>
-                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('transactions.index') }}">Cancel</a>
+                    <button type="submit" class="btn btn-success btn-user float-right mb-3">تعديل</button>
+                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('transactions.index') }}">إلغاء</a>
                 </div>
             </form>
         </div>

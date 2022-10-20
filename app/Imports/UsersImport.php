@@ -29,7 +29,7 @@ class UsersImport implements ToModel, WithHeadingRow
 
         // Delete Any Existing Role
         DB::table('model_has_roles')->where('model_id',$user->id)->delete();
-            
+
         // Assign Role To User
         $user->assignRole($user->role_id);
 

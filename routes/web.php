@@ -77,8 +77,8 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     Route::post('/add_task', [CustomerController::class, 'addTask'])->name('add.task');
 
     //import
-//    Route::get('/import-users', [UserController::class, 'importUsers'])->name('import');
-//    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
+    Route::get('/import-customers', [CustomerController::class, 'importCustomers'])->name('import');
+    Route::post('/upload-customers', [CustomerController::class, 'uploadCustomers'])->name('upload');
 
     //export
     Route::get('export/', [CustomerController::class, 'export'])->name('export');

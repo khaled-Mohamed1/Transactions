@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Customer List')
+@section('title', 'بيانات المتعسرين')
 
 @section('content')
     <div class="container-fluid">
@@ -15,8 +15,8 @@
 {{--                    </a>--}}
 {{--                </div>--}}
                 <div class="col-md-12">
-                    <a href="{{ route('customers.export.adverser') }}" class="btn btn-sm btn-success">
-                        <i class="fas fa-check"></i> Export To Excel
+                        <a href="{{ route('customers.export.adverser') }}" class="btn btn-sm btn-success">
+                            نصدير اكسل <i class="fas fa-check"></i>
                     </a>
                 </div>
 
@@ -30,24 +30,23 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">All Adverser</h6>
-
+                <h6 class="m-0 font-weight-bold text-primary text-right">كل العملاء</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="5%">Customer_NO</th>
-                            <th width="15%">Full_Name</th>
-                            <th width="15%">ID_NO</th>
-                            <th width="15%">Phone_NO</th>
-                            <th width="5%">Region</th>
-                            <th width="15%">Address</th>
-                            <th width="5%">Status</th>
-                            <th width="10%">Created_by</th>
-                            <th width="5%">Account</th>
-                            <th width="10%">Action</th>
+                            <th width="15%">رقم الإستدلالي</th>
+                            <th width="15%">الإسم كامل</th>
+                            <th width="10%">رقم الهوية</th>
+                            <th width="10%">رقم الجوال</th>
+                            <th width="5%">المنطقة</th>
+                            <th width="15%">العنوان</th>
+                            <th width="5%">الحالة</th>
+                            <th width="15%">إنشاء بواسطة</th>
+                            <th width="5%">الحساب</th>
+                            <th width="10%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -76,7 +75,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9">No record</td>
+                                <td colspan="10">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>
