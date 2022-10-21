@@ -50,7 +50,7 @@ class CustomerController extends Controller
 
     public function indexAdverser()
     {
-        $customers = Customer::orderBy('customer_NO','desc')->where('status','!=','جديد')->where('status','!=','مرفوض')->paginate(10);
+        $customers = Customer::orderBy('customer_NO','desc')->where('status','!=','متعسر')->paginate(100);
         return view('customers.index_adverser', ['customers' => $customers]);
     }
 
@@ -58,7 +58,7 @@ class CustomerController extends Controller
     {
         $users = User::where('role_id','!=','1')->latest()->get();
         $customers = Customer::orderBy('customer_NO','desc')->where('status','=','متعسر')->where('status','=','مقبول')
-            ->where('status','=','قيد التوقيع')->paginate(100);
+                            ->paginate(100);
         return view('customers.tasks', ['customers' => $customers,'users'=>$users]);
     }
 
@@ -229,7 +229,7 @@ class CustomerController extends Controller
 
 
             $transaction = Transaction::create([
-                'transaction_NO' => Helper::IDGenerator(new Customer, 'transaction_NO', 4,5),
+                'transaction_NO' => Helper::IDGenerator(new Transaction(), 'transaction_NO', 5,5),
                 'user_id' => auth()->user()->id,
                 'customer_id'    => $customer->id,
             ]);
@@ -245,12 +245,12 @@ class CustomerController extends Controller
                 'date_of_first_payment'       => $request->date_of_first_payment,
             ]);
 
-            $customer_st = Customer::find($customer->id);
-            if($customer_st->status == 'مقبول'){
-                Customer::whereId($customer->id)->update([
-                    'status' => 'قيد التوقيع',
-                ]);
-            }
+//            $customer_st = Customer::find($customer->id);
+//            if($customer_st->status == 'مقبول'){
+//                Customer::whereId($customer->id)->update([
+//                    'status' => 'قيد التوقيع',
+//                ]);
+//            }
 
             // Commit And Redirected To Listing
             DB::commit();

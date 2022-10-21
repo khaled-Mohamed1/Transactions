@@ -108,9 +108,11 @@
                             <input type="hidden" name="transactions_type" value="{{$transaction->transactions_type}}">
                             <select name="transactions_type" disabled class="form-control form-control-user"
                             style="height: 40px">
+                                <option  {{ $transaction->transactions_type == null ? 'selected' : '' }}></option>
                                 <option value="ودي" {{ $transaction->transactions_type == 'ودي' ? 'selected' : '' }}>ودي</option>
                                 <option value="استقطاع" {{ $transaction->transactions_type == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
                                 <option value="شيكات" {{ $transaction->transactions_type == 'شيكات' ? 'selected' : '' }}>شيكات</option>
+                                <option value="قروض" {{ $transaction->transactions_type == 'قروض' ? 'selected' : '' }}>قروض</option>
                             </select>
 
                         </div>
