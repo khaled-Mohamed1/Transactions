@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('customer_NO')->unique()->autoIncrement();
             $table->string('full_name')->nullable();
             $table->string('ID_NO')->nullable()->unique();
-            $table->string('phone_NO')->nullable()->unique();
+            $table->string('phone_NO')->nullable();
             $table->string('region')->nullable();
             $table->string('address')->nullable();
             $table->string('status')->default('جديد');
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->float('salary')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_branch')->nullable();
-            $table->string('bank_account_NO')->nullable()->unique();
+            $table->string('bank_account_NO')->nullable();
             $table->bigInteger('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('updated_by')->unsigned()->nullable();
