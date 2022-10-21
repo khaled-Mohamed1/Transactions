@@ -55,7 +55,7 @@ class CustomerController extends Controller
 
     public function indexTask()
     {
-        $users = User::where('role_id','2')->latest()->get();
+        $users = User::where('role_id','!=','1')->latest()->get();
         $customers = Customer::where('status','متعسر')->orWhere('status','مقبول')->latest()->paginate(100);
         return view('customers.tasks', ['customers' => $customers,'users'=>$users]);
     }
