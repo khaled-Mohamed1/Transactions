@@ -107,7 +107,7 @@
 
                         {{-- status --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                            <label>الحالة <span style="color:red;">*</span></label>
+                            <label>الحالة </label>
                             <select name="status" id="status" class="form-control form-control-user h-50 @error('status') is-invalid @enderror"
                                     style="height: 40px">
                                 @if($customer->status == 'مكتمل')
@@ -130,7 +130,7 @@
 
                         {{-- Account --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                            <label>الحساب <span style="color:red;">*</span></label>
+                            <label>الحساب </label>
                             <input
                                 type="text"
                                 class="form-control form-control-user h-50 @error('account') is-invalid @enderror"
@@ -145,13 +145,14 @@
 
                         <div id="display" class="form-group row m-auto" style="display: none">
                             <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>نوع المعاملة <span style="color:red;">*</span></label>
+                                <label>نوع المعاملة </label>
                                 <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror"
                                 style="height: 40px">
                                     <option selected disabled value="">أختر...</option>
                                     <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>
                                     <option value="استقطاع" {{ old('transactions_type') == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
                                     <option value="شيكات" {{ old('transactions_type') == 'شيكات' ? 'selected' : '' }}>شيكات</option>
+                                    <option value="قروض" {{ old('transactions_type') == 'قروض' ? 'selected' : '' }}>قروض</option>
                                 </select>
 
                                 @error('transactions_type')
@@ -161,7 +162,7 @@
 
                             {{-- transaction_amount --}}
                             <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>قيمة المعاملة <span style="color:red;">*</span></label>
+                                <label>قيمة المعاملة </label>
                                 <input
                                     type="number"
                                     class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
@@ -177,7 +178,7 @@
 
                             {{-- first_payment --}}
                             <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>أول دفعة <span style="color:red;">*</span></label>
+                                <label>أول دفعة </label>
                                 <input
                                     type="number"
                                     class="form-control form-control-user @error('first_payment') is-invalid @enderror"
@@ -193,7 +194,7 @@
 
                             {{-- transaction_rest --}}
                             <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
+                                <label>باقي قيمة المعاملة </label>
                                 <input
                                     type="number"
                                     class="form-control form-control-user @error('transaction_rest') is-invalid @enderror"
@@ -209,7 +210,7 @@
 
                             {{-- monthly_payment --}}
                             <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
+                                <label>قيمة الدفعة الشهرية </label>
                                 <input
                                     type="number"
                                     class="form-control form-control-user @error('monthly_payment') is-invalid @enderror"
@@ -225,7 +226,7 @@
 
                             {{-- date_of_first_payment --}}
                             <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>تاريخ أول دفعة <span style="color:red;">*</span></label>
+                                <label>تاريخ أول دفعة </label>
                                 <input
                                     type="date"
                                     class="form-control form-control-user @error('date_of_first_payment') is-invalid @enderror"

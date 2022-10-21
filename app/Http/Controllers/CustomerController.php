@@ -184,12 +184,12 @@ class CustomerController extends Controller
                 'phone_NO' => 'required|numeric|digits:10|',
                 'region'       =>  'required',
                 'address'       =>  'required',
-                'transactions_type'     => 'required_if:status,مقبول',
-                'transaction_amount'     => 'required_if:status,مقبول',
-                'first_payment'     => 'required_if:status,مقبول',
-                'transaction_rest'     => 'required_if:status,مقبول',
-                'monthly_payment'     => 'required_if:status,مقبول',
-                'date_of_first_payment'     => 'required_if:status,مقبول',
+//                'transactions_type'     => 'required_if:status,مقبول',
+//                'transaction_amount'     => 'required_if:status,مقبول',
+//                'first_payment'     => 'required_if:status,مقبول',
+//                'transaction_rest'     => 'required_if:status,مقبول',
+//                'monthly_payment'     => 'required_if:status,مقبول',
+//                'date_of_first_payment'     => 'required_if:status,مقبول',
 
 
             ],[
@@ -204,12 +204,12 @@ class CustomerController extends Controller
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
-                'transactions_type.required_if' => 'يجب ادخال نوع المعاملة',
-                'transaction_amount.required_if' => 'يجب ادخال قيمة المعاملة',
-                'first_payment.required_if' => 'يجب ادخال الدفعة الأولى',
-                'transaction_rest.required_if' => 'يجب ادخال باقي قيمة المعاملة',
-                'monthly_payment.required_if' => 'يجب ادخال قيمة دفعة المعاملة',
-                'date_of_first_payment.required_if' => 'يجب ادخال تاريخ دفعة أول دفعة',
+//                'transactions_type.required_if' => 'يجب ادخال نوع المعاملة',
+//                'transaction_amount.required_if' => 'يجب ادخال قيمة المعاملة',
+//                'first_payment.required_if' => 'يجب ادخال الدفعة الأولى',
+//                'transaction_rest.required_if' => 'يجب ادخال باقي قيمة المعاملة',
+//                'monthly_payment.required_if' => 'يجب ادخال قيمة دفعة المعاملة',
+//                'date_of_first_payment.required_if' => 'يجب ادخال تاريخ دفعة أول دفعة',
             ]
         );
 
