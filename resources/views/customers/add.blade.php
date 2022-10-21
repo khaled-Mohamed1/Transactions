@@ -78,7 +78,6 @@
                                 <option selected disabled value="">اختار...</option>
                                 <option value="الشمال" {{ old('region') == 'الشمال' ? 'selected' : '' }}>الشمال</option>
                                 <option value="غزة" {{ old('region') == 'غزة' ? 'selected' : '' }}>غزة</option>
-                                <option value="دير البلح" {{ old('region') == 'دير البلح' ? 'selected' : '' }}>دير البلح</option>
                                 <option value="وسطى" {{ old('region') == 'وسطى' ? 'selected' : '' }}>الوسطى</option>
                                 <option value="خانيونس" {{ old('region') == 'خانيونس' ? 'selected' : '' }}>خانيونس</option>
                                 <option value="رفح" {{ old('region') == 'رفح' ? 'selected' : '' }}>رفح</option>

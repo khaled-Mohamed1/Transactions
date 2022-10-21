@@ -80,7 +80,6 @@
                                 <option selected disabled value="">اختار...</option>
                                 <option value="الشمال" {{  $customer->region == 'الشمال' ? 'selected' : '' }}>الشمال</option>
                                 <option value="غزة" {{  $customer->region == 'غزة' ? 'selected' : '' }}>غزة</option>
-                                <option value="دير البلح" {{  $customer->region == 'دير البلح' ? 'selected' : '' }}>دير البلح</option>
                                 <option value="وسطى" {{  $customer->region == 'وسطى' ? 'selected' : '' }}>الوسطى</option>
                                 <option value="خانيونس" {{  $customer->region == 'خانيونس' ? 'selected' : '' }}>خانيونس</option>
                                 <option value="رفح" {{  $customer->region == 'رفح' ? 'selected' : '' }}>رفح</option>
