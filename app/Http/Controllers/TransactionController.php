@@ -38,14 +38,13 @@ class TransactionController extends Controller
 //        $transactions = Transaction::latest()->paginate(100);
         if(auth()->user()->role_id == 1){
             $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','جديد')
-                ->where('status','!=','مرفوض')->paginate(100);
+                ->where('status','!=','مكتمل')->where('status','!=','مرفوض')->paginate(100);
         }else{
             $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','مرفوض')
                 ->where('status','!=','مكتمل')->where('status','!=','جديد')->where('updated_by',auth()->user()->id)
                 ->paginate(100);
         }
 
-//        $customer = Customer::with('transactions')->where('updated_by',)->get();
         return view('transactions.index', ['customers' => $customers]);
     }
 

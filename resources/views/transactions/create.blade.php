@@ -99,7 +99,7 @@
                         {{-- transactions_type --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع المعاملة <span style="color:red;">*</span></label>
-                            <select name="transactions_type" disabled class="form-control form-control-user @error('transactions_type') is-invalid @enderror"
+                            <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror"
                                     style="height: 40px">
                                 <option  disabled selected>اختر...</option>
                                 <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>
@@ -266,7 +266,7 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
-                                disabled
+
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="transaction_amount"
