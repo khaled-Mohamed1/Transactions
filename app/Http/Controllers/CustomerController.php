@@ -50,7 +50,7 @@ class CustomerController extends Controller
 
     public function indexAdverser()
     {
-        $customers = Customer::orderBy('customer_NO','desc')->where('status','!=','متعسر')->paginate(100);
+        $customers = Customer::orderBy('customer_NO','desc')->where('status','=','متعسر')->paginate(100);
         return view('customers.index_adverser', ['customers' => $customers]);
     }
 
