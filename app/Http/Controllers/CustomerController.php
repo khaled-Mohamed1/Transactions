@@ -7,6 +7,7 @@ use App\Exports\CustomersExport;
 use App\Helpers\Helper;
 use App\Imports\CustomerImport;
 use App\Models\Customer;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -43,20 +44,21 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Customer::orderBy('customer_NO','desc')->where('status', '!=','مقبول')->paginate(100);
+        $customers = Customer::orderBy('customer_NO','desc')->where('status', '=','جديد')->paginate(100);
         return view('customers.index', ['customers' => $customers]);
     }
 
     public function indexAdverser()
     {
-        $customers = Customer::where('status','متعسر')->latest()->paginate(10);
+        $customers = Customer::orderBy('customer_NO','desc')->where('status','!=','جديد')->where('status','!=','مرفوض')->paginate(10);
         return view('customers.index_adverser', ['customers' => $customers]);
     }
 
     public function indexTask()
     {
         $users = User::where('role_id','!=','1')->latest()->get();
-        $customers = Customer::where('status','متعسر')->orWhere('status','مقبول')->latest()->paginate(100);
+        $customers = Customer::orderBy('customer_NO','desc')->where('status','=','متعسر')->where('status','=','مقبول')
+            ->where('status','=','قيد التوقيع')->paginate(100);
         return view('customers.tasks', ['customers' => $customers,'users'=>$users]);
     }
 
@@ -89,15 +91,14 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-// Validations
+        // Validations
         $request->validate([
-            'full_name'    => 'required',
-            'ID_NO'     => 'required|numeric|digits:9|unique:customers',
-            'phone_NO' => 'required|numeric|digits:10|unique:customers',
-            'region'       =>  'required',
-            'address'       =>  'required',
-        ]
-            ,[
+                'full_name'    => 'required',
+                'ID_NO'     => 'required|numeric|digits:9|unique:customers',
+                'phone_NO' => 'required|numeric|digits:10|unique:customers',
+                'region'       =>  'required',
+                'address'       =>  'required',
+            ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
                 'ID_NO.unique' => 'تم ادخال رقم الهوية من قبل',
@@ -109,7 +110,8 @@ class CustomerController extends Controller
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
-            ]);
+            ]
+        );
 
 
 
@@ -175,13 +177,22 @@ class CustomerController extends Controller
     {
 
         // Validations
-        $request->validate([
-            'full_name'    => 'required',
-            'ID_NO'     => 'required|numeric|digits:9|'.Rule::unique('customers')->ignore($customer->id),
-            'phone_NO' => 'required|numeric|digits:10|'.Rule::unique('customers')->ignore($customer->id),
-            'region'       =>  'required',
-            'address'       =>  'required',
-        ],[
+        $request->validate(
+            [
+                'full_name'    => 'required',
+                'ID_NO'     => 'required|numeric|digits:9|'.Rule::unique('customers')->ignore($customer->id),
+                'phone_NO' => 'required|numeric|digits:10|',
+                'region'       =>  'required',
+                'address'       =>  'required',
+                'transactions_type'     => 'required_if:status,مقبول',
+                'transaction_amount'     => 'required_if:status,مقبول',
+                'first_payment'     => 'required_if:status,مقبول',
+                'transaction_rest'     => 'required_if:status,مقبول',
+                'monthly_payment'     => 'required_if:status,مقبول',
+                'date_of_first_payment'     => 'required_if:status,مقبول',
+
+
+            ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
                 'ID_NO.unique' => 'تم ادخال رقم الهوية من قبل',
@@ -193,6 +204,12 @@ class CustomerController extends Controller
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
+                'transactions_type.required_if' => 'يجب ادخال نوع المعاملة',
+                'transaction_amount.required_if' => 'يجب ادخال قيمة المعاملة',
+                'first_payment.required_if' => 'يجب ادخال الدفعة الأولى',
+                'transaction_rest.required_if' => 'يجب ادخال باقي قيمة المعاملة',
+                'monthly_payment.required_if' => 'يجب ادخال قيمة دفعة المعاملة',
+                'date_of_first_payment.required_if' => 'يجب ادخال تاريخ دفعة أول دفعة',
             ]
         );
 
@@ -210,6 +227,28 @@ class CustomerController extends Controller
                 'account' => $request->account
             ]);
 
+
+            $transaction = Transaction::create([
+                'transaction_NO' => Helper::IDGenerator(new Customer, 'transaction_NO', 4,5),
+                'user_id' => auth()->user()->id,
+                'customer_id'    => $customer->id,
+            ]);
+
+            Transaction::where('id',$transaction->id)->update([
+                'transactions_type'     => $request->transactions_type,
+                'transaction_amount'         => $request->transaction_amount,
+                'first_payment' => $request->first_payment,
+                'transaction_rest'       => $request->transaction_rest,
+                'monthly_payment'       => $request->monthly_payment,
+                'date_of_first_payment'       => $request->date_of_first_payment,
+            ]);
+
+            $customer_st = Customer::find($customer->id);
+            if($customer_st->status == 'مقبول'){
+                Customer::whereId($customer->id)->update([
+                    'status' => 'قيد التوقيع',
+                ]);
+            }
 
             // Commit And Redirected To Listing
             DB::commit();

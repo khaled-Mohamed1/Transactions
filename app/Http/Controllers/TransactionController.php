@@ -35,8 +35,18 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::latest()->paginate(100);
-        return view('transactions.index', ['transactions' => $transactions]);
+//        $transactions = Transaction::latest()->paginate(100);
+        if(auth()->user()->role_id == 1){
+            $customers = Customer::with('transactions')->orderBy('customer_NO','desc')->where('status','!=','جديد')
+                ->where('status','!=','مرفوض')->paginate(100);
+        }else{
+            $customers = Customer::with('transactions')->orderBy('customer_NO','desc')->where('status','!=','مرفوض')
+                ->where('status','!=','مكتمل')->where('status','!=','جديد')->where('updated_by',auth()->user()->id)
+                ->paginate(100);
+        }
+
+//        $customer = Customer::with('transactions')->where('updated_by',)->get();
+        return view('transactions.index', ['customers' => $customers]);
     }
 
     /**
@@ -47,11 +57,10 @@ class TransactionController extends Controller
     public function create()
     {
         if(auth()->user()->role_id == 1){
-            $customers = Customer::where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
+            $customers = Customer::where('status','=','مقبول')->where('status','=','متعسر')->latest()->get();
         }else{
-            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
+            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','=','مقبول')->where('status','=','متعسر')->latest()->get();
         }
-
         return view('transactions.create',['customers' => $customers]);
     }
 
@@ -65,9 +74,7 @@ class TransactionController extends Controller
     {
         // Validations
         $request->validate([
-                'customer_id'    => 'required',
-                'transactions_type'     => 'required',
-                'reserve_phone_NO' => 'required|numeric|digits:10|unique:customers',
+                'reserve_phone_NO' => 'required|numeric|digits:10',
                 'date_of_birth'       =>  'required|date',
                 'marital_status'       =>  'required',
                 'number_of_children'       =>  'required',
@@ -76,20 +83,12 @@ class TransactionController extends Controller
                 'bank_name'   =>  'required_if:transactions_type,استقطاع',
                 'bank_branch'   =>  'required_if:transactions_type,استقطاع',
                 'bank_account_NO'   =>  'required_if:transactions_type,استقطاع',
-                'transaction_amount'   =>  'required',
-                'first_payment'   =>  'required',
-                'transaction_rest'   =>  'required',
-                'monthly_payment'   =>  'required',
-                'date_of_first_payment'   =>  'required|date',
                 'draft_NO'   =>  'required',
                 'agency_NO'   =>  'required',
                 'endorsement_NO'   =>  'required',
                 'receipt_NO'   =>  'required',
-
             ]
             ,[
-                'customer_id.required' => 'يجب ادخال اسم العميل',
-                'transactions_type.required' => 'يجب ادخال نوع المعاملة',
                 'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
                 'reserve_phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
                 'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
@@ -102,11 +101,6 @@ class TransactionController extends Controller
                 'bank_name.required_if' => 'يجب ادخال اسم البنك',
                 'bank_branch.required_if' => 'يجب ادخال فرع البنك',
                 'bank_account_NO.required_if' => 'يجب ادخال رقم حساب البنك',
-                'transaction_amount.required' => 'يجب ادخال قيمة المعاملة',
-                'first_payment.required' => 'يجب ادخال الدفعة الأولى',
-                'transaction_rest.required' => 'يجب ادخال باقي قيمة المعاملة',
-                'monthly_payment.required' => 'يجب ادخال قيمة دفعة المعاملة',
-                'date_of_first_payment.required' => 'يجب ادخال تاريخ دفعة أول دفعة',
                 'draft_NO.required' => 'يجب ادخال عدد الكمبيالات',
                 'agency_NO.required' => 'يجب ادخال عدد الوكالات',
                 'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
@@ -118,15 +112,7 @@ class TransactionController extends Controller
 
             // Store Data
             $transaction = Transaction::create([
-                'transaction_NO' => Helper::IDGenerator(new Customer, 'transaction_NO', 4,5),
                 'user_id' => auth()->user()->id,
-                'customer_id'    => $request->customer_id,
-                'transactions_type'     => $request->transactions_type,
-                'transaction_amount'         => $request->transaction_amount,
-                'first_payment' => $request->first_payment,
-                'transaction_rest'       => $request->transaction_rest,
-                'monthly_payment'       => $request->monthly_payment,
-                'date_of_first_payment'       => $request->date_of_first_payment,
                 'draft_NO'       => $request->draft_NO,
                 'agency_NO'       => $request->agency_NO,
                 'endorsement_NO'       => $request->endorsement_NO,
@@ -136,7 +122,7 @@ class TransactionController extends Controller
             if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات'){
                 $status = 'مكتمل';
             }else{
-                $status = 'قيد التوقيع';
+                $status = 'تم التوقيع';
             }
 
             // Store Data
@@ -174,7 +160,7 @@ class TransactionController extends Controller
 
     public function get(Request $request)
     {
-        $customer = Customer::findOrFail($request->customer_id);
+        $customer = Customer::with('transactions')->where('id',$request->customer_id)->get();
         return response()->json([
             'status' => 'success',
             'customer' => $customer,
@@ -199,13 +185,12 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        if(auth()->user()->role_id == 1){
-            $customers = Customer::where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
-        }else{
-            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
-        }
+//        if(auth()->user()->role_id == 1){
+//            $customers = Customer::where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
+//        }else{
+//            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مكتمل')->where('status','!=','جديد')->latest()->get();
+//        }
         return view('transactions.edit')->with([
-            'customers'  => $customers,
             'transaction'  => $transaction
         ]);
     }
@@ -220,11 +205,10 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         // Validations
+
         $customer = Customer::FindOrFail($request->customer_id);
         $request->validate([
-                'customer_id'    => 'required',
-                'transactions_type'     => 'required',
-                'reserve_phone_NO' => 'required|numeric|digits:10|'.Rule::unique('customers')->ignore($customer->id),
+                'reserve_phone_NO' => 'required|numeric|digits:10',
                 'date_of_birth'       =>  'required|date',
                 'marital_status'       =>  'required',
                 'number_of_children'       =>  'required',
@@ -233,11 +217,6 @@ class TransactionController extends Controller
                 'bank_name'   =>  'required_if:transactions_type,استقطاع',
                 'bank_branch'   =>  'required_if:transactions_type,استقطاع',
                 'bank_account_NO'   =>  'required_if:transactions_type,استقطاع',
-                'transaction_amount'   =>  'required',
-                'first_payment'   =>  'required',
-                'transaction_rest'   =>  'required',
-                'monthly_payment'   =>  'required',
-                'date_of_first_payment'   =>  'required|date',
                 'draft_NO'   =>  'required',
                 'agency_NO'   =>  'required',
                 'endorsement_NO'   =>  'required',
@@ -245,8 +224,6 @@ class TransactionController extends Controller
 
             ]
             ,[
-                'customer_id.required' => 'يجب ادخال اسم العميل',
-                'transactions_type.required' => 'يجب ادخال نوع المعاملة',
                 'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
                 'reserve_phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
                 'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
@@ -259,11 +236,6 @@ class TransactionController extends Controller
                 'bank_name.required_if' => 'يجب ادخال اسم البنك',
                 'bank_branch.required_if' => 'يجب ادخال فرع البنك',
                 'bank_account_NO.required_if' => 'يجب ادخال رقم حساب البنك',
-                'transaction_amount.required' => 'يجب ادخال قيمة المعاملة',
-                'first_payment.required' => 'يجب ادخال الدفعة الأولى',
-                'transaction_rest.required' => 'يجب ادخال باقي قيمة المعاملة',
-                'monthly_payment.required' => 'يجب ادخال قيمة دفعة المعاملة',
-                'date_of_first_payment.required' => 'يجب ادخال تاريخ دفعة أول دفعة',
                 'draft_NO.required' => 'يجب ادخال عدد الكمبيالات',
                 'agency_NO.required' => 'يجب ادخال عدد الوكالات',
                 'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
@@ -272,26 +244,19 @@ class TransactionController extends Controller
 
         DB::beginTransaction();
         try {
-
-            $rest = 0;
-
-            if($request->transaction_rest != $transaction->transaction_rest){
-                if($request->transaction_rest > $transaction->transaction_rest){
-                    $rest = $request->transaction_rest - $transaction->transaction_rest;
-                }elseif($request->transaction_rest < $transaction->transaction_rest){
-                    $rest = $request->transaction_rest - $transaction->transaction_rest ;
-                }
-            }
+//
+//            $rest = 0;
+//
+//            if($request->transaction_rest != $transaction->transaction_rest){
+//                if($request->transaction_rest > $transaction->transaction_rest){
+//                    $rest = $request->transaction_rest - $transaction->transaction_rest;
+//                }elseif($request->transaction_rest < $transaction->transaction_rest){
+//                    $rest = $request->transaction_rest - $transaction->transaction_rest ;
+//                }
+//            }
 
             // Store Data
             $transaction = Transaction::whereId($transaction->id)->update([
-                'customer_id'    => $request->customer_id,
-                'transactions_type'     => $request->transactions_type,
-                'transaction_amount'         => $request->transaction_amount,
-                'first_payment' => $request->first_payment,
-                'transaction_rest'       => $request->transaction_rest,
-                'monthly_payment'       => $request->monthly_payment,
-                'date_of_first_payment'       => $request->date_of_first_payment,
                 'draft_NO'       => $request->draft_NO,
                 'agency_NO'       => $request->agency_NO,
                 'endorsement_NO'       => $request->endorsement_NO,
@@ -301,7 +266,7 @@ class TransactionController extends Controller
             if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات'){
                 $status = 'مكتمل';
             }else{
-                $status = 'قيد التوقيع';
+                $status = 'تم التوقيع';
             }
 
             // Store Data
@@ -321,10 +286,10 @@ class TransactionController extends Controller
 
 
 
-            // Store Data
-            $customer->update([
-                'account'   => $customer->account + $rest,
-            ]);
+//            // Store Data
+//            $customer->update([
+//                'account'   => $customer->account + $rest,
+//            ]);
 
             // Commit And Redirected To Listing
             DB::commit();

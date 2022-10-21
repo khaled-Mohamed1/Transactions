@@ -108,14 +108,19 @@
                         {{-- status --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>الحالة <span style="color:red;">*</span></label>
-                            <select name="status" class="form-control form-control-user @error('status') is-invalid @enderror">
+                            <select name="status" id="status" class="form-control form-control-user h-50 @error('status') is-invalid @enderror"
+                                    style="height: 40px">
                                 @if($customer->status == 'مكتمل')
                                     <option value="{{$customer->status}}">{{$customer->status}}</option>
                                 @else
+                                    <option value="{{$customer->status}}">{{$customer->status}}</option>
                                 @endif
-                                <option value="جديد" {{$customer->status == 'جديد' ? 'selected' : ''}}>جديد</option>
-                                <option value="مقبول" {{ $customer->status == 'مقبول' ? 'selected' : ''}}>مقبول</option>
-                                <option value="مرفوض" {{ $customer->status == 'مرفوض' ? 'selected' : ''}}>مرفوض</option>
+                                <option value="جديد" {{old('status') ? ((old('status') == 'جديد') ? 'selected' : '')
+                                                        : (($customer->status == 'جديد') ? 'selected' : '')}}>جديد</option>
+                                <option value="مقبول" {{old('status') ? ((old('status') == 'مقبول') ? 'selected' : '')
+                                                        : (($customer->status == 'مقبول') ? 'selected' : '')}}>مقبول</option>
+                                <option value="مرفوض" {{old('status') ? ((old('status') == 'مرفوض') ? 'selected' : '')
+                                                        : (($customer->status == 'مرفوض') ? 'selected' : '')}}>مرفوض</option>
                             </select>
 
                             @error('status')
@@ -128,7 +133,7 @@
                             <label>الحساب <span style="color:red;">*</span></label>
                             <input
                                 type="text"
-                                class="form-control form-control-user @error('account') is-invalid @enderror"
+                                class="form-control form-control-user h-50 @error('account') is-invalid @enderror"
                                 id="exampleaccount"
                                 name="account"
                                 value="{{ old('account') ? old('account') : $customer->account}}">
@@ -137,6 +142,104 @@
                             <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
+
+                        <div id="display" class="form-group row m-auto" style="display: none">
+                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                                <label>نوع المعاملة <span style="color:red;">*</span></label>
+                                <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror"
+                                style="height: 40px">
+                                    <option selected disabled value="">أختر...</option>
+                                    <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>
+                                    <option value="استقطاع" {{ old('transactions_type') == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
+                                    <option value="شيكات" {{ old('transactions_type') == 'شيكات' ? 'selected' : '' }}>شيكات</option>
+                                </select>
+
+                                @error('transactions_type')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+
+                            {{-- transaction_amount --}}
+                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                                <label>قيمة المعاملة <span style="color:red;">*</span></label>
+                                <input
+                                    type="number"
+                                    class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
+                                    id="exampletransaction_amount"
+                                    name="transaction_amount"
+                                    min="0"
+                                    value="{{ old('transaction_amount') }}">
+
+                                @error('transaction_amount')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+
+                            {{-- first_payment --}}
+                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                                <label>أول دفعة <span style="color:red;">*</span></label>
+                                <input
+                                    type="number"
+                                    class="form-control form-control-user @error('first_payment') is-invalid @enderror"
+                                    id="examplefirst_payment"
+                                    name="first_payment"
+                                    min="0"
+                                    value="{{ old('first_payment') }}">
+
+                                @error('first_payment')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+
+                            {{-- transaction_rest --}}
+                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                                <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
+                                <input
+                                    type="number"
+                                    class="form-control form-control-user @error('transaction_rest') is-invalid @enderror"
+                                    id="exampletransaction_rest"
+                                    name="transaction_rest"
+                                    min="0"
+                                    value="{{ old('transaction_rest') }}">
+
+                                @error('transaction_rest')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+
+                            {{-- monthly_payment --}}
+                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                                <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
+                                <input
+                                    type="number"
+                                    class="form-control form-control-user @error('monthly_payment') is-invalid @enderror"
+                                    id="examplemonthly_payment"
+                                    name="monthly_payment"
+                                    min="0"
+                                    value="{{ old('monthly_payment') }}">
+
+                                @error('monthly_payment')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+
+                            {{-- date_of_first_payment --}}
+                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                                <label>تاريخ أول دفعة <span style="color:red;">*</span></label>
+                                <input
+                                    type="date"
+                                    class="form-control form-control-user @error('date_of_first_payment') is-invalid @enderror"
+                                    id="exampledate_of_first_payment"
+                                    name="date_of_first_payment"
+                                    value="{{ old('date_of_first_payment') }}">
+
+                                @error('date_of_first_payment')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        {{-- transactions_type --}}
+
 
                     </div>
                 </div>
@@ -150,5 +253,29 @@
 
     </div>
 
+@endsection
+
+@section('scripts')
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            if ($("#status").val() === 'مقبول') {
+                $("#display").show();
+                console.log($('show',"#status").val())
+            } else {
+                $("#display").hide();
+                console.log('hide',$("#status").val())
+            }
+
+            $("#status").on("change", function() {
+                if ($(this).val() == 'مقبول') {
+                    $("#display").show().siblings();
+                } else {
+                    $("#display").hide();
+                }
+            })
+        });
+    </script>
 
 @endsection

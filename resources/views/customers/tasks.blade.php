@@ -62,6 +62,8 @@
                                         <span class="text-success">{{ $customer->status }}</span>
                                     @elseif($customer->status == 'متعسر')
                                         <span class="text-danger">{{ $customer->status }}</span>
+                                    @else
+                                        <span class="text-warning">{{ $customer->status }}</span>
                                     @endif
                                 </td>
                                 <td>{{ $customer->account }}</td>

@@ -63,7 +63,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">تحكم بالعملاء:</h6>
                 <a class="collapse-item" href="{{ route('customers.index') }}">بيانات العملاء</a>
-                <a class="collapse-item" href="{{ route('customers.index.adverser') }}">المتعسرين</a>
+                <a class="collapse-item" href="{{ route('customers.index.adverser') }}">العملاء الفعليين</a>
                 <a class="collapse-item" href="{{ route('customers.index.task') }}">المهام</a>
 {{--                <a class="collapse-item" href="{{ route('users.create') }}">Add New</a>--}}
                 <a class="collapse-item" href="{{ route('customers.import') }}">استيراد بيانات</a>

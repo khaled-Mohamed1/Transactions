@@ -39,6 +39,7 @@
                         <thead>
                         <tr>
                             <th width="12%">رقم المعاملة</th>
+                            <th width="10%">رقم الإستدلالي</th>
                             <th width="10%">اسم العميل</th>
                             <th width="10%">نوع المعاملة</th>
                             <th width="13%">قيمة المعاملة</th>
@@ -47,12 +48,15 @@
                             <th width="10%">وقت إنشاء</th>
                             <th width="10%">حالة العميل</th>
                             <th width="10%">العمليات</th>
+
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse ($transactions as $transaction)
+                        @forelse ($customers as $customer)
+                            @foreach($customer->transactions as $transaction)
                             <tr>
                                 <td>{{ $transaction->transaction_NO }}</td>
+                                <td><a href="{{route('customers.show',['customer' => $transaction->CustomerTransaction->id])}}">{{ $transaction->CustomerTransaction->customer_NO }}</a></td>
                                 <td>{{ $transaction->CustomerTransaction->full_name }}</td>
                                 <td>{{ $transaction->transactions_type }}</td>
                                 <td>{{ $transaction->transaction_amount }}</td>
@@ -78,15 +82,18 @@
                                     </a>
                                 </td>
                             </tr>
+                            @endforeach
+
                         @empty
                             <tr>
                                 <td colspan="9">لا يوجد بيانات</td>
                             </tr>
+
                         @endforelse
                         </tbody>
                     </table>
 
-                    {{ $transactions->links() }}
+                    {{ $customers->links() }}
                 </div>
             </div>
         </div>

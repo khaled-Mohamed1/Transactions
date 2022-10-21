@@ -98,17 +98,13 @@
 
                         {{-- transactions_type --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>نوع المعاملة <span style="color:red;">*</span></label>
-                            <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror">
-                                <option selected disabled value="">أختر...</option>
-                                <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>
-                                <option value="استقطاع" {{ old('transactions_type') == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
-                                <option value="شيكات" {{ old('transactions_type') == 'شيكات' ? 'selected' : '' }}>شيكات</option>
-                            </select>
-
-                            @error('transactions_type')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <label>نوع المعاملة </label>
+                            <input
+                                disabled
+                                type="text"
+                                class="form-control form-control-user"
+                                id="transactions_type"
+                                name="transactions_type">
                         </div>
 
                         {{-- reserve_phone_NO --}}
@@ -178,7 +174,7 @@
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('job') is-invalid @enderror"
-                                id="examplejob"
+                                id="ejob"
                                 name="job"
                                 value="{{ old('job') }}">
 
@@ -193,7 +189,7 @@
                             <input
                                 type="number"
                                 class="form-control form-control-user @error('salary') is-invalid @enderror"
-                                id="examplejob"
+                                id="salary"
                                 name="salary"
                                 min="0"
                                 value="{{ old('salary') }}">
@@ -206,12 +202,25 @@
                         {{-- bank_name --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>اسم البنك</label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user @error('bank_name') is-invalid @enderror"
-                                id="examplebank_name"
-                                name="bank_name"
-                                value="{{ old('bank_name') }}">
+                            <select name="bank_name" class="form-control form-control-user @error('bank_name') is-invalid @enderror">
+                                <option selected disabled value="">اختر...</option>
+                                <option value="بنك فلسطين" {{ old('marital_status') == 'بنك فلسطين' ? 'selected' : '' }}>بنك فلسطين</option>
+                                <option value="بنك القدس" {{ old('marital_status') == 'بنك القدس' ? 'selected' : '' }}>بنك القدس</option>
+                                <option value="البنك الإسلامي الفلسطيني" {{ old('marital_status') == 'البنك الإسلامي الفلسطيني' ? 'selected' : '' }}>البنك الإسلامي الفلسطيني</option>
+                                <option value="البنك العقاري المصري العربي" {{ old('marital_status') == 'البنك العقاري المصري العربي' ? 'selected' : '' }}>البنك العقاري المصري العربي</option>
+                                <option value="بنك الوطني الاسلامي" {{ old('marital_status') == 'بنك الوطني الاسلامي' ? 'selected' : '' }}>بنك الوطني الاسلامي</option>
+                                <option value="بنك الانتاج الفلسطيني" {{ old('marital_status') == 'بنك الانتاج الفلسطيني' ? 'selected' : '' }}>بنك الانتاج الفلسطيني</option>
+                                <option value="بنك الأردن" {{ old('marital_status') == 'بنك الأردن' ? 'selected' : '' }}>بنك الأردن</option>
+                                <option value="بنك القاهرة عمان" {{ old('marital_status') == 'بنك القاهرة عمان' ? 'selected' : '' }}>بنك القاهرة عمان</option>
+                                <option value="بنك الاستثمار الفلسطيني" {{ old('marital_status') == 'بنك الاستثمار الفلسطيني' ? 'selected' : '' }}>بنك الاستثمار الفلسطيني</option>
+                                <option value="البنك العربي" {{ old('marital_status') == 'البنك العربي' ? 'selected' : '' }}>البنك العربي</option>
+                                <option value="البنك الاسلامي العربي" {{ old('marital_status') == 'البنك الاسلامي العربي' ? 'selected' : '' }}>البنك الاسلامي العربي</option>
+                                <option value="بنك الاسكان للتجارة والتمويل" {{ old('marital_status') == 'بنك الاسكان للتجارة والتمويل' ? 'selected' : '' }}>بنك الاسكان للتجارة والتمويل</option>
+                                <option value="البنك التجاري الأردني" {{ old('marital_status') == 'البنك التجاري الأردني' ? 'selected' : '' }}>البنك التجاري الأردني</option>
+                                <option value="البنك الأهلي الأردني" {{ old('marital_status') == 'البنك الأهلي الأردني' ? 'selected' : '' }}>البنك الأهلي الأردني</option>
+                                <option value="البنك الوطني" {{ old('marital_status') == 'البنك الوطني' ? 'selected' : '' }}>البنك الوطني</option>
+                                <option value="البريد" {{ old('marital_status') == 'البريد' ? 'selected' : '' }}>البريد</option>
+                            </select>
 
                             @error('bank_name')
                             <span class="text-danger">{{$message}}</span>
@@ -224,7 +233,7 @@
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('bank_branch') is-invalid @enderror"
-                                id="examplebank_branch"
+                                id="bank_branch"
                                 name="bank_branch"
                                 value="{{ old('bank_branch') }}">
 
@@ -239,7 +248,7 @@
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('bank_account_NO') is-invalid @enderror"
-                                id="examplebank_account_NO"
+                                id="bank_account_NO"
                                 name="bank_account_NO"
                                 value="{{ old('bank_account_NO') }}">
 
@@ -250,81 +259,57 @@
 
                         {{-- transaction_amount --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label>قيمة المعاملة <span style="color:red;">*</span></label>
+                            <label>قيمة المعاملة </label>
                             <input
+                                disabled
                                 type="number"
-                                class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
-                                id="exampletransaction_amount"
-                                name="transaction_amount"
-                                min="0"
-                                value="{{ old('transaction_amount') }}">
-
-                            @error('transaction_amount')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                                class="form-control form-control-user"
+                                id="transaction_amount"
+                                name="transaction_amount">
                         </div>
 
                         {{-- first_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>أول دفعة <span style="color:red;">*</span></label>
+                            <label>أول دفعة </label>
                             <input
+                                disabled
                                 type="number"
-                                class="form-control form-control-user @error('first_payment') is-invalid @enderror"
-                                id="examplefirst_payment"
-                                name="first_payment"
-                                min="0"
-                                value="{{ old('first_payment') }}">
-
-                            @error('first_payment')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                                class="form-control form-control-user"
+                                id="first_payment"
+                                name="first_payment">
                         </div>
 
                         {{-- transaction_rest --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
+                            <label>باقي قيمة المعاملة </label>
                             <input
+                                disabled
                                 type="number"
-                                class="form-control form-control-user @error('transaction_rest') is-invalid @enderror"
-                                id="exampletransaction_rest"
-                                name="transaction_rest"
-                                min="0"
-                                value="{{ old('transaction_rest') }}">
-
-                            @error('transaction_rest')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                                class="form-control form-control-user"
+                                id="transaction_rest"
+                                name="transaction_rest">
                         </div>
 
                         {{-- monthly_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
+                            <label>قيمة الدفعة الشهرية </label>
                             <input
+                                disabled
                                 type="number"
-                                class="form-control form-control-user @error('monthly_payment') is-invalid @enderror"
-                                id="examplemonthly_payment"
-                                name="monthly_payment"
-                                min="0"
-                                value="{{ old('monthly_payment') }}">
-
-                            @error('monthly_payment')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                                class="form-control form-control-user"
+                                id="monthly_payment"
+                                name="monthly_payment">
                         </div>
 
                         {{-- date_of_first_payment --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label>تاريخ أول دفعة <span style="color:red;">*</span></label>
+                            <label>تاريخ أول دفعة </label>
                             <input
+                                disabled
                                 type="date"
-                                class="form-control form-control-user @error('date_of_first_payment') is-invalid @enderror"
-                                id="exampledate_of_first_payment"
-                                name="date_of_first_payment"
-                                value="{{ old('date_of_first_payment') }}">
-
-                            @error('date_of_first_payment')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                                class="form-control form-control-user"
+                                id="date_of_first_payment"
+                                name="date_of_first_payment">
                         </div>
 
                         {{-- draft_NO --}}
@@ -336,7 +321,7 @@
                                 id="draft_NO"
                                 name="draft_NO"
                                 min="0"
-                                value="{{ old('draft_NO') }}">
+                                value="4">
 
                             @error('draft_NO')
                             <span class="text-danger">{{$message}}</span>
@@ -353,7 +338,7 @@
                                 id="agency_NO"
                                 name="agency_NO"
                                 min="0"
-                                value="{{ old('agency_NO') }}">
+                                value="4">
 
                             @error('agency_NO')
                             <span class="text-danger">{{$message}}</span>
@@ -369,7 +354,7 @@
                                 id="endorsement_NO"
                                 name="endorsement_NO"
                                 min="0"
-                                value="{{ old('endorsement_NO') }}">
+                                value="1">
 
                             @error('endorsement_NO')
                             <span class="text-danger">{{$message}}</span>
@@ -385,7 +370,7 @@
                                 id="receipt_NO"
                                 name="receipt_NO"
                                 min="0"
-                                value="{{ old('receipt_NO') }}">
+                                value="1">
 
                             @error('receipt_NO')
                             <span class="text-danger">{{$message}}</span>
@@ -435,11 +420,17 @@
                         },
                         success: function(res) {
                             if (res.status === 'success') {
-                                $('#ID_NO').val(res.customer.ID_NO);
-                                $('#phone_NO').val(res.customer.phone_NO);
-                                $('#region').val(res.customer.region);
-                                $('#address').val(res.customer.address);
-                                $('#account').val(res.customer.account);
+                                $('#ID_NO').val(res.customer[0].ID_NO);
+                                $('#phone_NO').val(res.customer[0].phone_NO);
+                                $('#region').val(res.customer[0].region);
+                                $('#address').val(res.customer[0].address);
+                                $('#account').val(res.customer[0].account);
+                                $('#transactions_type').val(res.customer[0].transactions[0].transactions_type);
+                                $('#transaction_amount').val(res.customer[0].transactions[0].transaction_amount);
+                                $('#first_payment').val(res.customer[0].transactions[0].first_payment);
+                                $('#transaction_rest').val(res.customer[0].transactions[0].transaction_rest);
+                                $('#monthly_payment').val(res.customer[0].transactions[0].monthly_payment);
+                                $('#date_of_first_payment').val(res.customer[0].transactions[0].date_of_first_payment);
                             }
                         },
                     });
