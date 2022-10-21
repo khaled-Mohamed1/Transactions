@@ -57,9 +57,9 @@ class TransactionController extends Controller
     public function create()
     {
         if(auth()->user()->role_id == 1){
-            $customers = Customer::where('status','=','مقبول')->where('status','=','متعسر')->latest()->get();
+            $customers = Customer::where('status','=','مقبول')->orWhere('status','=','متعسر')->latest()->get();
         }else{
-            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','=','مقبول')->where('status','=','متعسر')->latest()->get();
+            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','=','مقبول')->orWhere('status','=','متعسر')->latest()->get();
         }
         return view('transactions.create',['customers' => $customers]);
     }
