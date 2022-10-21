@@ -300,7 +300,7 @@ class TransactionController extends Controller
                 'date_of_first_payment'       => $request->date_of_first_payment,
             ]);
 
-            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات'){
+            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات' || $request->transactions_type == 'قروض'){
                 $status = 'مكتمل';
             }else{
                 $status = 'تم التوقيع';
