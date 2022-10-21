@@ -55,23 +55,23 @@
                                     <td>{{ $user->roles ? $user->roles->pluck('name')->first() : 'N/A' }}</td>
                                     <td>
                                         @if ($user->status == 0)
-                                            <span class="badge badge-danger">Inactive</span>
+                                            <span class="badge badge-danger">غير نشط</span>
                                         @elseif ($user->status == 1)
-                                            <span class="badge badge-success">Active</span>
+                                            <span class="badge badge-success">نشط</span>
                                         @endif
                                     </td>
                                     <td style="display: flex">
-                                        @if ($user->status == 0)
-                                            <a href="{{ route('users.status', ['user_id' => $user->id, 'status' => 1]) }}"
-                                                class="btn btn-success m-2">
-                                                <i class="fa fa-check"></i>
-                                            </a>
-                                        @elseif ($user->status == 1)
-                                            <a href="{{ route('users.status', ['user_id' => $user->id, 'status' => 0]) }}"
-                                                class="btn btn-danger m-2">
-                                                <i class="fa fa-ban"></i>
-                                            </a>
-                                        @endif
+{{--                                        @if ($user->status == 0)--}}
+{{--                                            <a href="{{ route('users.status', ['user_id' => $user->id, 'status' => 1]) }}"--}}
+{{--                                                class="btn btn-success m-2">--}}
+{{--                                                <i class="fa fa-check"></i>--}}
+{{--                                            </a>--}}
+{{--                                        @elseif ($user->status == 1)--}}
+{{--                                            <a href="{{ route('users.status', ['user_id' => $user->id, 'status' => 0]) }}"--}}
+{{--                                                class="btn btn-danger m-2">--}}
+{{--                                                <i class="fa fa-ban"></i>--}}
+{{--                                            </a>--}}
+{{--                                        @endif--}}
                                         <a href="{{ route('users.edit', ['user' => $user->id]) }}"
                                             class="btn btn-primary m-2">
                                             <i class="fa fa-pen"></i>

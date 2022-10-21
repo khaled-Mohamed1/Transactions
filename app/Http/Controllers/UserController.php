@@ -88,7 +88,7 @@ class UserController extends Controller
                 'mobile_number' => $request->mobile_number,
                 'role_id'       => $request->role_id,
                 'status'        => $request->status,
-                'password'      => Hash::make($request->first_name.'1234')
+                'password'      => Hash::make($request->password)
             ]);
 
             // Delete Any Existing Role

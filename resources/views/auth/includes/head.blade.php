@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{config('app.name', 'Laravel')}} | @yield('title')</title>
+    <title>{{config('app.name', 'معاملات')}} | @yield('title')</title>
 
     {{-- ICON --}}
     <link rel="shortcut icon" type="image/jpg" href="{{ asset('images/icon.png') }}"/>
