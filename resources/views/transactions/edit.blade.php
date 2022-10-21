@@ -272,13 +272,15 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user  @error('transaction_amount') is-invalid @enderror"
                                 id="exampletransaction_amount"
                                 name="transaction_amount"
                                 min="0"
                                 value="{{ $transaction->transaction_amount }}">
+                            @error('transaction_amount')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- first_payment --}}
@@ -287,11 +289,14 @@
                             <input
                                 disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user  @error('first_payment') is-invalid @enderror"
                                 id="examplefirst_payment"
                                 name="first_payment"
                                 min="0"
                                 value="{{ $transaction->first_payment }}">
+                            @error('first_payment')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- transaction_rest --}}
@@ -300,11 +305,14 @@
                             <input
                                 disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user  @error('transaction_rest') is-invalid @enderror"
                                 id="exampletransaction_rest"
                                 name="transaction_rest"
                                 min="0"
                                 value="{{ $transaction->transaction_rest }}">
+                            @error('transaction_rest')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- monthly_payment --}}
@@ -313,11 +321,14 @@
                             <input
                                 disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-use  @error('monthly_payment') is-invalid @enderror"
                                 id="examplemonthly_payment"
                                 name="monthly_payment"
                                 min="0"
                                 value="{{ $transaction->monthly_payment }}">
+                            @error('monthly_payment')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- date_of_first_payment --}}
@@ -326,10 +337,13 @@
                             <input
                                 disabled
                                 type="date"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user  @error('date_of_first_payment') is-invalid @enderror"
                                 id="exampledate_of_first_payment"
                                 name="date_of_first_payment"
                                 value="{{ $transaction->date_of_first_payment }}">
+                            @error('date_of_first_payment')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- draft_NO --}}

@@ -98,13 +98,18 @@
 
                         {{-- transactions_type --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>نوع المعاملة </label>
-                            <input
-                                disabled
-                                type="text"
-                                class="form-control form-control-user"
-                                id="transactions_type"
-                                name="transactions_type">
+                            <label>نوع المعاملة <span style="color:red;">*</span></label>
+                            <select name="transactions_type" disabled class="form-control form-control-user @error('transactions_type') is-invalid @enderror"
+                                    style="height: 40px">
+                                <option  disabled selected>اختر...</option>
+                                <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>
+                                <option value="استقطاع" {{ old('transactions_type') == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
+                                <option value="شيكات" {{ old('transactions_type') == 'شيكات' ? 'selected' : '' }}>شيكات</option>
+                                <option value="قروض" {{ old('transactions_type') == 'قروض' ? 'selected' : '' }}>قروض</option>
+                            </select>
+                            @error('transactions_type')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- reserve_phone_NO --}}
@@ -259,57 +264,69 @@
 
                         {{-- transaction_amount --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label>قيمة المعاملة </label>
+                            <label>قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
                                 disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="transaction_amount"
                                 name="transaction_amount">
+
+                            @error('transaction_amount')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- first_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>أول دفعة </label>
+                            <label>أول دفعة <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="first_payment"
                                 name="first_payment">
+                            @error('first_payment')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- transaction_rest --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label>باقي قيمة المعاملة </label>
+                            <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="transaction_rest"
                                 name="transaction_rest">
+                            @error('transaction_rest')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- monthly_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>قيمة الدفعة الشهرية </label>
+                            <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="number"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="monthly_payment"
                                 name="monthly_payment">
+                            @error('monthly_payment')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- date_of_first_payment --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label>تاريخ أول دفعة </label>
+                            <label>تاريخ أول دفعة <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="date"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="date_of_first_payment"
                                 name="date_of_first_payment">
+                            @error('date_of_first_payment')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- draft_NO --}}

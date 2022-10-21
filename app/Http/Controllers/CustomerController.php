@@ -228,22 +228,22 @@ class CustomerController extends Controller
             ]);
 
 
-            $transaction = Transaction::create([
-                'transaction_NO' => Helper::IDGenerator(new Transaction(), 'transaction_NO', 5,5),
-                'user_id' => auth()->user()->id,
-                'customer_id'    => $customer->id,
-            ]);
-
-            $test = 1;
-
-            Transaction::where('id',$transaction->id)->update([
-                'transactions_type'     => $request->transactions_type,
-                'transaction_amount'         => $request->transaction_amount,
-                'first_payment' => $request->first_payment,
-                'transaction_rest'       => $request->transaction_rest,
-                'monthly_payment'       => $request->monthly_payment,
-                'date_of_first_payment'       => $request->date_of_first_payment,
-            ]);
+//            $transaction = Transaction::create([
+//                'transaction_NO' => Helper::IDGenerator(new Transaction(), 'transaction_NO', 5,5),
+//                'user_id' => auth()->user()->id,
+//                'customer_id'    => $customer->id,
+//            ]);
+//
+//            $test = 1;
+//
+//            Transaction::where('id',$transaction->id)->update([
+//                'transactions_type'     => $request->transactions_type,
+//                'transaction_amount'         => $request->transaction_amount,
+//                'first_payment' => $request->first_payment,
+//                'transaction_rest'       => $request->transaction_rest,
+//                'monthly_payment'       => $request->monthly_payment,
+//                'date_of_first_payment'       => $request->date_of_first_payment,
+//            ]);
 
 //            $customer_st = Customer::find($customer->id);
 //            if($customer_st->status == 'مقبول'){

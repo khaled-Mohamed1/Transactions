@@ -74,6 +74,7 @@ class TransactionController extends Controller
     {
         // Validations
         $request->validate([
+
                 'reserve_phone_NO' => 'required|numeric|digits:10',
                 'date_of_birth'       =>  'required|date',
                 'marital_status'       =>  'required',
@@ -83,6 +84,12 @@ class TransactionController extends Controller
                 'bank_name'   =>  'required_if:transactions_type,استقطاع',
                 'bank_branch'   =>  'required_if:transactions_type,استقطاع',
                 'bank_account_NO'   =>  'required_if:transactions_type,استقطاع',
+                'transactions_type'     => 'required',
+                'transaction_amount'     => 'required',
+                'first_payment'     => 'required',
+                'transaction_rest'     => 'required',
+                'monthly_payment'     => 'required',
+                'date_of_first_payment'     => 'required',
                 'draft_NO'   =>  'required',
                 'agency_NO'   =>  'required',
                 'endorsement_NO'   =>  'required',
@@ -105,6 +112,12 @@ class TransactionController extends Controller
                 'agency_NO.required' => 'يجب ادخال عدد الوكالات',
                 'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
                 'receipt_NO.required' => 'يجب ادخال عدد الوصل',
+                'transactions_type.required' => 'يجب ادخال نوع المعاملة',
+                'transaction_amount.required' => 'يجب ادخال قيمة المعاملة',
+                'first_payment.required' => 'يجب ادخال الدفعة الأولى',
+                'transaction_rest.required' => 'يجب ادخال باقي قيمة المعاملة',
+                'monthly_payment.required' => 'يجب ادخال قيمة دفعة المعاملة',
+                'date_of_first_payment.required' => 'يجب ادخال تاريخ دفعة أول دفعة',
             ]);
 
         DB::beginTransaction();
@@ -112,14 +125,22 @@ class TransactionController extends Controller
 
             // Store Data
             $transaction = Transaction::create([
+                'transaction_NO' => Helper::IDGenerator(new Transaction(), 'transaction_NO', 5,5),
                 'user_id' => auth()->user()->id,
+                'customer_id'    => $request->customer_id,
+                'transactions_type'     => $request->transactions_type,
+                'transaction_amount'         => $request->transaction_amount,
+                'first_payment' => $request->first_payment,
+                'transaction_rest'       => $request->transaction_rest,
+                'monthly_payment'       => $request->monthly_payment,
+                'date_of_first_payment'       => $request->date_of_first_payment,
                 'draft_NO'       => $request->draft_NO,
                 'agency_NO'       => $request->agency_NO,
                 'endorsement_NO'       => $request->endorsement_NO,
                 'receipt_NO'       => $request->receipt_NO,
             ]);
 
-            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات'){
+            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات' || $request->transactions_type == 'قروض'){
                 $status = 'مكتمل';
             }else{
                 $status = 'تم التوقيع';
@@ -221,7 +242,12 @@ class TransactionController extends Controller
                 'agency_NO'   =>  'required',
                 'endorsement_NO'   =>  'required',
                 'receipt_NO'   =>  'required',
-
+                'transactions_type'     => 'required',
+                'transaction_amount'     => 'required',
+                'first_payment'     => 'required',
+                'transaction_rest'     => 'required',
+                'monthly_payment'     => 'required',
+                'date_of_first_payment'     => 'required',
             ]
             ,[
                 'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
@@ -240,6 +266,12 @@ class TransactionController extends Controller
                 'agency_NO.required' => 'يجب ادخال عدد الوكالات',
                 'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
                 'receipt_NO.required' => 'يجب ادخال عدد الوصل',
+                'transactions_type.required' => 'يجب ادخال نوع المعاملة',
+                'transaction_amount.required' => 'يجب ادخال قيمة المعاملة',
+                'first_payment.required' => 'يجب ادخال الدفعة الأولى',
+                'transaction_rest.required' => 'يجب ادخال باقي قيمة المعاملة',
+                'monthly_payment.required' => 'يجب ادخال قيمة دفعة المعاملة',
+                'date_of_first_payment.required' => 'يجب ادخال تاريخ دفعة أول دفعة',
             ]);
 
         DB::beginTransaction();
@@ -261,6 +293,12 @@ class TransactionController extends Controller
                 'agency_NO'       => $request->agency_NO,
                 'endorsement_NO'       => $request->endorsement_NO,
                 'receipt_NO'       => $request->receipt_NO,
+                'transactions_type'     => $request->transactions_type,
+                'transaction_amount'         => $request->transaction_amount,
+                'first_payment' => $request->first_payment,
+                'transaction_rest'       => $request->transaction_rest,
+                'monthly_payment'       => $request->monthly_payment,
+                'date_of_first_payment'       => $request->date_of_first_payment,
             ]);
 
             if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات'){
