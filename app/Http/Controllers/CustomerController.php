@@ -234,6 +234,8 @@ class CustomerController extends Controller
                 'customer_id'    => $customer->id,
             ]);
 
+            $test = 1;
+
             Transaction::where('id',$transaction->id)->update([
                 'transactions_type'     => $request->transactions_type,
                 'transaction_amount'         => $request->transaction_amount,
