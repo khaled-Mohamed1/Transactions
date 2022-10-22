@@ -7,7 +7,6 @@ use App\Exports\CustomersExport;
 use App\Helpers\Helper;
 use App\Imports\CustomerImport;
 use App\Models\Customer;
-use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -57,7 +56,7 @@ class CustomerController extends Controller
     public function indexTask()
     {
         $users = User::where('role_id','!=','1')->latest()->get();
-        $customers = Customer::orderBy('customer_NO','desc')->where('status','=','متعسر')->orWhere('status','=','مقبول')
+        $customers = Customer::orderBy('customer_NO','desc')->where('status','=','متعسر')->orWhere('status','=','قيد التوقيع')
                             ->paginate(100);
         return view('customers.tasks', ['customers' => $customers,'users'=>$users]);
     }
@@ -217,13 +216,18 @@ class CustomerController extends Controller
         try {
 
             // Store Data
+            if($request->status == 'مقبول'){
+                $status = 'قيد التوقيع';
+            }else{
+                $status = 'مرفوض';
+            }
             $customer_updated = Customer::whereId($customer->id)->update([
                 'full_name'    => $request->full_name,
                 'ID_NO'     => $request->ID_NO,
                 'phone_NO'         => $request->phone_NO,
                 'region' => $request->region,
                 'address'       => $request->address,
-                'status' => $request->status,
+                'status' => $status,
                 'account' => $request->account
             ]);
 

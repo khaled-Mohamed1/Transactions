@@ -56,9 +56,9 @@ class TransactionController extends Controller
     public function create()
     {
         if(auth()->user()->role_id == 1){
-            $customers = Customer::where('status','=','مقبول')->orWhere('status','=','متعسر')->latest()->get();
+            $customers = Customer::where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
         }else{
-            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','=','مقبول')->orWhere('status','=','متعسر')->latest()->get();
+            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
         }
         return view('transactions.create',['customers' => $customers]);
     }
@@ -306,11 +306,11 @@ class TransactionController extends Controller
                 'date_of_first_payment'       => $request->date_of_first_payment,
             ]);
 
-            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات' || $request->transactions_type == 'قروض'){
-                $status = 'مكتمل';
-            }else{
-                $status = 'تم التوقيع';
-            }
+//            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات' || $request->transactions_type == 'قروض'){
+//                $status = 'مكتمل';
+//            }else{
+//                $status = 'تم التوقيع';
+//            }
 
             // Store Data
 
@@ -324,7 +324,7 @@ class TransactionController extends Controller
                 'bank_name'       => $request->bank_name,
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
-                'status'       => $status,
+                'status'       => 'متعسر',
             ]);
 
 
@@ -359,7 +359,7 @@ class TransactionController extends Controller
             Transaction::whereId($transaction->id)->delete();
 
             DB::commit();
-            return redirect()->route('transactions.index')->with('success', 'تم حذف الصلاحية');
+            return redirect()->route('transactions.index')->with('success', 'تم حذف المعاملة');
 
         } catch (\Throwable $th) {
             DB::rollBack();
