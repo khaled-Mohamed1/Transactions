@@ -140,14 +140,14 @@
                             <label>رقم البديل </label>
                             <input
                                 type="text"
-                                class="form-control form-control-user @error('reserve_phone_NO') is-invalid @enderror"
+                                class="form-control form-control-user"
                                 id="examplereserve_phone_NO"
                                 name="reserve_phone_NO"
                                 value="{{ old('reserve_phone_NO') }}">
 
-                            @error('reserve_phone_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+{{--                            @error('reserve_phone_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
                         </div>
 
                         {{-- date_of_birth --}}
