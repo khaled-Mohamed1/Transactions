@@ -55,7 +55,7 @@
                         </div>
 
                         {{-- phone type --}}
-                        <div class="col-sm-1 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>نوع الجوال </label>
                             <select name="phone_type" id="phone_type" class="form-control form-control-user">
                                 <option selected disabled value="">اختار...</option>
@@ -65,7 +65,7 @@
                         </div>
 
                         {{-- phone_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>رقم الجوال</label>
                             <input
                                 disabled
@@ -77,7 +77,7 @@
                         </div>
 
                         {{-- region --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>المنطقة</label>
                             <input
                                 disabled
@@ -89,7 +89,7 @@
                         </div>
 
                         {{-- address --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>العنوان</label>
                             <input
                                 disabled
@@ -101,7 +101,7 @@
                         </div>
 
                         {{-- account --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>الحساب</label>
                             <input
                                 disabled
