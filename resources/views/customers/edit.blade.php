@@ -110,13 +110,6 @@
                             <label>الحالة </label>
                             <select name="status" id="status" class="form-control form-control-user h-50 @error('status') is-invalid @enderror"
                                     style="height: 40px">
-                                @if($customer->status == 'مكتمل')
-                                    <option value="{{$customer->status}}">{{$customer->status}}</option>
-                                @else
-                                    <option value="{{$customer->status}}">{{$customer->status}}</option>
-                                @endif
-                                <option value="جديد" {{old('status') ? ((old('status') == 'جديد') ? 'selected' : '')
-                                                        : (($customer->status == 'جديد') ? 'selected' : '')}}>جديد</option>
                                 <option value="مقبول" {{old('status') ? ((old('status') == 'مقبول') ? 'selected' : '')
                                                         : (($customer->status == 'مقبول') ? 'selected' : '')}}>مقبول</option>
                                 <option value="مرفوض" {{old('status') ? ((old('status') == 'مرفوض') ? 'selected' : '')
