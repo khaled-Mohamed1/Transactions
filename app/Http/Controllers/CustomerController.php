@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AdverserExport;
+use App\Exports\AllCustomersExport;
 use App\Exports\CustomersExport;
 use App\Helpers\Helper;
 use App\Imports\CustomerImport;
@@ -45,6 +46,12 @@ class CustomerController extends Controller
     {
         $customers = Customer::orderBy('customer_NO','desc')->where('status', '=','جديد')->paginate(100);
         return view('customers.index', ['customers' => $customers]);
+    }
+
+    public function indexCustomers()
+    {
+        $customers = Customer::orderBy('customer_NO','desc')->paginate(100);
+        return view('customers.customers', ['customers' => $customers]);
     }
 
     public function indexAdverser()
@@ -94,7 +101,7 @@ class CustomerController extends Controller
         $request->validate([
                 'full_name'    => 'required',
                 'ID_NO'     => 'required|numeric|digits:9|unique:customers',
-                'phone_NO' => 'required|numeric|digits:10|unique:customers',
+                'phone_NO' => 'required|numeric|digits:10',
                 'region'       =>  'required',
                 'address'       =>  'required',
             ],[
@@ -104,7 +111,6 @@ class CustomerController extends Controller
                 'ID_NO.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
                 'ID_NO.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
                 'phone_NO.required' => 'يجب ادخال رقم جوال العميل',
-                'phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
                 'phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
@@ -180,7 +186,7 @@ class CustomerController extends Controller
             [
                 'full_name'    => 'required',
                 'ID_NO'     => 'required|numeric|digits:9|'.Rule::unique('customers')->ignore($customer->id),
-                'phone_NO' => 'required|numeric|digits:10|',
+                'phone_NO' => 'required|numeric|digits:10',
                 'region'       =>  'required',
                 'address'       =>  'required',
 //                'transactions_type'     => 'required_if:status,مقبول',
@@ -198,7 +204,6 @@ class CustomerController extends Controller
                 'ID_NO.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
                 'ID_NO.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
                 'phone_NO.required' => 'يجب ادخال رقم جوال العميل',
-                'phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
                 'phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
@@ -317,6 +322,11 @@ class CustomerController extends Controller
     public function exportAdverser(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return Excel::download(new AdverserExport(), 'adverser.xlsx');
+    }
+
+    public function exportCustomers(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        return Excel::download(new AllCustomersExport(), 'AllCustomers.xlsx');
     }
 
     public function search(Request $request)

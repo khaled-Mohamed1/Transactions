@@ -13,7 +13,8 @@ class CustomersExport implements FromView
     {
 
         return view('exports.customers', [
-            'customers' => Customer::orderBy('customer_NO','desc')->where('status', '!=','مقبول')->get()
+            'customers' => Customer::orderBy('customer_NO','desc')->where('status', '!=','جديد')
+                ->where('status', '!=','مرفوض')->get()
         ]);
     }
 }

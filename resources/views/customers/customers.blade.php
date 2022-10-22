@@ -15,7 +15,7 @@
 {{--                    </a>--}}
 {{--                </div>--}}
                 <div class="col-md-12">
-                    <a href="{{ route('customers.export') }}" class="btn btn-sm btn-success">
+                    <a href="{{ route('customers.export.customers') }}" class="btn btn-sm btn-success">
                         تصدير اكسل <i class="fas fa-check"></i>
                     </a>
                 </div>

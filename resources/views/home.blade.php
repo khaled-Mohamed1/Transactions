@@ -8,8 +8,20 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">لوحة التحكم</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> انشاء تقرير</a>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary">
+                    اضافة جديد <i class="fas fa-plus"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> انشاء تقرير</a>
+            </div>
+
+        </div>
+
     </div>
 
     <div class="row">

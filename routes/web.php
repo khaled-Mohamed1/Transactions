@@ -62,6 +62,7 @@ Route::middleware('auth')->prefix('users')->name('users.')->group(function(){
 // Customer
 Route::middleware('auth')->prefix('customers')->name('customers.')->group(function(){
     Route::get('/', [CustomerController::class, 'index'])->name('index');
+    Route::get('/customers', [CustomerController::class, 'indexCustomers'])->name('index.customers');
     Route::get('/create', [CustomerController::class, 'create'])->name('create');
     Route::post('/store', [CustomerController::class, 'store'])->name('store');
     Route::get('/edit/{customer}', [CustomerController::class, 'edit'])->name('edit');
@@ -87,6 +88,7 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     //export
     Route::get('export/', [CustomerController::class, 'export'])->name('export');
     Route::get('export/adverser', [CustomerController::class, 'exportAdverser'])->name('export.adverser');
+    Route::get('export/customers', [CustomerController::class, 'exportCustomers'])->name('export.customers');
 
 });
 

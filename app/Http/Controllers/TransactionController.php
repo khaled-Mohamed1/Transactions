@@ -74,7 +74,13 @@ class TransactionController extends Controller
         // Validations
         $request->validate([
 
-                'reserve_phone_NO' => 'numeric|digits:10',
+                'full_name'    => 'required',
+                'ID_NO'     => 'required|numeric|digits:9|'.Rule::unique('customers')->ignore($request->customer_id),
+                'phone_NO' => 'required|numeric|digits:10',
+                'region'       =>  'required',
+                'address'       =>  'required',
+
+//                'reserve_phone_NO' => 'numeric|digits:10',
                 'date_of_birth'       =>  'required|date',
                 'marital_status'       =>  'required',
                 'number_of_children'       =>  'required',
@@ -83,22 +89,35 @@ class TransactionController extends Controller
                 'bank_name'   =>  'required_if:transactions_type,استقطاع',
                 'bank_branch'   =>  'required_if:transactions_type,استقطاع',
                 'bank_account_NO'   =>  'required_if:transactions_type,استقطاع',
+
                 'transactions_type'     => 'required',
                 'transaction_amount'     => 'required',
                 'first_payment'     => 'required',
                 'transaction_rest'     => 'required',
                 'monthly_payment'     => 'required',
                 'date_of_first_payment'     => 'required',
+
                 'draft_NO'   =>  'required',
                 'agency_NO'   =>  'required',
                 'endorsement_NO'   =>  'required',
                 'receipt_NO'   =>  'required',
             ]
             ,[
+
+                'full_name.required' => 'يجب ادخال اسم العميل',
+                'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
+                'ID_NO.unique' => 'تم ادخال رقم الهوية من قبل',
+                'ID_NO.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
+                'ID_NO.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
+                'phone_NO.required' => 'يجب ادخال رقم جوال العميل',
+                'phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
+                'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
+                'region.required' => 'يجب ادخال منطفة السكن',
+                'address.required' => 'يجب ادخال العنوان بالتفصيل',
+
 //                'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
-                'reserve_phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
-                'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
-                'reserve_phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
+//                'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
+//                'reserve_phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
                 'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
                 'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
@@ -111,13 +130,15 @@ class TransactionController extends Controller
                 'agency_NO.required' => 'يجب ادخال عدد الوكالات',
                 'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
                 'receipt_NO.required' => 'يجب ادخال عدد الوصل',
+
                 'transactions_type.required' => 'يجب ادخال نوع المعاملة',
                 'transaction_amount.required' => 'يجب ادخال قيمة المعاملة',
                 'first_payment.required' => 'يجب ادخال الدفعة الأولى',
                 'transaction_rest.required' => 'يجب ادخال باقي قيمة المعاملة',
                 'monthly_payment.required' => 'يجب ادخال قيمة دفعة المعاملة',
                 'date_of_first_payment.required' => 'يجب ادخال تاريخ دفعة أول دفعة',
-            ]);
+            ]
+        );
 
         DB::beginTransaction();
         try {
@@ -138,6 +159,12 @@ class TransactionController extends Controller
                 'endorsement_NO'       => $request->endorsement_NO,
                 'receipt_NO'       => $request->receipt_NO,
             ]);
+
+            if($transaction->transaction_NO == 500000){
+                $transaction->transaction_NO = $transaction->transaction_NO + 1;
+                $transaction->save();
+            }
+
 
 //            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات' || $request->transactions_type == 'قروض'){
 //                $status = 'مكتمل';

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('region')->nullable();
             $table->string('address')->nullable();
             $table->string('status')->default('جديد');
-            $table->string('reserve_phone_NO')->nullable()->unique();
+            $table->string('reserve_phone_NO')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('marital_status')->nullable();
             $table->string('number_of_children')->nullable();
@@ -32,9 +32,9 @@ return new class extends Migration
             $table->string('bank_branch')->nullable();
             $table->string('bank_account_NO')->nullable();
             $table->bigInteger('created_by')->unsigned();
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users');
             $table->bigInteger('updated_by')->unsigned()->nullable();
-            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->float('account')->default('0');
             $table->timestamps();
         });

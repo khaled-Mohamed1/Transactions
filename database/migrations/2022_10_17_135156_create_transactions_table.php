@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->text('transaction_NO');
             $table->bigInteger('customer_id')->unsigned();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('transactions_type')->nullable();
             $table->float('transaction_amount')->nullable();
             $table->float('first_payment')->nullable();

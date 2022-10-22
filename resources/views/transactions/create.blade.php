@@ -47,20 +47,26 @@
                             <input
                                 {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('full_name') is-invalid @enderror"
                                 id="full_name"
                                 name="full_name">
+                            @error('full_name')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
-                        {{-- ID_NO --}}
+                        {{-- customer_NO --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>رقم الإستدلالي</label>
                             <input
                                 disabled
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('customer_NO') is-invalid @enderror"
                                 id="customer_NO"
                                 name="customer_NO">
+                            @error('customer_NO')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- ID_NO --}}
@@ -69,9 +75,12 @@
                             <input
                                 {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('ID_NO') is-invalid @enderror"
                                 id="ID_NO"
                                 name="ID_NO">
+                            @error('ID_NO')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
 
@@ -81,9 +90,12 @@
                             <input
 {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('phone_NO') is-invalid @enderror"
                                 id="phone_NO"
                                 name="phone_NO">
+                            @error('phone_NO')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- region --}}
@@ -92,9 +104,12 @@
                             <input
 {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('region') is-invalid @enderror"
                                 id="region"
                                 name="region">
+                            @error('region')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- address --}}
@@ -103,9 +118,12 @@
                             <input
 {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('address') is-invalid @enderror"
                                 id="address"
                                 name="address">
+                            @error('address')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- account --}}
@@ -114,9 +132,12 @@
                             <input
 {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('account') is-invalid @enderror"
                                 id="account"
                                 name="account">
+                            @error('account')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- transactions_type --}}
