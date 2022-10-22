@@ -74,7 +74,7 @@ class TransactionController extends Controller
         // Validations
         $request->validate([
 
-                'reserve_phone_NO' => 'required|numeric|digits:10',
+                'reserve_phone_NO' => 'numeric|digits:10',
                 'date_of_birth'       =>  'required|date',
                 'marital_status'       =>  'required',
                 'number_of_children'       =>  'required',
@@ -95,7 +95,7 @@ class TransactionController extends Controller
                 'receipt_NO'   =>  'required',
             ]
             ,[
-                'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
+//                'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
                 'reserve_phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
                 'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
                 'reserve_phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
@@ -234,7 +234,7 @@ class TransactionController extends Controller
 
         $customer = Customer::FindOrFail($request->customer_id);
         $request->validate([
-                'reserve_phone_NO' => 'required|numeric|digits:10',
+                'reserve_phone_NO' => 'numeric|digits:10',
                 'date_of_birth'       =>  'required|date',
                 'marital_status'       =>  'required',
                 'number_of_children'       =>  'required',
@@ -255,7 +255,7 @@ class TransactionController extends Controller
                 'date_of_first_payment'     => 'required',
             ]
             ,[
-                'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
+//                'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
                 'reserve_phone_NO.unique' => 'تم ادخال رقم جوال من قبل',
                 'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
                 'reserve_phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',

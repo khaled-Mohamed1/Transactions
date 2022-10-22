@@ -75,19 +75,8 @@
                         </div>
 
 
-                        {{-- phone type --}}
-                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
-                            <label>نوع الجوال </label>
-                            <select name="phone_type" id="phone_type" class="form-control form-control-user"
-                            style="height: 40px">
-                                <option selected disabled value="">اختار...</option>
-                                <option value="جوال" {{ old('phone_type') == 'جوال' ? 'selected' : '' }}>جوال</option>
-                                <option value="وطنية" {{ old('phone_type') == 'وطنية' ? 'selected' : '' }}>وطنية</option>
-                            </select>
-                        </div>
-
                         {{-- phone_NO --}}
-                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>رقم الجوال</label>
                             <input
 {{--                                disabled--}}
@@ -98,7 +87,7 @@
                         </div>
 
                         {{-- region --}}
-                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>المنطقة</label>
                             <input
 {{--                                disabled--}}
@@ -148,7 +137,7 @@
 
                         {{-- reserve_phone_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>رقم البديل <span style="color:red;">*</span></label>
+                            <label>رقم البديل </label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('reserve_phone_NO') is-invalid @enderror"
@@ -489,14 +478,6 @@
                     });
                 });
             });
-
-            $("#phone_type").on("change", function() {
-                if ($(this).val() == 'جوال') {
-                    $("#phone_NO").val('059')
-                } else {
-                    $("#phone_NO").val('056');
-                }
-            })
 
         });
     </script>
