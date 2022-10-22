@@ -59,7 +59,8 @@
                         {{-- phone type --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>نوع الجوال <span style="color:red;">*</span></label>
-                            <select name="phone_type" id="phone_type" class="form-control form-control-user">
+                            <select name="phone_type" id="phone_type" class="form-control form-control-user"
+                                    style="height: 40px">
                                 <option selected disabled value="">اختار...</option>
                                 <option value="جوال" {{ old('phone_type') == 'جوال' ? 'selected' : '' }}>جوال</option>
                                 <option value="وطنية" {{ old('phone_type') == 'وطنية' ? 'selected' : '' }}>وطنية</option>
