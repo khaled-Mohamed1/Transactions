@@ -139,16 +139,22 @@ class TransactionController extends Controller
                 'receipt_NO'       => $request->receipt_NO,
             ]);
 
-            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات' || $request->transactions_type == 'قروض'){
-                $status = 'مكتمل';
-            }else{
-                $status = 'تم التوقيع';
-            }
+//            if($request->transactions_type == 'ودي' || $request->transactions_type == 'شيكات' || $request->transactions_type == 'قروض'){
+//                $status = 'مكتمل';
+//            }else{
+//                $status = 'تم التوقيع';
+//            }
 
             // Store Data
             $customer = Customer::findOrFail($request->customer_id);
 
             $customer->update([
+                'full_name'    => $request->full_name,
+                'ID_NO'     => $request->ID_NO,
+                'phone_NO'         => $request->phone_NO,
+                'region' => $request->region,
+                'address'       => $request->address,
+                'account' => $request->account,
                 'reserve_phone_NO'    => $request->reserve_phone_NO,
                 'date_of_birth'     => $request->date_of_birth,
                 'marital_status'         => $request->marital_status,
@@ -158,7 +164,7 @@ class TransactionController extends Controller
                 'bank_name'       => $request->bank_name,
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
-                'status'       => $status,
+                'status'       => 'متعسر',
             ]);
 
             // Store Data
