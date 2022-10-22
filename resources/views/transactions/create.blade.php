@@ -41,11 +41,22 @@
                             @enderror
                         </div>
 
+                        {{-- full_name --}}
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>الأسم كامل</label>
+                            <input
+                                {{--                                disabled--}}
+                                type="text"
+                                class="form-control form-control-user"
+                                id="full_name"
+                                name="full_name">
+                        </div>
+
                         {{-- ID_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>رقم الهوية</label>
                             <input
-                                disabled
+{{--                                disabled--}}
                                 type="text"
                                 class="form-control form-control-user"
                                 id="ID_NO"
@@ -53,10 +64,10 @@
                         </div>
 
                         {{-- phone_NO --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>رقم الجوال</label>
                             <input
-                                disabled
+{{--                                disabled--}}
                                 type="text"
                                 class="form-control form-control-user"
                                 id="phone_NO"
@@ -64,10 +75,10 @@
                         </div>
 
                         {{-- region --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>المنطقة</label>
                             <input
-                                disabled
+{{--                                disabled--}}
                                 type="text"
                                 class="form-control form-control-user"
                                 id="region"
@@ -75,10 +86,10 @@
                         </div>
 
                         {{-- address --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>العنوان</label>
                             <input
-                                disabled
+{{--                                disabled--}}
                                 type="text"
                                 class="form-control form-control-user"
                                 id="address"
@@ -86,10 +97,10 @@
                         </div>
 
                         {{-- account --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>الحساب</label>
                             <input
-                                disabled
+{{--                                disabled--}}
                                 type="text"
                                 class="form-control form-control-user"
                                 id="account"
@@ -438,6 +449,7 @@
                         success: function(res) {
                             if (res.status === 'success') {
                                 $('#ID_NO').val(res.customer[0].ID_NO);
+                                $('#full_name').val(res.customer[0].full_name);
                                 $('#phone_NO').val(res.customer[0].phone_NO);
                                 $('#region').val(res.customer[0].region);
                                 $('#address').val(res.customer[0].address);
