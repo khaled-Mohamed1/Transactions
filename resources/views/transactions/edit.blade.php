@@ -54,8 +54,18 @@
 
                         </div>
 
+                        {{-- phone type --}}
+                        <div class="col-sm-1 mb-3 mt-3 mb-sm-0">
+                            <label>نوع الجوال <span style="color:red;">*</span></label>
+                            <select name="phone_type" id="phone_type" class="form-control form-control-user">
+                                <option selected disabled value="">اختار...</option>
+                                <option value="جوال" {{ old('phone_type') == 'جوال' ? 'selected' : '' }}>جوال</option>
+                                <option value="وطنية" {{ old('phone_type') == 'وطنية' ? 'selected' : '' }}>وطنية</option>
+                            </select>
+                        </div>
+
                         {{-- phone_NO --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>رقم الجوال</label>
                             <input
                                 disabled
@@ -426,4 +436,21 @@
 
 @endsection
 
+@section('scripts')
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $("#phone_type").on("change", function() {
+                if ($(this).val() == 'جوال') {
+                    $("#phone_NO").val('059')
+                } else {
+                    $("#phone_NO").val('056');
+                }
+            })
+        });
+
+    </script>
+
+@endsection
 
