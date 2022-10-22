@@ -75,7 +75,7 @@
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('phone_NO') is-invalid @enderror"
-                                id="examplephone_NO"
+                                id="phone_NO"
                                 name="phone_NO"
                                 value="{{ old('phone_NO') ? old('phone_NO') : $customer->phone_NO}}">
 
