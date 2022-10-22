@@ -53,15 +53,27 @@
                         </div>
 
                         {{-- ID_NO --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
+                            <label>رقم الإستدلالي</label>
+                            <input
+                                disabled
+                                type="text"
+                                class="form-control form-control-user"
+                                id="customer_NO"
+                                name="customer_NO">
+                        </div>
+
+                        {{-- ID_NO --}}
+                        <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>رقم الهوية</label>
                             <input
-{{--                                disabled--}}
+                                {{--                                disabled--}}
                                 type="text"
                                 class="form-control form-control-user"
                                 id="ID_NO"
                                 name="ID_NO">
                         </div>
+
 
                         {{-- phone type --}}
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
@@ -460,6 +472,7 @@
                         success: function(res) {
                             if (res.status === 'success') {
                                 $('#ID_NO').val(res.customer[0].ID_NO);
+                                $('#customer_NO').val(res.customer[0].customer_NO);
                                 $('#full_name').val(res.customer[0].full_name);
                                 $('#phone_NO').val(res.customer[0].phone_NO);
                                 $('#region').val(res.customer[0].region);
