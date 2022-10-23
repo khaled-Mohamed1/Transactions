@@ -24,6 +24,9 @@
 
     </div>
 
+    @include('common.alert')
+
+
     <div class="row">
         <div class="col-md-12">
             <h2 class="text-center mb-3">اهلا وسهلا ب لوحة التحكم!</h2>

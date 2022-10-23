@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->text('customer_NO')->unique()->autoIncrement();
+            $table->text('customer_NO');
             $table->string('full_name')->nullable();
             $table->string('ID_NO')->nullable()->unique();
             $table->string('phone_NO')->nullable();
