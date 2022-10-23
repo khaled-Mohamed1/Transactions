@@ -7,7 +7,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4 border-bottom">
-            <h1 class="h3 mb-0 text-gray-800">ملف العميل</h1>
+            <h1 class="h3 mb-3 text-gray-800">ملف العميل</h1>
         </div>
 
         {{-- Alert Messages --}}
@@ -193,17 +193,46 @@
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th width="5%">#</th>
-                                    <th width="20%">رقم الكمبيالة</th>
-                                    <th width="20%">رقم الكمبيالة</th>
-                                    <th width="20%">رقم الكمبيالة</th>
-                                    <th width="20%">رقم الكمبيالة</th>
-                                    <th width="15%">العمليات</th>
+                                    <th width="10%">رقم الكمبيالة</th>
+                                    <th width="15%">إنشاء بواسطة</th>
+                                    <th width="10%">نوع المستند</th>
+                                    <th width="10%">عدد الأفراد</th>
+                                    <th width="10%">عدد المستند</th>
+                                    <th width="10%">مستند تابع</th>
+                                    <th width="10%">تاريخ الإنشاء</th>
+{{--                                    <th width="15%">العمليات</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td colspan="6">لا يوجد بيانات</td>
+                                @forelse ($drafts as $draft)
+                                    <tr>
+                                        <td>{{ $draft->DraftCustomerDraft->draft_NO }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->UserDraft->full_name }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->document_type }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->customer_qty }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->document_qty }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->document_affiliate }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->created_at }}</td>
+{{--                                        <td style="display: flex">--}}
+                                            {{--                                    <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
+                                            {{--                                       class="btn btn-primary m-2">--}}
+                                            {{--                                        <i class="fa fa-pen"></i>--}}
+                                            {{--                                    </a>--}}
+{{--                                            <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{ $draft->DraftCustomerDraft->id }}">--}}
+{{--                                                <i class="fas fa-trash"></i>--}}
+{{--                                            </a>--}}
+                                            {{--                                                <a class="btn btn-primary m-2" href="#">--}}
+                                            {{--                                                    <i class="fas fa-plus"></i>--}}
+                                            {{--                                                </a>--}}
+{{--                                        </td>--}}
+                                    </tr>
+
+                                @empty
+                                    <tr>
+                                        <td colspan="9">لا يوجد بيانات</td>
+                                    </tr>
+                                @endforelse
                                 </tr>
                                 </tbody>
                             </table>
@@ -237,6 +266,7 @@
                                     <th width="15%">العمليات</th>
                                 </tr>
                                 </thead>
+
                                 <tbody>
                                 <tr>
                                     <td colspan="6">لا يوجد بيانات</td>
@@ -270,4 +300,7 @@
 
 
     </div>
+
+
 @endsection
+

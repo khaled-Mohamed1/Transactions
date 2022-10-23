@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Exports\DraftExport;
 use App\Exports\TransactionExport;
+use App\Helpers\Helper;
+use App\Models\Customer;
+use App\Models\CustomerDraft;
 use App\Models\Draft;
 use App\Models\Transaction;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DraftController extends Controller
@@ -31,29 +35,110 @@ class DraftController extends Controller
      */
     public function index()
     {
-//        $drafts = Draft::latest()->paginate(100);
-        return view('drafts.index');
+        $drafts = Draft::orderBy('draft_NO','desc')->paginate(100);
+        return view('drafts.index',['drafts' => $drafts]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
-        //
+        return view('drafts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+
+
+        foreach($request->customer_id as $key => $data)
+        {
+            if($request->customer_id[$key] == null){
+                return redirect()->back()->with('error','يجب ادخال جميع أرقام الهوايا. ');
+            }
+        }
+
+        foreach($request->customer_id as $key => $data)
+        {
+            $customer_id = Customer::where('ID_NO',$request->customer_id[$key])->get()->first();
+            if($customer_id == null){
+                return redirect()->back()->with('error','رقم الهوية الذي ادخلته غير موجود ' . $request->customer_id[$key]);
+            }
+        }
+
+
+
+        // Validations
+        $validator = $request->validate(
+            [
+                'document_type' => 'required',
+                'customer_qty'  => 'required|numeric',
+                'document_qty'  => 'required|numeric',
+                'document_affiliate'  =>  'required|numeric',
+                'customer_id.*'     => 'required_if:customer_qty,>,0|numeric|digits:9',
+            ],[
+                'document_type.required' => 'يجب ادخال نوع المستند',
+                'customer_qty.required' => 'يجب ادخال عدد الأفراد',
+                'customer_qty.numeric' => 'يجب ادخال عدد الأفراد بالأرقام',
+                'document_qty.required' => 'يجب ادخال عدد المستندات',
+                'document_qty.numeric' => 'يجب ادخال عدد المستندات بالأرقام',
+                'document_affiliate.required' => 'يجب ادخال عدد المستندات التابعة',
+                'document_affiliate.numeric' => 'يجب ادخال عدد المستندات التابعة بالأرقام',
+//                'customer_id.required_if' => 'يجب ادخال رقم هوية العميل',
+                'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
+//                'customer_id.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
+            ]
+        );
+
+        DB::beginTransaction();
+        try {
+
+            // Store Data
+            $draft = Draft::create([
+                'draft_NO' => Helper::IDGenerator(new Draft(), 'draft_NO', 5,3),
+                'user_id'    => auth()->user()->id,
+                'document_type'     => $request->document_type,
+                'customer_qty'         => $request->customer_qty,
+                'document_qty' => $request->document_qty,
+                'document_affiliate'       => $request->document_affiliate,
+            ]);
+
+            $id = $draft->id;
+
+            foreach($request->customer_id as $key => $data)
+            {
+
+                $customer_id = Customer::where('ID_NO',$request->customer_id[$key])->get()->first();
+
+                // Store Data
+                $CustomerDraft = CustomerDraft::create([
+                    'draft_id'     => $id,
+                    'customer_id'         => $customer_id->id,
+                ]);
+            }
+
+            if($draft->draft_NO == 300000){
+                $draft->draft_NO = $draft->draft_NO + 1;
+                $draft->save();
+            }
+
+            // Commit And Redirected To Listing
+            DB::commit();
+            return redirect()->route('drafts.index')->with('success','تم انشاء الكمبيالة بنجاح');
+
+        } catch (\Throwable $th) {
+            // Rollback and return with Error
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', $th->getMessage());
+        }
     }
 
     /**
@@ -94,12 +179,22 @@ class DraftController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Draft  $draft
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Draft $draft)
+    public function delete(Draft $draft)
     {
-        //
-    }
+        DB::beginTransaction();
+        try {
+            // Delete User
+            Draft::whereId($draft->id)->delete();
+
+            DB::commit();
+            return redirect()->route('drafts.index')->with('success', 'تم حذف كمبيالة');
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $th->getMessage());
+        }    }
 
     public function export()
     {

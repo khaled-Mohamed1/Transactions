@@ -38,52 +38,54 @@
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="15%">رقم الكمبيالة</th>
-                            <th width="15%">رقم الكمبيالة</th>
-                            <th width="15%">رقم الكمبيالة</th>
-                            <th width="15%">رقم الكمبيالة</th>
-                            <th width="15%">رقم الكمبيالة</th>
+                            <th width="10%">رقم الكمبيالة</th>
+                            <th width="15%">إنشاء بواسطة</th>
+                            <th width="10%">نوع المستند</th>
+                            <th width="10%">عدد الأفراد</th>
+                            <th width="10%">عدد المستند</th>
+                            <th width="10%">مستند تابع</th>
+                            <th width="20%">رقم الإستدلالي</th>
+                            <th width="10%">تاريخ الإنشاء</th>
                             <th width="15%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
-{{--                        @forelse ($drafts as $draft)--}}
+                        @forelse ($drafts as $draft)
                             <tr>
-                                {{--                                <td>{{ $draft->transaction_NO }}</td>--}}
-                                {{--                                <td>{{ $draft->CustomerTransaction->full_name }}</td>--}}
-                                {{--                                <td>{{ $transaction->transactions_type }}</td>--}}
-                                {{--                                <td>{{ $transaction->transaction_amount }}</td>--}}
-                                {{--                                <td>{{ $transaction->first_payment }}</td>--}}
-                                {{--                                <td>{{ $transaction->transaction_rest }}</td>--}}
-                                {{--                                <td>{{$transaction->created_at}}</td>--}}
-                                {{--                                <td>--}}
-                                {{--                                    @if($transaction->CustomerTransaction->status == 'مقبول' || $transaction->CustomerTransaction->status == 'مكتمل')--}}
-                                {{--                                        <span class="text-success">{{ $transaction->CustomerTransaction->status }}</span>--}}
-                                {{--                                    @elseif($transaction->CustomerTransaction->status == 'مرفوض' || $transaction->CustomerTransaction->status == 'متعسر')--}}
-                                {{--                                        <span class="text-danger">{{ $transaction->CustomerTransaction->status }}</span>--}}
-                                {{--                                    @else--}}
-                                {{--                                        {{ $transaction->CustomerTransaction->status }}--}}
-                                {{--                                    @endif--}}
-                                {{--                                </td>--}}
-                                {{--                                <td style="display: flex">--}}
-                                {{--                                    <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
-                                {{--                                       class="btn btn-primary m-2">--}}
-                                {{--                                        <i class="fa fa-pen"></i>--}}
-                                {{--                                    </a>--}}
-                                {{--                                    <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$transaction->id}}">--}}
-                                {{--                                        <i class="fas fa-trash"></i>--}}
-                                {{--                                    </a>--}}
-                                {{--                                </td>--}}
+                                <td>{{ $draft->draft_NO }}</td>
+                                <td>{{ $draft->UserDraft->full_name }}</td>
+                                <td>{{ $draft->document_type }}</td>
+                                <td>{{ $draft->customer_qty }}</td>
+                                <td>{{ $draft->document_qty }}</td>
+                                <td>{{ $draft->document_affiliate }}</td>
+                                <td>
+                                    @foreach($draft->cusotmerDrafts as $customer)
+                                    <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->DraftCustomer->customer_NO }}</a> -
+                                    @endforeach
+                                </td>
+                                <td>{{$draft->created_at}}</td>
+                                <td style="display: flex">
+{{--                                    <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
+{{--                                       class="btn btn-primary m-2">--}}
+{{--                                        <i class="fa fa-pen"></i>--}}
+{{--                                    </a>--}}
+                                    <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$draft->id}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                    <a class="btn btn-primary m-2" href="#">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </td>
                             </tr>
-{{--                        @empty--}}
+                        @empty
                             <tr>
-                                <td colspan="6">لا يوجد بيانات</td>
+                                <td colspan="9">لا يوجد بيانات</td>
                             </tr>
-{{--                        @endforelse--}}
+                        @endforelse
                         </tbody>
                     </table>
 
-{{--                    {{ $drafts->links() }}--}}
+                    {{ $drafts->links() }}
                 </div>
             </div>
         </div>

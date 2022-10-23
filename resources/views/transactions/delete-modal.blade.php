@@ -9,7 +9,7 @@
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
-                    <div class="modal-body text-right">اختر "حذف" بالأسفل اذا كنت تريد حذف. <span class="text-danger">{{$transaction->full_name}}</span> المعاملة!.</div>
+                    <div class="modal-body text-right">اختر "حذف" بالأسفل اذا كنت تريد حذف. <span class="text-danger">{{$transaction->transaction_NO}}</span> المعاملة!.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">إلغاء</button>
                         <a class="btn btn-danger" href="{{ route('logout') }}"

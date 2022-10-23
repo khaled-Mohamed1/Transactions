@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
+    public function drafts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Draft::class);
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timezone('Asia/Gaza')->format('Y-m-d H:i');
