@@ -35,17 +35,22 @@ class TransactionController extends Controller
      */
     public function index()
     {
-//        $transactions = Transaction::latest()->paginate(100);
-        if(auth()->user()->role_id == 1){
-            $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','جديد')
-                ->where('status','!=','مرفوض')->paginate(100);
+        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
+            $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
         }else{
-            $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','مرفوض')
-                    ->where('status','!=','جديد')->where('updated_by',auth()->user()->id)
-                ->paginate(100);
+            $transactions = Transaction::orderBy('transaction_NO')->where(auth()->user()->id, 'user_id')->paginate(100);
         }
 
-        return view('transactions.index', ['customers' => $customers]);
+//        if(auth()->user()->role_id == 1){
+//            $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','جديد')
+//                ->where('status','!=','مرفوض')->paginate(100);
+//        }else{
+//            $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','مرفوض')
+//                    ->where('status','!=','جديد')->where('updated_by',auth()->user()->id)
+//                ->paginate(100);
+//        }
+
+        return view('transactions.index', ['transactions' => $transactions]);
     }
 
     /**

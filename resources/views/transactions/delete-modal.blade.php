@@ -1,5 +1,4 @@
-@foreach($customers as $customer)
-    @foreach ($customer->transactions as $transaction)
+    @foreach ($transactions as $transaction)
 
         <div class="modal fade" id="deleteModal{{$transaction->id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalExample"
              aria-hidden="true">
@@ -26,6 +25,5 @@
             </div>
         </div>
     @endforeach
-@endforeach
 
 

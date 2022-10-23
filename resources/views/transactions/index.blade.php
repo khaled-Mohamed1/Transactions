@@ -52,8 +52,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse ($customers as $customer)
-                            @foreach($customer->transactions as $transaction)
+                            @forelse($transactions as $transaction)
                             <tr>
                                 <td>{{ $transaction->transaction_NO }}</td>
                                 <td><a href="{{route('customers.show',['customer' => $transaction->CustomerTransaction->id])}}">{{ $transaction->CustomerTransaction->customer_NO }}</a></td>
@@ -82,7 +81,6 @@
                                     </a>
                                 </td>
                             </tr>
-                            @endforeach
 
                         @empty
                             <tr>
@@ -93,7 +91,7 @@
                         </tbody>
                     </table>
 
-                    {{ $customers->links() }}
+                    {{ $transactions->links() }}
                 </div>
             </div>
         </div>
