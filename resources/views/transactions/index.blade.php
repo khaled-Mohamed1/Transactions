@@ -84,7 +84,7 @@
 
                         @empty
                             <tr>
-                                <td colspan="9">لا يوجد بيانات</td>
+                                <td colspan="10">لا يوجد بيانات</td>
                             </tr>
 
                         @endforelse
