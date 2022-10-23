@@ -60,7 +60,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->role_id == 1){
+        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $customers = Customer::where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
         }else{
             $customers = Customer::where('updated_by',auth()->user()->id)->where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
