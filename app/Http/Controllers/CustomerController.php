@@ -136,7 +136,7 @@ class CustomerController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('customers.index')->with('success','تم انشاء العميل بنجاح');
+            return redirect()->route('home')->with('success','تم انشاء العميل بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
