@@ -58,12 +58,14 @@
                                 <td>{{ $customer->region }}</td>
                                 <td>{{ $customer->address }}</td>
                                 <td>
-                                    @if($customer->status == 'مقبول')
+                                    @if($customer->status == 'مقبول' || $customer->status == 'مكتمل')
                                         <span class="text-success">{{ $customer->status }}</span>
-                                    @elseif($customer->status == 'متعسر')
+                                    @elseif($customer->status == 'مرفوض' || $customer->status == 'متعسر')
                                         <span class="text-danger">{{ $customer->status }}</span>
-                                    @else
+                                    @elseif($customer->status == 'قيد التوقيع')
                                         <span class="text-warning">{{ $customer->status }}</span>
+                                    @else
+                                        {{ $customer->status }}
                                     @endif
                                 </td>
                                 <td>{{ $customer->account }}</td>

@@ -59,6 +59,13 @@ class UserController extends Controller
         return view('users.add', ['roles' => $roles]);
     }
 
+    public function show(User $user){
+        return view('users.show')->with([
+            'user'  => $user,
+        ]);
+    }
+
+
     /**
      * Store User
      * @param Request $request

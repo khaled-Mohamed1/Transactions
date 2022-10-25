@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function customers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Customer::class);
+        return $this->hasMany(Customer::class,'created_by','id');
     }
 
     public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
