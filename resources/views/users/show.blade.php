@@ -88,7 +88,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($user->customers->take(100) as $customer)
+                                @forelse($user->customers->take(99) as $customer)
                                 <tr>
                                     <td>{{ $customer->customer_NO }}</td>
                                     <td>{{ $customer->full_name }}</td>
