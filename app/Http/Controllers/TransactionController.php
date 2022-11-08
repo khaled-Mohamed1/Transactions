@@ -38,7 +38,7 @@ class TransactionController extends Controller
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
         }else{
-            $transactions = Transaction::orderBy('transaction_NO')->where(auth()->user()->id, 'user_id')->paginate(100);
+            $transactions = Transaction::where(auth()->user()->id, 'user_id')->orderBy('transaction_NO')->paginate(100);
         }
 
 //        if(auth()->user()->role_id == 1){
