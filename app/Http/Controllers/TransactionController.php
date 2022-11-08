@@ -63,7 +63,7 @@ class TransactionController extends Controller
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $customers = Customer::where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
         }else{
-            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
+            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مرفوض')->where('status','!=','مكتمل')->latest()->get();
         }
         return view('transactions.create',['customers' => $customers]);
     }
