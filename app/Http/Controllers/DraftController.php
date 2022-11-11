@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exports\DraftExport;
-use App\Exports\TransactionExport;
 use App\Helpers\Helper;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\Draft;
-use App\Models\Transaction;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -22,10 +20,12 @@ class DraftController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:draft-list|draft-create|draft-edit|draft-delete', ['only' => ['index']]);
-        $this->middleware('permission:draft-create', ['only' => ['create','store']]);
-        $this->middleware('permission:draft-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:draft-delete', ['only' => ['delete']]);
+        $this->middleware('permission:كمبيالات-بيانات|كمبيالات-اضافة|كمبيالات-تعديل|كمبيالات-حذف', ['only' => ['index']]);
+        $this->middleware('permission:كمبيالات-اضافة', ['only' => ['create','store']]);
+        $this->middleware('permission:كمبيالات-تعديل', ['only' => ['edit','update']]);
+        $this->middleware('permission:كمبيالات-حذف', ['only' => ['delete']]);
+        $this->middleware('permission:كمبيالات-تصدير', ['only' => ['export']]);
+
     }
 
     /**
@@ -58,6 +58,10 @@ class DraftController extends Controller
     public function store(Request $request)
     {
 
+        if($request->customer_id == null){
+            return redirect()->back()->with('error','يجب ادخال عدد الأفراد قبل اتمام العملية. ');
+        }
+
 
         foreach($request->customer_id as $key => $data)
         {
@@ -77,7 +81,7 @@ class DraftController extends Controller
 
 
         // Validations
-        $validator = $request->validate(
+        $request->validate(
             [
                 'document_type' => 'required',
                 'customer_qty'  => 'required|numeric',
@@ -92,9 +96,7 @@ class DraftController extends Controller
                 'document_qty.numeric' => 'يجب ادخال عدد المستندات بالأرقام',
                 'document_affiliate.required' => 'يجب ادخال عدد المستندات التابعة',
                 'document_affiliate.numeric' => 'يجب ادخال عدد المستندات التابعة بالأرقام',
-//                'customer_id.required_if' => 'يجب ادخال رقم هوية العميل',
                 'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
-//                'customer_id.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
             ]
         );
 
@@ -185,7 +187,7 @@ class DraftController extends Controller
     {
         DB::beginTransaction();
         try {
-            // Delete User
+            // Delete
             Draft::whereId($draft->id)->delete();
 
             DB::commit();
@@ -194,10 +196,11 @@ class DraftController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('error', $th->getMessage());
-        }    }
+        }
+    }
 
     public function export()
     {
-        return Excel::download(new DraftExport(), 'drafts.xlsx');
+        return Excel::download(new DraftExport(), 'الكمبيالات.xlsx');
     }
 }

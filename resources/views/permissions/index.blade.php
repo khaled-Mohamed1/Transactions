@@ -1,35 +1,35 @@
 @extends('layouts.app')
 
-@section('title', 'Permissions')
+@section('title', 'الصلاحيات')
 
 @section('content')
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Permissions</h1>
+        <h1 class="h3 mb-0 text-gray-800">الصلاحيات</h1>
         <a href="{{route('permissions.create')}}" class="btn btn-sm btn-primary" >
-            <i class="fas fa-plus"></i> Add New
+            <i class="fas fa-plus"></i> اضافة جديد
         </a>
     </div>
 
     {{-- Alert Messages --}}
     @include('common.alert')
-   
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">All Permissions</h6>
-            
+            <h6 class="m-0 font-weight-bold text-primary text-right">جميع الصلاحيات</h6>
+
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th width="40%">Name</th>
-                            <th width="40%">Guard Name</th>
-                            <th width="20%">Action</th>
+                            <th width="40%">اسم</th>
+                            <th width="40%">نوع الصلاحية</th>
+                            <th width="20%">العمليات</th>
                         </tr>
                     </thead>
                     <tbody>

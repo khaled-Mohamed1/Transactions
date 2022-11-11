@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\CustomersExport;
 use App\Exports\TransactionExport;
 use App\Helpers\Helper;
 use App\Models\Customer;
@@ -22,10 +21,12 @@ class TransactionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:transaction-list|transaction-create|transaction-edit|transaction-delete', ['only' => ['index']]);
-        $this->middleware('permission:transaction-create', ['only' => ['create','store']]);
-        $this->middleware('permission:transaction-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:transaction-delete', ['only' => ['delete']]);
+        $this->middleware('permission:معاملات-بيانات|معاملات-اضافة|معاملات-تعجيل|معاملات-حذف', ['only' => ['index']]);
+        $this->middleware('permission:معاملات-اضافة', ['only' => ['create','store']]);
+        $this->middleware('permission:معاملات-تعديل', ['only' => ['edit','update']]);
+        $this->middleware('permission:معاملات-حذف', ['only' => ['delete']]);
+        $this->middleware('permission:معاملات-تصدير', ['only' => ['export']]);
+
     }
 
     /**
@@ -35,6 +36,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
+
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
         }else{
@@ -43,12 +45,15 @@ class TransactionController extends Controller
 
 //        if(auth()->user()->role_id == 1){
 //            $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','جديد')
-//                ->where('status','!=','مرفوض')->paginate(100);
+//                ->orWhere('status','!=','مرفوض')->paginate(100);
+//
 //        }else{
 //            $customers = Customer::with('transactions')->orderBy('customer_NO')->where('status','!=','مرفوض')
 //                    ->where('status','!=','جديد')->where('updated_by',auth()->user()->id)
 //                ->paginate(100);
 //        }
+
+
 
         return view('transactions.index', ['transactions' => $transactions]);
     }
@@ -401,6 +406,6 @@ class TransactionController extends Controller
 
     public function export()
     {
-        return Excel::download(new TransactionExport(), 'transactions.xlsx');
+        return Excel::download(new TransactionExport(), 'المعاملات.xlsx');
     }
 }

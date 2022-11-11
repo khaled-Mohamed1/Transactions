@@ -26,14 +26,16 @@ class CustomerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:customer-list|customer-create|customer-edit|customer-delete|customer-show|customer-import', ['only' => ['index']]);
-        $this->middleware('permission:customer-create', ['only' => ['create','store']]);
-        $this->middleware('permission:customer-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:customer-delete', ['only' => ['delete']]);
-        $this->middleware('permission:customer-show', ['only' => ['show']]);
-        $this->middleware('permission:customer-adverser', ['only' => ['indexAdverser']]);
-        $this->middleware('permission:customer-task', ['only' => ['indexTask','addTask']]);
-        $this->middleware('permission:customer-import', ['only' => ['importCustomers','uploadCustomers']]);
+        $this->middleware('permission:عملاء-بيانات|عملاء-اضافة|عملاء-تعديل|عملاء-حذف|عملاء-ملف-شخصي|عملاء-استراد', ['only' => ['index']]);
+        $this->middleware('permission:عملاء-اضافة', ['only' => ['create','store']]);
+        $this->middleware('permission:عملاء-تعديل', ['only' => ['edit','update']]);
+        $this->middleware('permission:عملاء-حذف', ['only' => ['delete']]);
+        $this->middleware('permission:عملاء-ملف-شخصي', ['only' => ['show']]);
+        $this->middleware('permission:عملاء-المتعسرين', ['only' => ['indexAdverser']]);
+        $this->middleware('permission:عملاء-المرفوضين', ['only' => ['indexRejected']]);
+        $this->middleware('permission:عملاء-الجميع', ['only' => ['indexCustomers']]);
+        $this->middleware('permission:عملاء-المهام', ['only' => ['indexTask','addTask']]);
+        $this->middleware('permission:عملاء-استرداد', ['only' => ['importCustomers','uploadCustomers']]);
     }
 
     /**
@@ -45,7 +47,6 @@ class CustomerController extends Controller
 
     public function index()
     {
-
         $customers = Customer::orderBy('customer_NO','desc')->where('status','جديد')->paginate(100);
         return view('customers.index', ['customers' => $customers]);
     }
@@ -62,11 +63,19 @@ class CustomerController extends Controller
         return view('customers.index_adverser', ['customers' => $customers]);
     }
 
+    public function indexRejected()
+    {
+        $customers = Customer::orderBy('customer_NO','desc')->where('status','=','مرفوض')->paginate(100);
+        return view('customers.rejected', ['customers' => $customers]);
+    }
+
     public function indexTask()
     {
         $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
-        $customers = Customer::orderBy('customer_NO','desc')->where('status','=','متعسر')->orWhere('status','=','قيد التوقيع')
-                            ->paginate(100);
+        $customers = Customer::orderBy('customer_NO','desc')->whereNull('updated_by')->where(function ($query){
+            $query->where('status','=','متعسر')->orWhere('status','=','قيد التوقيع')
+            ->orWhere('status','=','مقبول');
+        })->paginate(100);
         return view('customers.tasks', ['customers' => $customers,'users'=>$users]);
     }
 
@@ -320,17 +329,17 @@ class CustomerController extends Controller
 
     public function export(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        return Excel::download(new CustomersExport(), 'customers.xlsx');
+        return Excel::download(new CustomersExport(), 'العملاء المقبولين.xlsx');
     }
 
     public function exportAdverser(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        return Excel::download(new AdverserExport(), 'adverser.xlsx');
+        return Excel::download(new AdverserExport(), 'المتعسرين.xlsx');
     }
 
     public function exportCustomers(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
-        return Excel::download(new AllCustomersExport(), 'AllCustomers.xlsx');
+        return Excel::download(new AllCustomersExport(), 'جميع العملاء.xlsx');
     }
 
     public function search(Request $request)

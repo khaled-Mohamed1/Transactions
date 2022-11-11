@@ -27,10 +27,10 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index']]);
-        $this->middleware('permission:user-create', ['only' => ['create','store', 'updateStatus']]);
-        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:user-delete', ['only' => ['delete']]);
+        $this->middleware('permission:موظفين-بيانات|موظفين-اضافة|موظفين-تعديل|موظفين-حذف', ['only' => ['index']]);
+        $this->middleware('permission:موظفين-اضافة', ['only' => ['create','store', 'updateStatus']]);
+        $this->middleware('permission:موظفين-تعديل', ['only' => ['edit','update']]);
+        $this->middleware('permission:موظفين-حذف', ['only' => ['delete']]);
     }
 
 

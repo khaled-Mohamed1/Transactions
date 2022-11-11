@@ -38,52 +38,57 @@
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="15%">رقم القضية</th>
-                            <th width="15%">رقم القضية</th>
-                            <th width="15%">رقم القضية</th>
-                            <th width="15%">رقم القضية</th>
-                            <th width="15%">رقم القضية</th>
-                            <th width="15%">العمليات</th>
+                            <th width="10%">رقم</th>
+                            <th width="10%">إنشاء بواسطة</th>
+                            <th width="10%">اسم المحكمة</th>
+                            <th width="10%">رقم القضية</th>
+                            <th width="10%">مبلغ القضية</th>
+                            <th width="10%">طالب التنفيذ</th>
+                            <th width="15%">الأطراف</th>
+                            <th width="10%">الوكيل</th>
+                            <th width="10%">الحاله</th>
+                            <th width="10%">ملاحظات</th>
+                            <th width="10%">تاريخ الإنشاء</th>
+                            <th width="10%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{--                        @forelse ($issues as $issue)--}}
-                        <tr>
-                            {{--                                <td>{{ $draft->transaction_NO }}</td>--}}
-                            {{--                                <td>{{ $draft->CustomerTransaction->full_name }}</td>--}}
-                            {{--                                <td>{{ $transaction->transactions_type }}</td>--}}
-                            {{--                                <td>{{ $transaction->transaction_amount }}</td>--}}
-                            {{--                                <td>{{ $transaction->first_payment }}</td>--}}
-                            {{--                                <td>{{ $transaction->transaction_rest }}</td>--}}
-                            {{--                                <td>{{$transaction->created_at}}</td>--}}
-                            {{--                                <td>--}}
-                            {{--                                    @if($transaction->CustomerTransaction->status == 'مقبول' || $transaction->CustomerTransaction->status == 'مكتمل')--}}
-                            {{--                                        <span class="text-success">{{ $transaction->CustomerTransaction->status }}</span>--}}
-                            {{--                                    @elseif($transaction->CustomerTransaction->status == 'مرفوض' || $transaction->CustomerTransaction->status == 'متعسر')--}}
-                            {{--                                        <span class="text-danger">{{ $transaction->CustomerTransaction->status }}</span>--}}
-                            {{--                                    @else--}}
-                            {{--                                        {{ $transaction->CustomerTransaction->status }}--}}
-                            {{--                                    @endif--}}
-                            {{--                                </td>--}}
-                            {{--                                <td style="display: flex">--}}
-                            {{--                                    <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
-                            {{--                                       class="btn btn-primary m-2">--}}
-                            {{--                                        <i class="fa fa-pen"></i>--}}
-                            {{--                                    </a>--}}
-                            {{--                                    <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$transaction->id}}">--}}
-                            {{--                                        <i class="fas fa-trash"></i>--}}
-                            {{--                                    </a>--}}
-                            {{--                                </td>--}}
-                        </tr>
-                        {{--                        @empty--}}
-                        <tr>
-                            <td colspan="6">لا يوجد بيانات</td>
-                        </tr>
-                        {{--                        @endforelse--}}
+                            @forelse ($issues as $issue)
+                                <tr>
+                                    <td>{{ $issue->issue_NO }}</td>
+                                    <td>{{ $issue->UserIssue->full_name }}</td>
+                                    <td>{{ $issue->court_name }}</td>
+                                    <td>{{ $issue->case_number }}</td>
+                                    <td>{{ $issue->case_amount }}</td>
+                                    <td>{{ $issue->execution_request }}</td>
+                                    <td>
+                                        @foreach($issue->cusotmerIssues as $customer)
+                                            <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $issue->agent_name }}</td>
+                                    <td>{{ $issue->issue_status }}</td>
+                                    <td>{{ $issue->notes }}</td>
+                                    <td>{{ $issue->created_at }}</td>
+                                    <td style="display: flex">
+{{--                                        <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
+{{--                                           class="btn btn-primary m-2">--}}
+{{--                                            <i class="fa fa-pen"></i>--}}
+{{--                                        </a>--}}
+                                        <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$issue->id}}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="12">لا يوجد بيانات</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
 
-                    {{--                    {{ $issues->links() }}--}}
+                    {{ $issues->links() }}
                 </div>
             </div>
         </div>

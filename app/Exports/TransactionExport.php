@@ -3,16 +3,20 @@
 namespace App\Exports;
 
 use App\Models\Transaction;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class TransactionExport implements FromCollection
+class TransactionExport implements FromView
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
-    {
-        return Transaction::latest()->get();
 
+    public function view(): View
+    {
+
+        return view('exports.transactions', [
+            'transactions' => Transaction::orderBy('transaction_NO','desc')->get()
+        ]);
     }
 }

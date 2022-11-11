@@ -6,28 +6,23 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Draft extends Model
+class CustomerIssue extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'draft_NO',
-        'user_id',
-        'document_type',
-        'customer_qty',
-        'document_qty',
-        'document_affiliate',
+        'issue_id',
+        'customer_id',
     ];
 
-
-    public function UserDraft(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function IssueCustomerIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(Issue::class, 'issue_id', 'id');
     }
 
-    public function cusotmerdrafts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function IssueCustomer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(CustomerDraft::class,'draft_id');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 
     public function getCreatedAtAttribute($value)

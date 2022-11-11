@@ -42,6 +42,11 @@ class Customer extends Model
         return $this->hasMany(CustomerDraft::class, 'customer_id');
     }
 
+    public function CustomerIssues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CustomerIssue::class, 'customer_id');
+    }
+
     public function UserCustomer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

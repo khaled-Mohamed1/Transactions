@@ -79,6 +79,9 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     //adverser
     Route::get('/adverser', [CustomerController::class, 'indexAdverser'])->name('index.adverser');
 
+    //rejected
+    Route::get('/rejected', [CustomerController::class, 'indexRejected'])->name('index.rejected');
+
     //Task
     Route::get('/tasks', [CustomerController::class, 'indexTask'])->name('index.task');
     Route::post('/add_task', [CustomerController::class, 'addTask'])->name('add.task');

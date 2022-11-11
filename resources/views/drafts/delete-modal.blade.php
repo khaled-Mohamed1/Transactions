@@ -13,10 +13,10 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">إلغاء</button>
                     <a class="btn btn-danger" href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); document.getElementById('transaction-delete-form{{$draft->id}}').submit();">
+                       onclick="event.preventDefault(); document.getElementById('draft-delete-form{{$draft->id}}').submit();">
                         حذف
                     </a>
-                    <form id="transaction-delete-form{{$draft->id}}" method="POST" action="{{ route('drafts.destroy', ['draft' => $draft->id]) }}">
+                    <form id="draft-delete-form{{$draft->id}}" method="POST" action="{{ route('drafts.destroy', ['draft' => $draft->id]) }}">
                         @csrf
                         @method('DELETE')
                     </form>

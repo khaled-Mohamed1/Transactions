@@ -129,8 +129,7 @@
                                 type="text"
                                 class="form-control form-control-user"
                                 id="customer_id"
-                                name="customer_id[]"
-                                value="{{ old('customer_id') }}">
+                                name="customer_id[]">
 
                         </div>`
 

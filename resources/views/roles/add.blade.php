@@ -21,19 +21,18 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary text-right">اضافة وظيفة جديدة</h6>
         </div>
-        <div class="card-body">
+        <div class="card-body text-right">
             <form method="POST" action="{{route('roles.store')}}">
                 @csrf
                 <div class="form-group row">
 
                     {{-- Name --}}
-                    <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="col-sm-6 mb-3 mb-sm-0 ">
                         <label>اسم الوظيفة <span style="color:red;">*</span></label>
                         <input
                             type="text"
                             class="form-control form-control-user @error('name') is-invalid @enderror"
                             id="exampleName"
-                            placeholder="Name"
                             name="name"
                             value="{{ old('name') }}">
 

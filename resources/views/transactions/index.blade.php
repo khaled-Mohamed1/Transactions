@@ -51,7 +51,7 @@
 
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody>z
                             @forelse($transactions as $transaction)
                             <tr>
                                 <td>{{ $transaction->transaction_NO }}</td>
