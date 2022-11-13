@@ -26,6 +26,7 @@ class TransactionController extends Controller
         $this->middleware('permission:معاملات-تعديل', ['only' => ['edit','update']]);
         $this->middleware('permission:معاملات-حذف', ['only' => ['delete']]);
         $this->middleware('permission:معاملات-تصدير', ['only' => ['export']]);
+        $this->middleware('permission:معاملات-جميع', ['only' => ['allIndex']]);
 
     }
 
@@ -37,10 +38,16 @@ class TransactionController extends Controller
     public function index()
     {
 
-        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
-            $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
+//        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
+//            $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
+//        }else{
+//            $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('transaction_NO')->paginate(100);
+//        }
+
+        if(auth()->user()->role_id == 1){
+            $customers = Customer::with('transactions')->orderBy('customer_NO')->whereNotNull('updated_by')->paginate(100);
         }else{
-            $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('transaction_NO')->paginate(100);
+            $customers = Customer::with('transactions')->where('updated_by', auth()->user()->id)->orderBy('customer_NO')->paginate(100);
         }
 
 //        if(auth()->user()->role_id == 1){
@@ -55,22 +62,34 @@ class TransactionController extends Controller
 
 
 
-        return view('transactions.index', ['transactions' => $transactions]);
+        return view('transactions.index', ['customers' => $customers]);
     }
+
+    public function allIndex(){
+        if(auth()->user()->role_id == 1){
+            $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
+        }else{
+            $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('transaction_NO')->paginate(100);
+        }
+
+        return view('transactions.allTransactions', ['transactions' => $transactions]);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(Customer $customer)
     {
-        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
-            $customers = Customer::where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
-        }else{
-            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مرفوض')->where('status','!=','مكتمل')->latest()->get();
-        }
-        return view('transactions.create',['customers' => $customers]);
+//        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
+//            $customers = Customer::where('status','=','قيد التوقيع')->orWhere('status','=','متعسر')->latest()->get();
+//        }else{
+//            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مرفوض')->where('status','!=','مكتمل')->latest()->get();
+//        }
+        return view('transactions.create',['customer' => $customer]);
     }
 
     /**
@@ -202,6 +221,7 @@ class TransactionController extends Controller
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
                 'status'       => 'متعسر',
+                'updated_by' => null
             ]);
 
             // Store Data

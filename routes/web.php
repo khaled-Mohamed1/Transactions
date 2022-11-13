@@ -100,7 +100,8 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
 // Transaction
 Route::middleware('auth')->prefix('transactions')->name('transactions.')->group(function(){
     Route::get('/', [TransactionController::class, 'index'])->name('index');
-    Route::get('/create', [TransactionController::class, 'create'])->name('create');
+    Route::get('/All_transactions', [TransactionController::class, 'allIndex'])->name('index.all');
+    Route::get('/create/{customer}', [TransactionController::class, 'create'])->name('create');
     Route::post('/store', [TransactionController::class, 'store'])->name('store');
     Route::get('/edit/{transaction}', [TransactionController::class, 'edit'])->name('edit');
     Route::put('/update/{transaction}', [TransactionController::class, 'update'])->name('update');

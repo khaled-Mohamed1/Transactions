@@ -35,7 +35,7 @@ class CustomerController extends Controller
         $this->middleware('permission:عملاء-المرفوضين', ['only' => ['indexRejected']]);
         $this->middleware('permission:عملاء-الجميع', ['only' => ['indexCustomers']]);
         $this->middleware('permission:عملاء-المهام', ['only' => ['indexTask','addTask']]);
-        $this->middleware('permission:عملاء-استرداد', ['only' => ['importCustomers','uploadCustomers']]);
+        $this->middleware('permission:عملاء-استراد', ['only' => ['importCustomers','uploadCustomers']]);
     }
 
     /**
