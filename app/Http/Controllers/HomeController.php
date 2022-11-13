@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Draft;
+use App\Models\Issue;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,14 +35,29 @@ class HomeController extends Controller
             ->whereYear('created_at', date('Y'))->get()->count();
         $customers_adverser = Customer::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->where('status','متعسر')->get()->count();
+        $customers_new = Customer::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->where('status','جديد')->get()->count();
+        $customers_tasks = Customer::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
+        $customers_rejects = Customer::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->where('status','مرفوض')->get()->count();
         $transaction_amount = Transaction::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->get()->sum('transaction_amount');
         $transactions = Transaction::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->get()->count();
+        $drafts = Draft::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->get()->count();
+        $issues = Issue::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->get()->count();
         return view('home',['customers' => $customers,
                                 'customers_adverser' => $customers_adverser,
                                 'transaction_amount' => $transaction_amount,
-                                'transactions' => $transactions]);
+                                'transactions' => $transactions,
+            'customers_new' => $customers_new,
+            'customers_tasks'=>$customers_tasks,
+            'customers_rejects'=>$customers_rejects,
+            'drafts'=>$drafts,
+            'issues'=>$issues]);
     }
 
     /**
