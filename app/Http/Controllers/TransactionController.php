@@ -44,7 +44,7 @@ class TransactionController extends Controller
 //            $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('transaction_NO')->paginate(100);
 //        }
 
-        if(auth()->user()->role_id == 1){
+        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $customers = Customer::with('transactions')->orderBy('customer_NO')->whereNotNull('updated_by')->paginate(100);
         }else{
             $customers = Customer::with('transactions')->where('updated_by', auth()->user()->id)->orderBy('customer_NO')->paginate(100);
@@ -66,7 +66,7 @@ class TransactionController extends Controller
     }
 
     public function allIndex(){
-        if(auth()->user()->role_id == 1){
+        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
         }else{
             $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('transaction_NO')->paginate(100);
