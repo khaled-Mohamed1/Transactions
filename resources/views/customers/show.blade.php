@@ -14,6 +14,19 @@
 {{--                <button class="btn btn-success" type="submit"><i class="las la-print"></i></button>--}}
 
 {{--            </form>--}}
+            <div>
+                <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}"
+                   class="btn btn-primary m-2">
+                    <i class="fa fa-pen"></i>
+                </a>
+{{--                <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">--}}
+{{--                    <i class="fas fa-trash"></i>--}}
+{{--                </a>--}}
+                <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
+                   class="btn btn-info m-2">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
         </div>
 
         {{-- Alert Messages --}}
@@ -106,15 +119,15 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>{{ $customer->reserve_phone_NO }}</td>
-                                    <td>{{ $customer->date_of_birth }}</td>
-                                    <td>{{ $customer->marital_status }}</td>
-                                    <td>{{ $customer->number_of_children }}</td>
-                                    <td>{{ $customer->job }}</td>
-                                    <td>{{ $customer->salary }}</td>
-                                    <td>{{ $customer->bank_name }}</td>
-                                    <td>{{ $customer->bank_branch }}</td>
-                                    <td>{{ $customer->bank_account_NO }}</td>
+                                    <td>{{ $customer->reserve_phone_NO ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->date_of_birth ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->marital_status ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->number_of_children ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->job ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->salary ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->bank_name ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->bank_branch ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->bank_account_NO ?? 'لم يدخل'}}</td>
                                 </tr>
 
                                 </tbody>
