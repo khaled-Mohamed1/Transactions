@@ -7,7 +7,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">بيانات العملاء</h1>
+            <h1 class="h3 mb-0 text-gray-800">بيانات العملاء الجدد</h1>
             <div class="row">
 {{--                <div class="col-md-6">--}}
 {{--                    <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary">--}}
@@ -30,7 +30,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary text-right">كل العملاء</h6>
+                <h6 class="m-0 font-weight-bold text-primary text-right">كل العملاء الجدد</h6>
 
             </div>
             <div class="card-body">

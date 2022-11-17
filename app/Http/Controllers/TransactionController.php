@@ -6,6 +6,7 @@ use App\Exports\TransactionExport;
 use App\Helpers\Helper;
 use App\Models\Customer;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -44,6 +45,9 @@ class TransactionController extends Controller
 //            $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('transaction_NO')->paginate(100);
 //        }
 
+        $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
+
+
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $customers = Customer::with('transactions')->orderBy('customer_NO')->whereNotNull('updated_by')->paginate(100);
         }else{
@@ -62,7 +66,8 @@ class TransactionController extends Controller
 
 
 
-        return view('transactions.index', ['customers' => $customers]);
+        return view('transactions.index', ['customers' => $customers,
+            'users'=>$users]);
     }
 
     public function allIndex(){

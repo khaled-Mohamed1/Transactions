@@ -37,16 +37,14 @@
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="15%">رقم الإستدلالي</th>
+                            <th width="10%">رقم الإستدلالي</th>
                             <th width="15%">الإسم كامل</th>
                             <th width="10%">رقم الهوية</th>
                             <th width="10%">رقم الجوال</th>
                             <th width="5%">المنطقة</th>
-                            <th width="15%">العنوان</th>
+                            <th width="20%">العنوان</th>
                             <th width="5%">الحالة</th>
-                            <th width="15%">إنشاء بواسطة</th>
-                            <th width="5%">الحساب</th>
-{{--                            <th width="10%">العمليات</th>--}}
+                            <th width="10%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -61,17 +59,15 @@
                                 <td>
                                     <span class="text-danger">{{ $customer->status }}</span>
                                 </td>
-                                <td>{{ $customer->UserCustomer->full_name }}</td>
-                                <td>{{ $customer->account }}</td>
-{{--                                <td style="display: flex">--}}
-{{--                                    <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}"--}}
-{{--                                       class="btn btn-primary m-2">--}}
-{{--                                        <i class="fa fa-pen"></i>--}}
-{{--                                    </a>--}}
+                                <td style="display: flex">
+                                    <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}"
+                                       class="btn btn-primary m-2">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
 {{--                                    <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">--}}
 {{--                                        <i class="fas fa-trash"></i>--}}
 {{--                                    </a>--}}
-{{--                                </td>--}}
+                                </td>
                             </tr>
                         @empty
                             <tr>

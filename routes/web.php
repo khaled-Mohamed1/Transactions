@@ -92,6 +92,7 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
 
     //export
     Route::get('export/', [CustomerController::class, 'export'])->name('export');
+    Route::post('export/pdf', [CustomerController::class, 'exportPDF'])->name('export.PDF');
     Route::get('export/adverser', [CustomerController::class, 'exportAdverser'])->name('export.adverser');
     Route::get('export/customers', [CustomerController::class, 'exportCustomers'])->name('export.customers');
 

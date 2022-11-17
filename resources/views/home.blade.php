@@ -41,8 +41,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 1.1rem">
-                                عملاء (شهري)</div>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{route('customers.index.customers')}}" class="text-primary"> عملاء (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers}}</div>
                         </div>
                         <div class="col-auto">
@@ -58,8 +58,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="font-size: 1.1rem">
-                                عملاء الجدد (شهري)</div>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{route('customers.index')}}" class="text-warning"> عملاء الجدد (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_new}}</div>
                         </div>
                         <div class="col-auto">
@@ -75,8 +75,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1" style="font-size: 1.1rem">
-                                المتابعة (شهري)</div>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{route('transactions.index')}}" class="text-info">المتابعة (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_tasks}}</div>
                         </div>
                         <div class="col-auto">
@@ -92,8 +92,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 1.1rem">
-                                المرفوضين (شهري)</div>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{ route('customers.index.rejected') }}" class="text-success">المرفوضين (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_rejects}}</div>
                         </div>
                         <div class="col-auto">
@@ -109,12 +109,34 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 1.1rem">
-                                المتعسرين (شهري)</div>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{ route('customers.index.adverser') }}" class="text-primary">المتعسرين (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_adverser}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4 text-right">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{ route('transactions.index.all') }}" class="text-warning">المعاملات (شهري)</a>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$transactions}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -127,35 +149,6 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1" style="font-size: 1.1rem">
-                                المعاملات (شهري)
-                            </div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$transactions}}</div>
-                                </div>
-{{--                                <div class="col">--}}
-{{--                                    <div class="progress progress-sm mr-2">--}}
-{{--                                        <div class="progress-bar bg-info" role="progressbar"--}}
-{{--                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"--}}
-{{--                                            aria-valuemax="100"></div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4 text-right">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="font-size: 1.1rem">
                                 قيمة المعاملات (شهري)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$transaction_amount}}</div>
                         </div>
@@ -172,8 +165,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 1.1rem">
-                                الكمبيالات (شهري)</div>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{ route('drafts.index') }}" class="text-success">الكمبيالات (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$drafts}}</div>
                         </div>
                         <div class="col-auto">
@@ -189,8 +182,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 1.1rem">
-                                القضايا (شهري)</div>
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{ route('issues.index') }}" class="text-primary">القضايا (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issues}}</div>
                         </div>
                         <div class="col-auto">

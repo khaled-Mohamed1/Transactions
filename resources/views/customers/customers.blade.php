@@ -7,7 +7,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">بيانات العملاء</h1>
+            <h1 class="h3 mb-0 text-gray-800">جميع العملاء</h1>
             <div class="row">
 {{--                <div class="col-md-6">--}}
 {{--                    <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary">--}}
@@ -30,7 +30,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary text-right">كل العملاء</h6>
+                <h6 class="m-0 font-weight-bold text-primary text-right">جميع العملاء</h6>
 
             </div>
             <div class="card-body">
@@ -38,16 +38,15 @@
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th width="15%">رقم الإستدلالي</th>
+                            <th width="10%">رقم الإستدلالي</th>
                             <th width="15%">الإسم كامل</th>
                             <th width="10%">رقم الهوية</th>
                             <th width="10%">رقم الجوال</th>
                             <th width="5%">المنطقة</th>
-                            <th width="15%">العنوان</th>
+                            <th width="20%">العنوان</th>
                             <th width="5%">الحالة</th>
-                            <th width="15%">إنشاء بواسطة</th>
                             <th width="5%">الحساب</th>
-                            <th width="10%">العمليات</th>
+                            <th>العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,7 +69,6 @@
                                         {{ $customer->status }}
                                     @endif
                                 </td>
-                                <td>{{ $customer->UserCustomer->full_name }}</td>
                                 <td>{{ $customer->account }}</td>
                                 <td style="display: flex">
                                     <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}"
@@ -79,6 +77,10 @@
                                     </a>
                                     <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">
                                         <i class="fas fa-trash"></i>
+                                    </a>
+                                    <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
+                                       class="btn btn-info m-2">
+                                        <i class="fas fa-plus"></i>
                                     </a>
                                 </td>
                             </tr>

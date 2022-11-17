@@ -153,8 +153,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    @forelse($user->transactions->take(100) as $transaction)
+                                @forelse($user->transactions->take(100) as $transaction)
+
+                                    <tr>
                                         <td>{{ $transaction->transaction_NO }}</td>
                                         <td>{{ $transaction->transactions_type }}</td>
                                         <td>{{ $transaction->transaction_amount }}</td>
@@ -167,10 +168,11 @@
                                         <td>{{ $transaction->endorsement_NO }}</td>
                                         <td>{{ $transaction->receipt_NO }}</td>
                                         <td>{{ $transaction->created_at }}</td>
-                                    @empty
-                                        <td colspan="13">لا يوجد بيانات</td>
-                                    @endforelse
+
                                 </tr>
+                                @empty
+                                    <td colspan="13">لا يوجد بيانات</td>
+                                @endforelse
 
                                 </tbody>
                             </table>

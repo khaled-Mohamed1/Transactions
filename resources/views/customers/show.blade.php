@@ -8,6 +8,12 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4 border-bottom">
             <h1 class="h3 mb-3 text-gray-800">ملف العميل</h1>
+{{--            <form action="{{route('customers.export.PDF')}}" method="POST">--}}
+{{--                @csrf--}}
+{{--                <input type="hidden" name="customer_id" value="{{$customer->id}}">--}}
+{{--                <button class="btn btn-success" type="submit"><i class="las la-print"></i></button>--}}
+
+{{--            </form>--}}
         </div>
 
         {{-- Alert Messages --}}
@@ -150,8 +156,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    @forelse($customer->transactions as $transaction)
+                                @forelse($customer->transactions as $transaction)
+
+                                    <tr>
                                         <td>{{ $transaction->transaction_NO }}</td>
                                         <td>{{ $transaction->transactions_type }}</td>
                                         <td>{{ $transaction->transaction_amount }}</td>
@@ -164,10 +171,13 @@
                                         <td>{{ $transaction->endorsement_NO }}</td>
                                         <td>{{ $transaction->receipt_NO }}</td>
                                         <td>{{ $transaction->created_at }}</td>
-                                    @empty
-                                        <td colspan="13">لا يوجد بيانات</td>
-                                    @endforelse
+
                                 </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="13">لا يوجد بيانات</td>
+                                    </tr>
+                                @endforelse
 
                                 </tbody>
                             </table>

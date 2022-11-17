@@ -71,6 +71,10 @@
                                     <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">
                                         <i class="fas fa-trash"></i>
                                     </a>
+                                    <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
+                                       class="btn btn-info m-2">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @empty

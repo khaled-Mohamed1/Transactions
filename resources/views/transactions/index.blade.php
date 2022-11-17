@@ -47,7 +47,9 @@
                             <th width="15%">العنوان</th>
                             <th width="5%">الحالة</th>
                             <th width="5%">عدد المعاملات</th>
-                            <th width="10%">اضافة معاملة</th>
+                            <th width="5%">اضافة معاملة</th>
+                            <th width="15%">اضافة إلى</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -77,6 +79,22 @@
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </td>
+                                <td id="select">
+                                    <form action="" method="POST" class="test">
+                                        <input type="hidden" name="customer_id" id="customer_id{{$customer->id}}" value="{{$customer->id}}">
+                                        <select name="user_id" id="select{{$customer->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
+                                            <option  value="false">إلغاء</option>
+                                            @foreach($users as $user)
+                                                <option id="option{{$customer->id}}" value="{{$user->id}}" {{old('user_id') ? ((old('user_id') == $user->id) ? 'selected' : '')
+                                                : (($user->id == $customer->updated_by) ? 'selected' : '')}}>{{$user->full_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('user_id')
+                                        <span class="text-danger">{{$message}}</span>
+                                        @enderror
+                                    </form>
+
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -99,5 +117,44 @@
 @endsection
 
 @section('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function() {
+
+            let customers = {!! $customers->toJson() !!};
+
+            $(".test").each(function(index) {
+                $(document).on('change', '#select'+customers.data[index].id, function(e) {
+                    let user_id = $(this).val();
+                    let customer_id = customers.data[index].id;
+                    if (confirm('هل تريد اضافة المهمة للموظف؟')){
+                        $.ajax({
+                            url: "{{ route('customers.add.task') }}",
+                            method: 'POST',
+                            data: {
+                                user_id: user_id,
+                                customer_id: customer_id,
+                            },
+                            success: function(res) {
+                                if (res.status === 'success') {
+                                    location.reload();
+                                }
+                            },
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

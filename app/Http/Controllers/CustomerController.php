@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+use ArPHP\I18N\Arabic;
 
 
 class CustomerController extends Controller
@@ -82,9 +84,16 @@ class CustomerController extends Controller
 
     public function addTask(Request $request)
     {
-        $customer = Customer::findOrFail($request->customer_id)->update([
-            'updated_by' => $request->user_id,
-        ]);
+
+        if($request->user_id === 'false'){
+            $customer = Customer::findOrFail($request->customer_id)->update([
+                'updated_by' => NULL,
+            ]);
+        }else{
+            $customer = Customer::findOrFail($request->customer_id)->update([
+                'updated_by' => $request->user_id,
+            ]);        }
+
         return response()->json([
             'status' => 'success',
         ]);
@@ -357,5 +366,25 @@ class CustomerController extends Controller
         }
         return view('customers.search', compact('customers'));
     }
+
+//    public function exportPDF(Request $request){
+//
+//        $data = Customer::findOrFail($request->customer_id);
+//        $reportHtml = view('pdf.customerProfile' ,['data'=>$data])->render();
+//
+//        $arabic = new Arabic();
+//        $p = $arabic->arIdentify($reportHtml);
+//
+//        for ($i = count($p)-1; $i >= 0; $i-=2) {
+//            $utf8ar = $arabic->utf8Glyphs(substr($reportHtml, $p[$i-1], $p[$i] - $p[$i-1]));
+//            $reportHtml = substr_replace($reportHtml, $utf8ar, $p[$i-1], $p[$i] - $p[$i-1]);
+//        }
+//
+//            $pdf = PDF::loadHTML($reportHtml)->setPaper('a4','portrait');
+//
+//
+//        return $pdf->download('ملف شخصي.pdf');
+//    }
+
 
 }
