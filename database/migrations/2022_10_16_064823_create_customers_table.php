@@ -36,6 +36,7 @@ return new class extends Migration
             $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->foreign('updated_by')->references('id')->on('users');
             $table->float('account')->default('0');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

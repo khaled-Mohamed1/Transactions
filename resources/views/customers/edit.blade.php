@@ -140,103 +140,110 @@
                             @enderror
                         </div>
 
-                        <div id="display" class="form-group row m-auto" style="display: none">
-                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>نوع المعاملة </label>
-                                <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror"
-                                style="height: 40px">
-                                    <option selected disabled value="">أختر...</option>
-                                    <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>
-                                    <option value="استقطاع" {{ old('transactions_type') == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
-                                    <option value="شيكات" {{ old('transactions_type') == 'شيكات' ? 'selected' : '' }}>شيكات</option>
-                                    <option value="قروض" {{ old('transactions_type') == 'قروض' ? 'selected' : '' }}>قروض</option>
-                                </select>
-
-                                @error('transactions_type')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            {{-- transaction_amount --}}
-                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>قيمة المعاملة </label>
-                                <input
-                                    type="number"
-                                    class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
-                                    id="exampletransaction_amount"
-                                    name="transaction_amount"
-                                    min="0"
-                                    value="{{ old('transaction_amount') }}">
-
-                                @error('transaction_amount')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            {{-- first_payment --}}
-                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>أول دفعة </label>
-                                <input
-                                    type="number"
-                                    class="form-control form-control-user @error('first_payment') is-invalid @enderror"
-                                    id="examplefirst_payment"
-                                    name="first_payment"
-                                    min="0"
-                                    value="{{ old('first_payment') }}">
-
-                                @error('first_payment')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            {{-- transaction_rest --}}
-                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>باقي قيمة المعاملة </label>
-                                <input
-                                    type="number"
-                                    class="form-control form-control-user @error('transaction_rest') is-invalid @enderror"
-                                    id="exampletransaction_rest"
-                                    name="transaction_rest"
-                                    min="0"
-                                    value="{{ old('transaction_rest') }}">
-
-                                @error('transaction_rest')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            {{-- monthly_payment --}}
-                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>قيمة الدفعة الشهرية </label>
-                                <input
-                                    type="number"
-                                    class="form-control form-control-user @error('monthly_payment') is-invalid @enderror"
-                                    id="examplemonthly_payment"
-                                    name="monthly_payment"
-                                    min="0"
-                                    value="{{ old('monthly_payment') }}">
-
-                                @error('monthly_payment')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-
-                            {{-- date_of_first_payment --}}
-                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                                <label>تاريخ أول دفعة </label>
-                                <input
-                                    type="date"
-                                    class="form-control form-control-user @error('date_of_first_payment') is-invalid @enderror"
-                                    id="exampledate_of_first_payment"
-                                    name="date_of_first_payment"
-                                    value="{{ old('date_of_first_payment') }}">
-
-                                @error('date_of_first_payment')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
+                        {{-- notes --}}
+                        <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
+                            <label>الملاحظات </label>
+                            <textarea class="form-control form-control-user"
+                                      name="notes" rows="3">{{$customer->notes}}</textarea>
                         </div>
-                        {{-- transactions_type --}}
+
+{{--                        <div id="display" class="form-group row m-auto" style="display: none">--}}
+{{--                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
+{{--                                <label>نوع المعاملة </label>--}}
+{{--                                <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror"--}}
+{{--                                style="height: 40px">--}}
+{{--                                    <option selected disabled value="">أختر...</option>--}}
+{{--                                    <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>--}}
+{{--                                    <option value="استقطاع" {{ old('transactions_type') == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>--}}
+{{--                                    <option value="شيكات" {{ old('transactions_type') == 'شيكات' ? 'selected' : '' }}>شيكات</option>--}}
+{{--                                    <option value="قروض" {{ old('transactions_type') == 'قروض' ? 'selected' : '' }}>قروض</option>--}}
+{{--                                </select>--}}
+
+{{--                                @error('transactions_type')--}}
+{{--                                <span class="text-danger">{{$message}}</span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+
+{{--                            --}}{{-- transaction_amount --}}
+{{--                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
+{{--                                <label>قيمة المعاملة </label>--}}
+{{--                                <input--}}
+{{--                                    type="number"--}}
+{{--                                    class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"--}}
+{{--                                    id="exampletransaction_amount"--}}
+{{--                                    name="transaction_amount"--}}
+{{--                                    min="0"--}}
+{{--                                    value="{{ old('transaction_amount') }}">--}}
+
+{{--                                @error('transaction_amount')--}}
+{{--                                <span class="text-danger">{{$message}}</span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+
+{{--                            --}}{{-- first_payment --}}
+{{--                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
+{{--                                <label>أول دفعة </label>--}}
+{{--                                <input--}}
+{{--                                    type="number"--}}
+{{--                                    class="form-control form-control-user @error('first_payment') is-invalid @enderror"--}}
+{{--                                    id="examplefirst_payment"--}}
+{{--                                    name="first_payment"--}}
+{{--                                    min="0"--}}
+{{--                                    value="{{ old('first_payment') }}">--}}
+
+{{--                                @error('first_payment')--}}
+{{--                                <span class="text-danger">{{$message}}</span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+
+{{--                            --}}{{-- transaction_rest --}}
+{{--                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
+{{--                                <label>باقي قيمة المعاملة </label>--}}
+{{--                                <input--}}
+{{--                                    type="number"--}}
+{{--                                    class="form-control form-control-user @error('transaction_rest') is-invalid @enderror"--}}
+{{--                                    id="exampletransaction_rest"--}}
+{{--                                    name="transaction_rest"--}}
+{{--                                    min="0"--}}
+{{--                                    value="{{ old('transaction_rest') }}">--}}
+
+{{--                                @error('transaction_rest')--}}
+{{--                                <span class="text-danger">{{$message}}</span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+
+{{--                            --}}{{-- monthly_payment --}}
+{{--                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
+{{--                                <label>قيمة الدفعة الشهرية </label>--}}
+{{--                                <input--}}
+{{--                                    type="number"--}}
+{{--                                    class="form-control form-control-user @error('monthly_payment') is-invalid @enderror"--}}
+{{--                                    id="examplemonthly_payment"--}}
+{{--                                    name="monthly_payment"--}}
+{{--                                    min="0"--}}
+{{--                                    value="{{ old('monthly_payment') }}">--}}
+
+{{--                                @error('monthly_payment')--}}
+{{--                                <span class="text-danger">{{$message}}</span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+
+{{--                            --}}{{-- date_of_first_payment --}}
+{{--                            <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
+{{--                                <label>تاريخ أول دفعة </label>--}}
+{{--                                <input--}}
+{{--                                    type="date"--}}
+{{--                                    class="form-control form-control-user @error('date_of_first_payment') is-invalid @enderror"--}}
+{{--                                    id="exampledate_of_first_payment"--}}
+{{--                                    name="date_of_first_payment"--}}
+{{--                                    value="{{ old('date_of_first_payment') }}">--}}
+
+{{--                                @error('date_of_first_payment')--}}
+{{--                                <span class="text-danger">{{$message}}</span>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
+
+{{--                        </div>--}}
 
 
                     </div>
