@@ -30,6 +30,7 @@ class Customer extends Model
         'created_by',
         'updated_by',
         'account',
+        'notes'
     ];
 
     public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany

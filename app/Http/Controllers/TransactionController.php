@@ -216,6 +216,7 @@ class TransactionController extends Controller
                 'region' => $request->region,
                 'address'       => $request->address,
                 'account' => $request->account,
+                'notes' => $request->notes,
                 'reserve_phone_NO'    => $request->reserve_phone_NO,
                 'date_of_birth'     => $request->date_of_birth,
                 'marital_status'         => $request->marital_status,
@@ -386,6 +387,7 @@ class TransactionController extends Controller
                 'bank_name'       => $request->bank_name,
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
+                'notes' => $request->notes,
                 'status'       => 'متعسر',
             ]);
 

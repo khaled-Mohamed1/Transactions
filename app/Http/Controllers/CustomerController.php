@@ -255,7 +255,8 @@ class CustomerController extends Controller
                 'region' => $request->region,
                 'address'       => $request->address,
                 'status' => $status,
-                'account' => $request->account
+                'account' => $request->account,
+                'notes' => $request->notes,
             ]);
 
 
@@ -357,7 +358,8 @@ class CustomerController extends Controller
             $customers = Customer::query();
             if ($request->filled('search')) {
                 $customers = $customers->where('ID_NO', 'LIKE', '%' . $request->search . '%')
-                    ->orWhere('customer_NO', 'LIKE', '%' . $request->search . '%');
+                    ->orWhere('customer_NO', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('full_name', 'LIKE', '%' . $request->search . '%');
             }
             $customers = $customers->get();
 
