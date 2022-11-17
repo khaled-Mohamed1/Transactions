@@ -93,6 +93,26 @@
                 <hr>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">ملاحظات</h4>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <h6 class="text-right">{{$customer->notes}}</h6>
+
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">معلومات ثانوية</h4>
                 </div>
 
