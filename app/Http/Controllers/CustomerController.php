@@ -151,8 +151,14 @@ class CustomerController extends Controller
                 'phone_NO'         => $request->phone_NO,
                 'region' => $request->region,
                 'address'       => $request->address,
+                'notes'       => $request->notes,
                 'created_by' => auth()->user()->id
             ]);
+
+            if($customer->customer_NO == 400000){
+                $customer->customer_NO = $customer->customer_NO + 1;
+                $customer->save();
+            }
 
             // Commit And Redirected To Listing
             DB::commit();
@@ -173,10 +179,14 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
+        $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
         $drafts = CustomerDraft::with('DraftCustomerDraft')->where('customer_id',$customer->id)->get();
+        $issues = CustomerDraft::with('IssueCustomerIussue')->where('customer_id',$customer->id)->get();
         return view('customers.show')->with([
             'customer'  => $customer,
-            'drafts' => $drafts
+            'drafts' => $drafts,
+            'issues' => $issues,
+            'users' => $users
         ]);
     }
 
@@ -243,7 +253,7 @@ class CustomerController extends Controller
         try {
 
             // Store Data
-            if($request->status == 'مقبول'){
+            if($request->status == 'مقبول' || $request->status == 'قيد التوقيع'){
                 $status = 'قيد التوقيع';
             }else{
                 $status = 'مرفوض';
@@ -286,7 +296,7 @@ class CustomerController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('customers.index.customers')->with('success','تم تعديل العميل بنجاح!');
+            return redirect()->route('customers.show',['customer' => $customer->id])->with('success','تم تعديل العميل بنجاح!');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error

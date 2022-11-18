@@ -103,6 +103,13 @@
                             @enderror
                         </div>
 
+                        {{-- notes --}}
+                        <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
+                            <label>الملاحظات </label>
+                            <textarea class="form-control form-control-user"
+                                      name="notes" rows="3"></textarea>
+                        </div>
+
                     </div>
                 </div>
 

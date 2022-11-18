@@ -65,6 +65,8 @@
                                         <span class="text-success">{{ $customer->status }}</span>
                                     @elseif($customer->status == 'مرفوض' || $customer->status == 'متعسر')
                                         <span class="text-danger">{{ $customer->status }}</span>
+                                    @elseif($customer->status == 'قيد التوقيع')
+                                        <span class="text-warning">{{ $customer->status }}</span>
                                     @else
                                         {{ $customer->status }}
                                     @endif
@@ -79,10 +81,13 @@
                                     <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
-                                       class="btn btn-primary m-2">
-                                        <i class="fas fa-plus"></i>
-                                    </a>
+                                    @if($customer->status == 'مرفوض')
+                                    @else
+                                        <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
+                                           class="btn btn-info m-2">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

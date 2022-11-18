@@ -22,10 +22,14 @@
 {{--                <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">--}}
 {{--                    <i class="fas fa-trash"></i>--}}
 {{--                </a>--}}
-                <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
-                   class="btn btn-info m-2">
-                    <i class="fas fa-plus"></i>
-                </a>
+                @if($customer->status == 'مرفوض')
+                @else
+                    <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
+                       class="btn btn-info m-2">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                @endif
+
             </div>
         </div>
 
@@ -162,6 +166,27 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">المعاملات</h4>
+                    <div>
+                        @if($customer->updated_by == NULL)
+                            <h6 class="text-info text-right">ليس لديه معاملة</h6>
+                        @else
+                            <h6 class="text-warning text-right">المعاملة لم تنجز</h6>
+                        @endif
+                        <form action="" method="POST" class="test">
+                            <input type="hidden" name="customer_id" id="customer_id{{$customer->id}}" value="{{$customer->id}}">
+                            <select name="user_id" id="select{{$customer->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
+                                <option  value="false">إلغاء</option>
+                                @foreach($users as $user)
+                                    <option id="option{{$customer->id}}" value="{{$user->id}}" {{old('user_id') ? ((old('user_id') == $user->id) ? 'selected' : '')
+                                                : (($user->id == $customer->updated_by) ? 'selected' : '')}}>{{$user->full_name}}</option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </form>
+                    </div>
+
                 </div>
 
                 <div class="card shadow mb-4">
@@ -301,19 +326,54 @@
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th width="5%">#</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="15%">العمليات</th>
+                                    <th width="10%">رقم</th>
+                                    <th width="10%">إنشاء بواسطة</th>
+                                    <th width="10%">اسم المحكمة</th>
+                                    <th width="10%">رقم القضية</th>
+                                    <th width="10%">مبلغ القضية</th>
+                                    <th width="10%">طالب التنفيذ</th>
+                                    <th width="15%">الأطراف</th>
+                                    <th width="10%">الوكيل</th>
+                                    <th width="10%">الحاله</th>
+                                    <th width="10%">ملاحظات</th>
+                                    <th width="10%">تاريخ الإنشاء</th>
+                                    <th width="10%">العمليات</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <tr>
-                                    <td colspan="6">لا يوجد بيانات</td>
-                                </tr>
+                                @forelse ($issues as $issue)
+                                    <tr>
+                                        <td>{{ $issue->issue_NO }}</td>
+                                        <td>{{ $issue->UserIssue->full_name }}</td>
+                                        <td>{{ $issue->court_name }}</td>
+                                        <td>{{ $issue->case_number }}</td>
+                                        <td>{{ $issue->case_amount }}</td>
+                                        <td>{{ $issue->execution_request }}</td>
+                                        <td>
+                                            @foreach($issue->cusotmerIssues as $customer)
+                                                <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $issue->agent_name }}</td>
+                                        <td>{{ $issue->issue_status }}</td>
+                                        <td>{{ $issue->notes }}</td>
+                                        <td>{{ $issue->created_at }}</td>
+{{--                                        <td style="display: flex">--}}
+                                            {{--                                        <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
+                                            {{--                                           class="btn btn-primary m-2">--}}
+                                            {{--                                            <i class="fa fa-pen"></i>--}}
+                                            {{--                                        </a>--}}
+{{--                                            <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$issue->id}}">--}}
+{{--                                                <i class="fas fa-trash"></i>--}}
+{{--                                            </a>--}}
+{{--                                        </td>--}}
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="12">لا يوجد بيانات</td>
+                                    </tr>
+                                @endforelse
                                 </tbody>
                             </table>
 
@@ -344,6 +404,49 @@
 
     </div>
 
+
+@endsection
+
+@section('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function() {
+
+            let customer = {!! $customer->toJson() !!};
+
+            $(".test").each(function(index) {
+                $(document).on('change', '#select'+customer.id, function(e) {
+                    let user_id = $(this).val();
+                    let customer_id = customer.id;
+                    if (confirm('هل تريد اضافة المهمة للموظف؟')){
+                        $.ajax({
+                            url: "{{ route('customers.add.task') }}",
+                            method: 'POST',
+                            data: {
+                                user_id: user_id,
+                                customer_id: customer_id,
+                            },
+                            success: function(res) {
+                                if (res.status === 'success') {
+                                    location.reload();
+                                }
+                            },
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection
 
