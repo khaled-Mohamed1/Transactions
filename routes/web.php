@@ -8,7 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\DraftController;
 use App\Http\Controllers\IssueController;
-
+use App\Http\Controllers\AttachmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,6 +71,13 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     Route::get('/show/{customer}', [CustomerController::class, 'show'])->name('show');
     Route::put('/update/{customer}', [CustomerController::class, 'update'])->name('update');
     Route::delete('/delete/{customer}', [CustomerController::class, 'delete'])->name('destroy');
+
+    //attachment
+    Route::get('/create-attachment/{customer}', [AttachmentController::class, 'create'])->name('attachment.create');
+    Route::get('/show-attachment/{attachment}', [AttachmentController::class, 'show'])->name('attachment.show');
+    Route::post('/store-attachment', [AttachmentController::class, 'store'])->name('attachment.store');
+    Route::delete('/delete-attachment/{attachment}', [AttachmentController::class, 'destroy'])->name('attachment.destroy');
+
 
     //search
     Route::get('/search', [CustomerController::class, 'search'])->name('search');

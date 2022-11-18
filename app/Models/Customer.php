@@ -38,6 +38,11 @@ class Customer extends Model
         return $this->hasMany(Transaction::class);
     }
 
+    public function attachments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
     public function CustomerDrafts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CustomerDraft::class, 'customer_id');

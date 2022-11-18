@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
+    public function attachments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
     public function drafts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Draft::class);

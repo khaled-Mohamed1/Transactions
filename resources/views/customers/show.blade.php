@@ -390,9 +390,28 @@
                 <div class="p-3 py-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="text-right">المرفقات</h4>
+                        <a href="{{ route('customers.attachment.create', ['customer' => $customer->id]) }}"
+                           class="btn btn-success m-2">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
                     <div class="row mt-2">
-                        لا يوجد مرفقات
+                        @forelse($customer->attachments as $attachment)
+                            <div class="col-4 mb-4 text-right">
+                                <div class="card" style="width: 20rem;">
+                                    <a href="{{route('customers.attachment.show',['attachment'=>$attachment->id])}}"><img height="250px" src="{{asset($attachment->attachment)}}" class="card-img-top" alt="..."></a>
+                                    <div class="card-body bg-gray-100" style="width: 100%">
+                                        <p class="card-text">{{$attachment->title}}</p>
+                                        <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$attachment->id}}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            لا يوجد مرفقات
+                        @endforelse
+
                     </div>
                 </div>
 
@@ -405,6 +424,7 @@
 
 
     </div>
+    @include('customers.attachment-delete')
 
 
 @endsection
