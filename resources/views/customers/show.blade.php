@@ -78,6 +78,8 @@
                                                 <span class="text-success">{{ $customer->status }}</span>
                                             @elseif($customer->status == 'مرفوض' || $customer->status == 'متعسر')
                                                 <span class="text-danger">{{ $customer->status }}</span>
+                                            @elseif($customer->status == 'قيد التوقيع')
+                                                <span class="text-warning">{{ $customer->status }}</span>
                                             @else
                                                 {{ $customer->status }}
                                             @endif

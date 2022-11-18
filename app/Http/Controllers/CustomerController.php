@@ -255,16 +255,15 @@ class CustomerController extends Controller
             // Store Data
             if($request->status == 'مقبول' || $request->status == 'قيد التوقيع'){
                 $status = 'قيد التوقيع';
-            }else{
-                $status = 'مرفوض';
             }
+
             $customer_updated = Customer::whereId($customer->id)->update([
                 'full_name'    => $request->full_name,
                 'ID_NO'     => $request->ID_NO,
                 'phone_NO'         => $request->phone_NO,
                 'region' => $request->region,
                 'address'       => $request->address,
-                'status' => $status,
+                'status' => $status ?? $request->status,
                 'account' => $request->account,
                 'notes' => $request->notes,
             ]);
