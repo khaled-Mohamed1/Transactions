@@ -9,7 +9,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">تعديل المعاملة</h1>
-            <a href="{{route('transactions.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
+            <a href="{{route('customers.show',['customer' => $transaction->CustomerTransaction->id])}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
                     class="fas fa-arrow-left fa-sm text-white-50"></i></a>
         </div>
 
@@ -28,85 +28,121 @@
                 <div class="card-body">
                     <div class="form-group row">
 
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user"
+                            id="customer_id"
+                            name="customer_id"
+                            value="{{$transaction->CustomerTransaction->id}}">
+
                         {{-- customer_id --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>اسم العميل <span style="color:red;">*</span></label>
-                            <select name="customer_id" id="customer_id" class="form-control form-control-user @error('customer_id') is-invalid @enderror"
-                            style="height: 40px">
-                                    <option value="{{$transaction->CustomerTransaction->id}}">{{$transaction->CustomerTransaction->full_name}}</option>
-                            </select>
-
-                            @error('customer_id')
+                            <label>الأسم كامل</label>
+                            <input
+                                {{--                                disabled--}}
+                                type="text"
+                                class="form-control form-control-user @error('full_name') is-invalid @enderror"
+                                id="full_name"
+                                name="full_name"
+                                value="{{$transaction->CustomerTransaction->full_name}}">
+                            @error('full_name')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
+                        </div>
+
+                        {{-- customer_NO --}}
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>رقم الإستدلالي</label>
+                            <input
+                                disabled
+                                type="text"
+                                class="form-control form-control-user"
+                                id="customer_NO"
+                                name="customer_NO"
+                                value="{{$transaction->CustomerTransaction->customer_NO}}">
+
                         </div>
 
                         {{-- ID_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>رقم الهوية</label>
                             <input
-                                disabled
+                                {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('ID_NO') is-invalid @enderror"
                                 id="ID_NO"
                                 name="ID_NO"
                                 value="{{$transaction->CustomerTransaction->ID_NO}}">
-
+                            @error('ID_NO')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- phone_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>رقم الجوال</label>
                             <input
-                                disabled
+                                {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('phone_NO') is-invalid @enderror"
                                 id="phone_NO"
                                 name="phone_NO"
                                 value="{{$transaction->CustomerTransaction->phone_NO}}">
+                            @error('phone_NO')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- region --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>المنطقة</label>
                             <input
-                                disabled
+                                {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('region') is-invalid @enderror"
                                 id="region"
                                 name="region"
                                 value="{{$transaction->CustomerTransaction->region}}">
+                            @error('region')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- address --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>العنوان</label>
                             <input
-                                disabled
+                                {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('address') is-invalid @enderror"
                                 id="address"
                                 name="address"
                                 value="{{$transaction->CustomerTransaction->address}}">
+                            @error('address')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- account --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>الحساب</label>
                             <input
-                                disabled
+                                {{--                                disabled--}}
                                 type="text"
-                                class="form-control form-control-user"
+                                class="form-control form-control-user @error('account') is-invalid @enderror"
                                 id="account"
                                 name="account"
                                 value="{{$transaction->CustomerTransaction->account}}">
+                            @error('account')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         {{-- transactions_type --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع المعاملة <span style="color:red;">*</span></label>
                             <input type="hidden" name="transactions_type" value="{{$transaction->transactions_type}}">
-                            <select name="transactions_type" disabled class="form-control form-control-user"
+                            <select name="transactions_type" class="form-control form-control-user"
                             style="height: 40px">
                                 <option  {{ $transaction->transactions_type == null ? 'selected' : '' }}></option>
                                 <option value="ودي" {{ $transaction->transactions_type == 'ودي' ? 'selected' : '' }}>ودي</option>
@@ -116,6 +152,7 @@
                             </select>
 
                         </div>
+
 
                         {{-- reserve_phone_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
@@ -287,7 +324,6 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>أول دفعة <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="number"
                                 class="form-control form-control-user  @error('first_payment') is-invalid @enderror"
                                 id="examplefirst_payment"
@@ -303,7 +339,6 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="number"
                                 class="form-control form-control-user  @error('transaction_rest') is-invalid @enderror"
                                 id="exampletransaction_rest"
@@ -319,7 +354,6 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="number"
                                 class="form-control form-control-use  @error('monthly_payment') is-invalid @enderror"
                                 id="examplemonthly_payment"
@@ -335,7 +369,6 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>تاريخ أول دفعة <span style="color:red;">*</span></label>
                             <input
-                                disabled
                                 type="date"
                                 class="form-control form-control-user  @error('date_of_first_payment') is-invalid @enderror"
                                 id="exampledate_of_first_payment"
@@ -423,7 +456,7 @@
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success btn-user float-right mb-3">تعديل</button>
-                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('transactions.index') }}">إلغاء</a>
+                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('customers.show',['customer' => $transaction->CustomerTransaction->id]) }}">إلغاء</a>
                 </div>
             </form>
         </div>

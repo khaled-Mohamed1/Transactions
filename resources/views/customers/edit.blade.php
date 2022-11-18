@@ -9,7 +9,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">تعديل عميل</h1>
-            <a href="{{route('customers.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
+            <a href="{{route('customers.show',['customer' => $customer->id])}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
                     class="fas fa-arrow-left fa-sm text-white-50"></i></a>
         </div>
 
@@ -251,7 +251,7 @@
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success btn-user float-right mb-3">تعديل</button>
-                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('customers.index') }}">إلغاء</a>
+                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('customers.show',['customer' => $customer->id]) }}">إلغاء</a>
                 </div>
             </form>
         </div>

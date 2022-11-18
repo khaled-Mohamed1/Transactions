@@ -400,7 +400,7 @@ class TransactionController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('transactions.index')->with('success','تم تعديل المعاملة بنجاح');
+            return redirect()->route('customers.show',['customer' => $customer->id])->with('success','تم تعديل المعاملة بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
