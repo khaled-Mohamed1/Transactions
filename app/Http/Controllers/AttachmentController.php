@@ -10,8 +10,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class AttachmentController extends Controller
 {
@@ -67,23 +65,17 @@ class AttachmentController extends Controller
         DB::beginTransaction();
         try {
 
-            $imageName = Str::random(32) . "." . $request->file->getClientOriginalExtension();
-
-
             $customer = Customer::findOrFail($request->customer_id);
-//            $fileName = time().$request->file('file')->getClientOriginalName();
-//            $path = $request->file('file')->storeAs('attachments/'.$customer->customer_NO, $fileName,'public');
+            $fileName = time().$request->file('file')->getClientOriginalName();
+            $path = $request->file('file')->storeAs('attachments/'.$customer->customer_NO, $fileName,'public');
 
             // Store Data move(public_path('images'), $imageName);
             $customer = Attachment::create([
                 'customer_id' => $request->customer_id,
                 'user_id'    => auth()->user()->id,
                 'title'     => $request->title,
-                'attachment'         => 'http://transaction.sellbuyltd.com/storage/app/public/attachments/'. $customer->customer_NO . $imageName,
+                'attachment'         => '/storage/'.$path,
             ]);
-
-            Storage::disk('public')->put('attachments/' . $imageName, file_get_contents($request->file));
-
 
             // Commit And Redirected To Listing
             DB::commit();
