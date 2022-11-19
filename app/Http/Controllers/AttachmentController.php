@@ -79,10 +79,10 @@ class AttachmentController extends Controller
                 'customer_id' => $request->customer_id,
                 'user_id'    => auth()->user()->id,
                 'title'     => $request->title,
-                'attachment'         => 'http://transaction.sellbuyltd.com/storage/app/public/attachments/'.$customer->customer_NO.'/' . $imageName,
+                'attachment'         => 'http://transaction.sellbuyltd.com/storage/app/public/attachments/' . $imageName,
             ]);
 
-            Storage::disk('public')->put('attachments/'.$customer->customer_NO.'/' . $imageName, file_get_contents($request->file));
+            Storage::disk('public')->put('attachments/' . $imageName, file_get_contents($request->file));
 
 
             // Commit And Redirected To Listing
