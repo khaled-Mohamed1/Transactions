@@ -67,7 +67,7 @@ class AttachmentController extends Controller
         DB::beginTransaction();
         try {
 
-            $imageName = Str::random(32) . "." . $request->category_image->getClientOriginalExtension();
+            $imageName = Str::random(32) . "." . $request->file->getClientOriginalExtension();
 
 
             $customer = Customer::findOrFail($request->customer_id);
