@@ -69,7 +69,7 @@ class AttachmentController extends Controller
             $fileName = time().$request->file('file')->getClientOriginalName();
             $path = $request->file('file')->storeAs('attachments/'.$customer->customer_NO, $fileName,'public');
 
-            // Store Data
+            // Store Data move(public_path('images'), $imageName);
             $customer = Attachment::create([
                 'customer_id' => $request->customer_id,
                 'user_id'    => auth()->user()->id,
@@ -131,6 +131,7 @@ class AttachmentController extends Controller
     {
         DB::beginTransaction();
         try {
+
             // Delete attachment
             Attachment::whereId($attachment->id)->delete();
 
