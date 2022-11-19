@@ -140,6 +140,14 @@ class AttachmentController extends Controller
         DB::beginTransaction();
         try {
 
+            // Public storage
+            $storage = Storage::disk('public');
+
+            // Iamge delete
+            if ($storage->exists('attachments/' . $attachment->attachment))
+                $storage->delete('attachments/' . $attachment->attachment);
+
+
             // Delete attachment
             Attachment::whereId($attachment->id)->delete();
 
