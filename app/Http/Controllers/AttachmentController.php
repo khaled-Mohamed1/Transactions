@@ -67,7 +67,7 @@ class AttachmentController extends Controller
         DB::beginTransaction();
         try {
 
-//            $customer = Customer::findOrFail($request->customer_id);
+            $customer = Customer::findOrFail($request->customer_id);
 //            $fileName = time().$request->file('file')->getClientOriginalName();
 //            $path = $request->file('file')->storeAs('attachments/'.$customer->customer_NO, $fileName,'public');
 
@@ -79,7 +79,7 @@ class AttachmentController extends Controller
                 'customer_id' => $request->customer_id,
                 'user_id'    => auth()->user()->id,
                 'title'     => $request->title,
-                'attachment'         => 'http://transaction.sellbuyltd.com/storage/app/public/attachments/' . $imageName,
+                'attachment'         => 'http://transaction.sellbuyltd.com/storage/app/public/attachments/'.$customer->customer_NO.'/' . $imageName,
             ]);
 
             Storage::disk('public')->put('attachments/' . $imageName, file_get_contents($request->file));
