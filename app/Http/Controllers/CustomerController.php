@@ -9,6 +9,7 @@ use App\Helpers\Helper;
 use App\Imports\CustomerImport;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
+use App\Models\CustomerIssue;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -181,7 +182,7 @@ class CustomerController extends Controller
     {
         $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
         $drafts = CustomerDraft::with('DraftCustomerDraft')->where('customer_id',$customer->id)->get();
-        $issues = CustomerDraft::with('IssueCustomerIssue')->where('customer_id',$customer->id)->get();
+        $issues = CustomerIssue::with('IssueCustomerIssue')->where('customer_id',$customer->id)->get();
         return view('customers.show')->with([
             'customer'  => $customer,
             'drafts' => $drafts,
