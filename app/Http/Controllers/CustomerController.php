@@ -181,7 +181,7 @@ class CustomerController extends Controller
     {
         $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
         $drafts = CustomerDraft::with('DraftCustomerDraft')->where('customer_id',$customer->id)->get();
-        $issues = CustomerDraft::with('IssueCustomerIussue')->where('customer_id',$customer->id)->get();
+        $issues = CustomerDraft::with('IssueCustomerIssue')->where('customer_id',$customer->id)->get();
         return view('customers.show')->with([
             'customer'  => $customer,
             'drafts' => $drafts,
