@@ -9,12 +9,17 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">لوحة التحكم</h1>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary">
-                    اضافة جديد <i class="fas fa-plus"></i>
+                    اضافة عميل جديد <i class="fas fa-plus"></i>
                 </a>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <a href="{{ route('payments.create') }}" class="btn btn-sm btn-info">
+                    اضافة دفعة جديدة <i class="fas fa-plus"></i>
+                </a>
+            </div>
+            <div class="col-md-4">
 
                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                     class="fas fa-download fa-sm text-white-50"></i> انشاء تقرير</a>
@@ -29,7 +34,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-center mb-3">اهلا وسهلا ب لوحة التحكم!</h2>
+{{--            <h2 class="text-center mb-3">اهلا وسهلا ب لوحة التحكم!</h2>--}}
         </div>
     </div>
 

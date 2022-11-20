@@ -9,6 +9,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\DraftController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -163,5 +164,15 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
 //    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
 
     Route::get('export/', [IssueController::class, 'export'])->name('export');
+
+});
+
+Route::middleware('auth')->prefix('payments')->name('payments.')->group(function(){
+    Route::get('/create', [PaymentController::class, 'create'])->name('create');
+    Route::post('/store', [PaymentController::class, 'store'])->name('store');
+    Route::delete('/delete/{payment}', [PaymentController::class, 'delete'])->name('destroy');
+
+    //get data of customer
+    Route::post('/get', [PaymentController::class, 'get'])->name('get');
 
 });

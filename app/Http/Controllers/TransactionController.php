@@ -72,7 +72,7 @@ class TransactionController extends Controller
 
     public function allIndex(){
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
-            $transactions = Transaction::orderBy('transaction_NO')->paginate(100);
+            $transactions = Transaction::orderBy('transaction_NO','desc')->paginate(100);
         }else{
             $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('transaction_NO')->paginate(100);
         }
@@ -226,7 +226,8 @@ class TransactionController extends Controller
                 'bank_name'       => $request->bank_name,
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
-                'status'       => 'متعسر',
+//                'status'       => 'متعسر',
+                'status'       => 'قيد العمل',
                 'updated_by' => null
             ]);
 

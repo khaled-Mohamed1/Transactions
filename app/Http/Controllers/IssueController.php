@@ -145,7 +145,7 @@ class IssueController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('issues.index')->with('success','تم انشاء القضيىة بنجاح');
+            return redirect()->route('issues.index')->with('success','تم انشاء القضية بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error

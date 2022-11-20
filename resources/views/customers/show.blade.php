@@ -74,12 +74,14 @@
                                         <td>{{ $customer->region }}</td>
                                         <td>{{ $customer->address }}</td>
                                         <td>
-                                            @if($customer->status == 'مقبول' || $customer->status == 'مكتمل')
+                                            @if($customer->status == 'مقبول' || $customer->status == 'مكتمل' || $customer->status == 'ملتزم')
                                                 <span class="text-success">{{ $customer->status }}</span>
                                             @elseif($customer->status == 'مرفوض' || $customer->status == 'متعسر')
                                                 <span class="text-danger">{{ $customer->status }}</span>
                                             @elseif($customer->status == 'قيد التوقيع')
                                                 <span class="text-warning">{{ $customer->status }}</span>
+                                            @elseif($customer->status == 'قيد العمل')
+                                                <span class="text-info">{{ $customer->status }}</span>
                                             @else
                                                 {{ $customer->status }}
                                             @endif
@@ -383,6 +385,62 @@
                     </div>
                 </div>
 
+                <hr>
+
+                {{-- Issue --}}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">الدفعات</h4>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr class="text-info">
+                                    <th width="10%">رقم الدفعة</th>
+                                    <th width="10%">إنشاء بواسطة</th>
+                                    <th width="10%">قيمة الدفعة</th>
+                                    <th width="15%">تاريخ الدفع</th>
+                                    <th width="15%">نوعة الدفعة</th>
+                                    <th width="15%">عن طريق</th>
+                                    <th width="20%">ملاحظات</th>
+                                    <th width="10%">العمليات</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                @forelse ($customer->payments as $payment)
+                                    <tr>
+                                        <td>{{ $payment->payment_NO }}</td>
+                                        <td>{{ $payment->UserPayment->full_name }}</td>
+                                        <td>{{ $payment->payment_amount }}</td>
+                                        <td>{{ $payment->created_at }}</td>
+                                        <td>{{ $payment->payment_type }}</td>
+                                        <td>{{ $payment->payment_via }}</td>
+                                        <td>{{ $payment->notes }}</td>
+                                        <td style="display: flex">
+                                            <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$payment->id}}">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8">لا يوجد بيانات</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
 
                 <hr>
 
@@ -425,6 +483,7 @@
 
     </div>
     @include('customers.attachment-delete')
+    @include('payments.delete-modal')
 
 
 @endsection

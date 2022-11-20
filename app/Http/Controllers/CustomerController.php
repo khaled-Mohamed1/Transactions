@@ -10,6 +10,7 @@ use App\Imports\CustomerImport;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\CustomerIssue;
+use App\Models\Payment;
 use App\Models\User;
 use ArPHP\I18N\Arabic;
 use Barryvdh\DomPDF\Facade\Pdf;

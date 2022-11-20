@@ -58,6 +58,11 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
+    public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     public function customers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Customer::class,'created_by','id');
