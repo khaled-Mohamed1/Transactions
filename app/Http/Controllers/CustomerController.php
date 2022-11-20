@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\AdverserExport;
 use App\Exports\AllCustomersExport;
+use App\Exports\CommittedExport;
 use App\Exports\CustomersExport;
 use App\Helpers\Helper;
 use App\Imports\CustomerImport;
@@ -408,6 +409,11 @@ class CustomerController extends Controller
     public function exportCustomers(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return Excel::download(new AllCustomersExport(), 'جميع العملاء.xlsx');
+    }
+
+    public function exportCommitted(): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        return Excel::download(new CommittedExport(), 'الملتزمين.xlsx');
     }
 
     public function search(Request $request)
