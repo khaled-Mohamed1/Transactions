@@ -30,7 +30,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                <tr>
+                                <tr class="text-info">
                                     <th width="20%">اسم</th>
                                     <th width="25%">البريد الإلكتروني</th>
                                     <th width="15%">رقم الجوال</th>
@@ -75,7 +75,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                <tr>
+                                <tr class="text-info">
                                     <th width="15%">رقم الإستدلالي</th>
                                     <th width="15%">الإسم كامل</th>
                                     <th width="10%">رقم الهوية</th>
@@ -137,7 +137,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                <tr>
+                                <tr class="text-info">
                                     <th width="5%">رقم المعاملة</th>
                                     <th width="5%">نوع المعاملة</th>
                                     <th width="5%">قيمة المعاملة</th>
@@ -197,7 +197,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                <tr>
+                                <tr class="text-info">
                                     <th width="10%">رقم الكمبيالة</th>
                                     <th width="15%">إنشاء بواسطة</th>
                                     <th width="10%">نوع المستند</th>
@@ -246,7 +246,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
-                                <tr>
+                                <tr class="text-info">
                                     <th width="5%">#</th>
                                     <th width="20%">رقم القضية</th>
                                     <th width="20%">رقم القضية</th>
@@ -271,14 +271,14 @@
                 <hr>
 
                 {{-- Attachments --}}
-                <div class="p-3 py-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">المرفقات</h4>
-                    </div>
-                    <div class="row mt-2">
-                        لا يوجد مرفقات
-                    </div>
-                </div>
+{{--                <div class="p-3 py-3">--}}
+{{--                    <div class="d-flex justify-content-between align-items-center mb-3">--}}
+{{--                        <h4 class="text-right">المرفقات</h4>--}}
+{{--                    </div>--}}
+{{--                    <div class="row mt-2">--}}
+{{--                        لا يوجد مرفقات--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
             </div>
 

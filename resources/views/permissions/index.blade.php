@@ -26,7 +26,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                     <thead>
-                        <tr>
+                    <tr class="text-info">
                             <th width="40%">اسم</th>
                             <th width="40%">نوع الصلاحية</th>
                             <th width="20%">العمليات</th>

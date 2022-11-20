@@ -37,7 +37,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                        <tr>
+                        <tr class="text-info">
                             <th width="10%">رقم الكمبيالة</th>
                             <th width="15%">إنشاء بواسطة</th>
                             <th width="10%">نوع المستند</th>

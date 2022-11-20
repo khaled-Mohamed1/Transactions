@@ -38,7 +38,7 @@
 
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                        <tr>
+                        <tr class="text-info">
                             <th width="12%">رقم المعاملة</th>
                             <th width="10%">رقم الإستدلالي</th>
                             <th width="10%">اسم العميل</th>

@@ -37,7 +37,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                        <tr>
+                        <tr class="text-info">
                             <th width="10%">رقم الإستدلالي</th>
                             <th width="15%">الإسم كامل</th>
                             <th width="10%">رقم الهوية</th>
