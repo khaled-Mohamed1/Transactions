@@ -87,8 +87,16 @@
                                             @endif
                                         </td>
                                         <td>{{ $customer->created_at }}</td>
-                                        <td>{{ $customer->account }}</td>
+                                        <td>
+                                            @if($customer->account > 0)
+                                                <span class="text-danger">{{ $customer->account }}</span>
 
+                                            @elseif($customer->account < 0)
+                                                <span class="text-success">{{ $customer->account }}</span>
+                                            @else
+                                                {{ $customer->account }}
+                                            @endif
+                                        </td>
                                     </tr>
 
                                 </tbody>

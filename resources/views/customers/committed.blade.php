@@ -1,27 +1,26 @@
 @extends('layouts.app')
 
-@section('title', 'بيانات العميل')
+@section('title', 'العملاء الملتزمين')
 
 @section('content')
     <div class="container-fluid">
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">بيانات العميل</h1>
+            <h1 class="h3 mb-0 text-gray-800">الملتزمين</h1>
             <div class="row">
-{{--                <div class="col-md-6">--}}
-{{--                    <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary">--}}
-{{--                        اضافة جديد <i class="fas fa-plus"></i>--}}
-{{--                    </a>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-6">--}}
-{{--                    <a href="{{ route('customers.export') }}" class="btn btn-sm btn-success">--}}
-{{--                        نصدير اكسل <i class="fas fa-check"></i>--}}
-{{--                    </a>--}}
-{{--                </div>--}}
+                {{--                <div class="col-md-6">--}}
+                {{--                    <a href="{{ route('customers.create') }}" class="btn btn-sm btn-primary">--}}
+                {{--                        <i class="fas fa-plus"></i> Add New--}}
+                {{--                    </a>--}}
+                {{--                </div>--}}
+                <div class="col-md-12">
+                    <a href="{{ route('customers.export.adverser') }}" class="btn btn-sm btn-success">
+                        تصدير اكسل <i class="fas fa-check"></i>
+                    </a>
+                </div>
+
             </div>
-            <a href="{{route('customers.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
-                    class="fas fa-arrow-left fa-sm text-white-50"></i></a>
 
         </div>
 
@@ -31,8 +30,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
-
+                <h6 class="m-0 font-weight-bold text-primary text-right">كل العملاء</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -46,7 +44,6 @@
                             <th width="5%">المنطقة</th>
                             <th width="15%">العنوان</th>
                             <th width="5%">الحالة</th>
-                            <th width="15%">إنشاء بواسطة</th>
                             <th width="5%">الحساب</th>
                             <th width="10%">العمليات</th>
                         </tr>
@@ -61,19 +58,8 @@
                                 <td>{{ $customer->region }}</td>
                                 <td>{{ $customer->address }}</td>
                                 <td>
-                                    @if($customer->status == 'مقبول' || $customer->status == 'مكتمل' || $customer->status == 'ملتزم')
-                                        <span class="text-success">{{ $customer->status }}</span>
-                                    @elseif($customer->status == 'مرفوض' || $customer->status == 'متعسر')
-                                        <span class="text-danger">{{ $customer->status }}</span>
-                                    @elseif($customer->status == 'قيد التوقيع')
-                                        <span class="text-warning">{{ $customer->status }}</span>
-                                    @elseif($customer->status == 'قيد العمل')
-                                        <span class="text-info">{{ $customer->status }}</span>
-                                    @else
-                                        {{ $customer->status }}
-                                    @endif
+                                    <span class="text-success">{{ $customer->status }}</span>
                                 </td>
-                                <td>{{ $customer->UserCustomer->full_name }}</td>
                                 <td>
                                     @if($customer->account > 0)
                                         <span class="text-danger">{{ $customer->account }}</span>
@@ -83,7 +69,8 @@
                                     @else
                                         {{ $customer->account }}
                                     @endif
-                                </td>                                <td style="display: flex">
+                                </td>
+                                <td style="display: flex">
                                     <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}"
                                        class="btn btn-primary m-2">
                                         <i class="fa fa-pen"></i>
@@ -91,30 +78,28 @@
                                     <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    @if($customer->status == 'مرفوض')
-                                    @else
-                                        <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
-                                           class="btn btn-info m-2">
-                                            <i class="fas fa-plus"></i>
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
+                                       class="btn btn-info m-2">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10">No record</td>
+                                <td colspan="9">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>
                     </table>
 
+                    {{ $customers->links() }}
                 </div>
             </div>
         </div>
 
     </div>
 
-    @include('customers.delete-modalsearch')
+    @include('customers.delete-modal')
 
 @endsection
 

@@ -70,8 +70,16 @@
                                         {{ $customer->status }}
                                     @endif
                                 </td>
-                                <td>{{ $customer->account }}</td>
-                                <td id="select">
+                                <td>
+                                    @if($customer->account > 0)
+                                        <span class="text-danger">{{ $customer->account }}</span>
+
+                                    @elseif($customer->account < 0)
+                                        <span class="text-success">{{ $customer->account }}</span>
+                                    @else
+                                        {{ $customer->account }}
+                                    @endif
+                                </td>                                <td id="select">
                                     <form action="" method="POST" class="test">
                                         <input type="hidden" name="customer_id" id="customer_id{{$customer->id}}" value="{{$customer->id}}">
                                         <select name="repeater" id="select{{$customer->id}}"  class="form-control form-control-user @error('repeater') is-invalid @enderror">

@@ -66,6 +66,7 @@
                 <a class="collapse-item" href="{{ route('customers.index') }}">بيانات العملاء الجدد</a>
                 <a class="collapse-item" href="{{ route('customers.index.task') }}">العملاء المقبولين (المهام)</a>
                 <a class="collapse-item" href="{{ route('customers.index.adverser') }}">العملاء المتعسرين</a>
+                <a class="collapse-item" href="{{ route('customers.index.committed') }}">العملاء الملتزمين</a>
                 <a class="collapse-item" href="{{ route('customers.index.rejected') }}">العملاء المرفوضين</a>
                 <a class="collapse-item" href="{{ route('customers.index.follow') }}">المتابعة</a>
 {{--                <a class="collapse-item" href="{{ route('users.create') }}">Add New</a>--}}

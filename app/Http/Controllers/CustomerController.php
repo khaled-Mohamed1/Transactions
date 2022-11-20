@@ -38,6 +38,7 @@ class CustomerController extends Controller
         $this->middleware('permission:عملاء-حذف', ['only' => ['delete']]);
         $this->middleware('permission:عملاء-ملف-شخصي', ['only' => ['show']]);
         $this->middleware('permission:عملاء-المتعسرين', ['only' => ['indexAdverser']]);
+        $this->middleware('permission:عملاء-الملتزمين', ['only' => ['indexCommitted']]);
         $this->middleware('permission:عملاء-المرفوضين', ['only' => ['indexRejected']]);
         $this->middleware('permission:عملاء-الجميع', ['only' => ['indexCustomers']]);
         $this->middleware('permission:عملاء-المهام', ['only' => ['indexTask','addTask']]);
@@ -68,6 +69,12 @@ class CustomerController extends Controller
     {
         $customers = Customer::orderBy('customer_NO','desc')->where('status','=','متعسر')->paginate(100);
         return view('customers.index_adverser', ['customers' => $customers]);
+    }
+
+    public function indexCommitted()
+    {
+        $customers = Customer::orderBy('customer_NO','desc')->where('status','=','ملتزم')->paginate(100);
+        return view('customers.committed', ['customers' => $customers]);
     }
 
     public function indexRejected()

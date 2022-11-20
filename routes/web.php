@@ -90,6 +90,9 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     //adverser
     Route::get('/adverser', [CustomerController::class, 'indexAdverser'])->name('index.adverser');
 
+    //committed
+    Route::get('/committed', [CustomerController::class, 'indexCommitted'])->name('index.committed');
+
     //rejected
     Route::get('/rejected', [CustomerController::class, 'indexRejected'])->name('index.rejected');
 

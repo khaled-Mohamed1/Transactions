@@ -71,8 +71,16 @@
                                         {{ $customer->status }}
                                     @endif
                                 </td>
-                                <td>{{ $customer->account }}</td>
-                                <td style="display: flex">
+                                <td>
+                                    @if($customer->account > 0)
+                                        <span class="text-danger">{{ $customer->account }}</span>
+
+                                    @elseif($customer->account < 0)
+                                        <span class="text-success">{{ $customer->account }}</span>
+                                    @else
+                                        {{ $customer->account }}
+                                    @endif
+                                </td>                                <td style="display: flex">
                                     <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}"
                                        class="btn btn-primary m-2">
                                         <i class="fa fa-pen"></i>
