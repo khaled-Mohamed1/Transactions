@@ -64,12 +64,13 @@
                                 <td>{{ $transaction->transaction_rest }}</td>
                                 <td>{{$transaction->created_at}}</td>
                                 <td>
-                                    @if($transaction->CustomerTransaction->status == 'مقبول' || $transaction->CustomerTransaction->status == 'مكتمل')
+                                    @if($transaction->CustomerTransaction->status == 'مقبول' || $transaction->CustomerTransaction->status == 'مكتمل' || $transaction->CustomerTransaction->status == 'ملتزم')
                                         <span class="text-success">{{ $transaction->CustomerTransaction->status }}</span>
-                                    @elseif($transaction->CustomerTransaction->status == 'مرفوض' || $transaction->CustomerTransaction->status == 'متعسر')
+                                    @elseif($transaction->CustomerTransaction->status == 'مرفوض' || $transaction->CustomerTransaction->status == 'متعسر' )
                                         <span class="text-danger">{{ $transaction->CustomerTransaction->status }}</span>
-                                    @else
-                                        {{ $transaction->CustomerTransaction->status }}
+                                    @elseif($transaction->CustomerTransaction->status == 'قيد العمل')
+                                        <span class="text-info">{{ $transaction->CustomerTransaction->status }}</span>
+                                    @else                                        {{ $transaction->CustomerTransaction->status }}
                                     @endif
                                 </td>
                                 <td style="display: flex">
