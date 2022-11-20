@@ -21,7 +21,8 @@ class PaymentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:عملاء-دفعات', ['only' => ['create','store','delete']]);
+        $this->middleware('permission:عملاء-دفعات', ['only' => ['create','store']]);
+        $this->middleware('permission:عملاء-دفعات-حذف', ['only' => ['delete']]);
     }
 
 
