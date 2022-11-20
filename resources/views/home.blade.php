@@ -76,8 +76,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
-                                <a href="{{route('transactions.index')}}" class="text-info">المتابعة (شهري)</a></div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_tasks}}</div>
+                                <a href="{{ route('customers.index.adverser') }}" class="text-info">المتعسرين (شهري)</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_adverser}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user-alt fa-2x text-gray-300"></i>
@@ -110,11 +110,12 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
-                                <a href="{{ route('customers.index.adverser') }}" class="text-primary">المتعسرين (شهري)</a></div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_adverser}}</div>
+                                <a href="{{route('transactions.index')}}" class="text-primary">المعاملات الحالية (شهري)</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customers_tasks}}</div>
+
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                            <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -170,7 +171,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$drafts}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                            <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -187,12 +188,36 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issues}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                            <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-xl-3 col-md-6 mb-4 text-right">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{ route('customers.index.follow') }}" class="text-warning">المتابعة (شهري)</a>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$customers_follow}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 

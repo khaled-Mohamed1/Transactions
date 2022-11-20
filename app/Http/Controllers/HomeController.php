@@ -39,6 +39,8 @@ class HomeController extends Controller
             ->whereYear('created_at', date('Y'))->where('status','جديد')->get()->count();
         $customers_tasks = Customer::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
+        $customers_follow = Customer::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->where('repeater',true)->get()->count();
         $customers_rejects = Customer::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->where('status','مرفوض')->get()->count();
         $transaction_amount = Transaction::whereMonth('created_at', date('m'))
@@ -56,6 +58,7 @@ class HomeController extends Controller
             'customers_new' => $customers_new,
             'customers_tasks'=>$customers_tasks,
             'customers_rejects'=>$customers_rejects,
+            'customers_follow'=>$customers_follow,
             'drafts'=>$drafts,
             'issues'=>$issues]);
     }

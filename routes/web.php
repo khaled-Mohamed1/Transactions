@@ -78,6 +78,9 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     Route::post('/store-attachment', [AttachmentController::class, 'store'])->name('attachment.store');
     Route::delete('/delete-attachment/{attachment}', [AttachmentController::class, 'destroy'])->name('attachment.destroy');
 
+    //follow-up
+    Route::get('/follow-up', [CustomerController::class, 'indexFollow'])->name('index.follow');
+    Route::post('/change-follow', [CustomerController::class, 'changeFollow'])->name('change.follow');
 
     //search
     Route::get('/search', [CustomerController::class, 'search'])->name('search');

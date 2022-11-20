@@ -37,6 +37,7 @@ return new class extends Migration
             $table->foreign('updated_by')->references('id')->on('users');
             $table->float('account')->default('0');
             $table->text('notes')->nullable();
+            $table->boolean('repeater')->default(false);
             $table->timestamps();
         });
     }

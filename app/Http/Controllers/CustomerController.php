@@ -11,6 +11,8 @@ use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\CustomerIssue;
 use App\Models\User;
+use ArPHP\I18N\Arabic;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -19,8 +21,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
-use Barryvdh\DomPDF\Facade\Pdf;
-use ArPHP\I18N\Arabic;
+
+
 
 
 class CustomerController extends Controller
@@ -38,6 +40,7 @@ class CustomerController extends Controller
         $this->middleware('permission:عملاء-المرفوضين', ['only' => ['indexRejected']]);
         $this->middleware('permission:عملاء-الجميع', ['only' => ['indexCustomers']]);
         $this->middleware('permission:عملاء-المهام', ['only' => ['indexTask','addTask']]);
+        $this->middleware('permission:عملاء-المتابعة', ['only' => ['indexFollow','changeFollow']]);
         $this->middleware('permission:عملاء-استراد', ['only' => ['importCustomers','uploadCustomers']]);
     }
 
@@ -81,6 +84,33 @@ class CustomerController extends Controller
         })->paginate(100);
         return view('customers.tasks', ['customers' => $customers,'users'=>$users]);
     }
+
+    public function indexFollow()
+    {
+        $customers = Customer::orderBy('customer_NO','desc')->where('repeater',true)->paginate(100);
+        return view('customers.follow-up', ['customers' => $customers]);
+    }
+
+    public function changeFollow(Request $request): \Illuminate\Http\JsonResponse
+    {
+        if($request->repeater === 'true'){
+            $customer = Customer::findOrFail($request->customer_id)->update([
+                'status' => 'قيد التوقيع',
+                'repeater' => 0,
+            ]);
+        }else{
+            $customer = Customer::findOrFail($request->customer_id)->update([
+                'status' => 'مرفوض',
+                'repeater' => 0,
+            ]);
+        }
+
+
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
+
 
 
     public function addTask(Request $request)
