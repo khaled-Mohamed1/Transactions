@@ -8,6 +8,16 @@
     </div>
 @endif
 
+@if (Session::has('warning'))
+    <div class="alert alert-warning alert-dismissible text-right" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="fa fa-times"></i>
+        </button>
+        <strong>تحذير !</strong> {{ session('warning') }}
+    </div>
+@endif
+
+
 @if (Session::has('error'))
     <div class="alert alert-danger alert-dismissible text-right" role="alert">
         <button type="button" class="close" data-dismiss="alert">

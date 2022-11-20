@@ -151,14 +151,13 @@ class CustomerController extends Controller
         // Validations
         $request->validate([
                 'full_name'    => 'required',
-                'ID_NO'     => 'required|numeric|digits:9|unique:customers',
+                'ID_NO'     => 'required|numeric|digits:9',
                 'phone_NO' => 'required|numeric|digits:10',
                 'region'       =>  'required',
                 'address'       =>  'required',
             ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
-                'ID_NO.unique' => 'تم ادخال رقم الهوية من قبل',
                 'ID_NO.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
                 'ID_NO.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
                 'phone_NO.required' => 'يجب ادخال رقم جوال العميل',
@@ -173,6 +172,17 @@ class CustomerController extends Controller
 
         DB::beginTransaction();
         try {
+
+            $repeater_customer = Customer::where('ID_NO', $request->ID_NO)->first();
+            if($repeater_customer !== null){
+                $customer_updated = Customer::where('ID_NO', $request->ID_NO)->update([
+                    'repeater' => true
+                ]);
+
+                DB::commit();
+                return redirect()->route('home')->with('warning','العميل موجود مسبقا! يتم الأن مراجعته من قبل المدير.');
+            }
+
 
             // Store Data
             $customer = Customer::create([
