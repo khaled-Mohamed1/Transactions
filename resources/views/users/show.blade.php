@@ -210,14 +210,15 @@
                                 <tbody>
                                 <tr>
                                 @forelse ($user->drafts->take(100) as $draft)
+
                                     <tr>
-                                        <td>{{ $draft->DraftCustomerDraft->draft_NO }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->UserDraft->full_name }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->document_type }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->customer_qty }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->document_qty }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->document_affiliate }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->created_at }}</td>
+                                        <td>{{ $draft->draft_NO }}</td>
+                                        <td>{{ $draft->UserDraft->full_name }}</td>
+                                        <td>{{ $draft->document_type }}</td>
+                                        <td>{{ $draft->customer_qty }}</td>
+                                        <td>{{ $draft->document_qty }}</td>
+                                        <td>{{ $draft->document_affiliate }}</td>
+                                        <td>{{ $draft->created_at }}</td>
                                     </tr>
                                 @empty
                                     <td colspan="9">لا يوجد بيانات</td>

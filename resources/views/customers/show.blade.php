@@ -15,6 +15,10 @@
 
 {{--            </form>--}}
             <div>
+
+                <a href="{{ route('customers.export.customer', ['customer' => $customer->id]) }}" class="btn btn-success m-2">
+                    <i class="fas fa-file-csv"></i>
+                </a>
                 <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}"
                    class="btn btn-primary m-2">
                     <i class="fa fa-pen"></i>

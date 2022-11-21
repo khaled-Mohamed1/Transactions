@@ -20,6 +20,7 @@
         <th scope="col" colspan="2">Bank_Branch</th>
         <th scope="col" colspan="2">Bank_Account_NO</th>
         <th scope="col" colspan="2">Transaction_NO</th>
+        <th scope="col" colspan="2">Notes</th>
     </tr>
     </thead>
     <tbody>
@@ -56,6 +57,7 @@
                 {{ $transaction->transaction_NO }}
                 @endforeach
             </td>
+            <td colspan="2">{{$customer->notes}}</td>
         </tr>
     @endforeach
     </tbody>

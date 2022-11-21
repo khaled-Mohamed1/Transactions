@@ -109,6 +109,7 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     Route::post('export/pdf', [CustomerController::class, 'exportPDF'])->name('export.PDF');
     Route::get('export/adverser', [CustomerController::class, 'exportAdverser'])->name('export.adverser');
     Route::get('export/customers', [CustomerController::class, 'exportCustomers'])->name('export.customers');
+    Route::get('export/customer/{customer}', [CustomerController::class, 'exportCustomer'])->name('export.customer');
     Route::get('export/committed', [CustomerController::class, 'exportCommitted'])->name('export.committed');
 
 });

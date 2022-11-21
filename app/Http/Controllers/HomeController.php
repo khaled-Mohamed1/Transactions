@@ -7,6 +7,7 @@ use App\Models\Draft;
 use App\Models\Issue;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        $adverser = Customer::whereHas('transactions')->latest();
+        $adverser = $adverser->whereHas('payments',function ($query) {
+            return $query->where('created_at', '<=', Carbon::now()->subDays(10)->toDateTimeString());
+        })->update([
+            'status'=> 'متعسر'
+        ]);
+
+//        dd($adverser);
+
+
         $customers = Customer::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->get()->count();
         $customers_adverser = Customer::whereMonth('created_at', date('m'))
