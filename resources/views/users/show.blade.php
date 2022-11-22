@@ -221,12 +221,12 @@
                                         <td>{{ $draft->document_affiliate }}</td>
                                         <td>
                                             @foreach($draft->cusotmerDrafts as $customer)
-                                                {{ $customer->DraftCustomer->customer_NO }} -
+                                                <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->DraftCustomer->customer_NO }}</a> -
                                             @endforeach
                                         </td>
                                         <td>{{ $draft->created_at }}</td>
                                     </tr>
-                                @empty
+                                    @empty
                                     <td colspan="9">لا يوجد بيانات</td>
                                     @endforelse
                                     </tr>
@@ -254,25 +254,105 @@
                             <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr class="text-info">
-                                    <th width="5%">#</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="20%">رقم القضية</th>
-                                    <th width="15%">العمليات</th>
+                                    <th width="10%">رقم</th>
+                                    <th width="10%">إنشاء بواسطة</th>
+                                    <th width="10%">اسم المحكمة</th>
+                                    <th width="10%">رقم القضية</th>
+                                    <th width="10%">مبلغ القضية</th>
+                                    <th width="10%">طالب التنفيذ</th>
+                                    <th width="15%">الأطراف</th>
+                                    <th width="10%">وكيل طالب التنفيذ</th>
+                                    <th width="10%">وكيل المنفذ ضده</th>
+                                    <th width="10%">الحاله</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
-                                <tr>
-                                    <td colspan="6">لا يوجد بيانات</td>
-                                </tr>
+                                @forelse ($user->issues->take(100) as $issue)
+                                    <tr>
+                                        <td>{{ $issue->issue_NO }}</td>
+                                        <td>{{ $issue->UserIssue->full_name }}</td>
+                                        <td>{{ $issue->court_name }}</td>
+                                        <td>{{ $issue->case_number }}</td>
+                                        <td>{{ $issue->case_amount }}</td>
+                                        <td>{{ $issue->execution_request }}</td>
+                                        <td>
+                                            @foreach($issue->cusotmerIssues as $customer)
+                                                <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $issue->execution_agent_name }}</td>
+                                        <td>{{ $issue->execution_agent_against_it }}</td>
+                                        <td>{{ $issue->issue_status }}</td>
+
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="11">لا يوجد بيانات</td>
+                                    </tr>
+                                @endforelse
                                 </tbody>
                             </table>
 
                         </div>
                     </div>
                 </div>
+
+                <hr>
+
+                {{-- payments --}}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">الدفعات</h4>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr class="text-info">
+                                    <th width="10%">رقم الدفعة</th>
+                                    <th width="10%">إنشاء بواسطة</th>
+                                    <th width="10%">قيمة الدفعة</th>
+                                    <th width="15%">تاريخ الدفع</th>
+                                    <th width="15%">نوعة الدفعة</th>
+                                    <th width="15%">عن طريق</th>
+                                    <th width="20%">ملاحظات</th>
+{{--                                    <th width="10%">العمليات</th>--}}
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                @forelse ($user->payments as $payment)
+                                    <tr>
+                                        <td>{{ $payment->payment_NO }}</td>
+                                        <td>{{ $payment->UserPayment->full_name }}</td>
+                                        <td>{{ $payment->payment_amount }}</td>
+                                        <td>{{ $payment->created_at }}</td>
+                                        <td>{{ $payment->payment_type }}</td>
+                                        <td>{{ $payment->payment_via }}</td>
+                                        <td>{{ $payment->notes }}</td>
+{{--                                        <td style="display: flex">--}}
+{{--                                            <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$payment->id}}">--}}
+{{--                                                <i class="fas fa-trash"></i>--}}
+{{--                                            </a>--}}
+{{--                                        </td>--}}
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8">لا يوجد بيانات</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
 
 
                 <hr>

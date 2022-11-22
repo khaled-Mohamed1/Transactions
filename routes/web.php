@@ -10,6 +10,8 @@ use App\Http\Controllers\DraftController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\AgentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -179,5 +181,28 @@ Route::middleware('auth')->prefix('payments')->name('payments.')->group(function
 
     //get data of customer
     Route::post('/get', [PaymentController::class, 'get'])->name('get');
+
+});
+
+Route::middleware('auth')->prefix('stores')->name('stores.')->group(function(){
+    Route::get('/', [AgentController::class, 'index'])->name('index');
+    Route::get('/create', [StoreController::class, 'create'])->name('create');
+    Route::post('/store', [StoreController::class, 'store'])->name('store');
+    Route::get('/edit/{store}', [StoreController::class, 'edit'])->name('edit');
+    Route::put('/update/{store}', [StoreController::class, 'update'])->name('update');
+    Route::delete('/delete/{store}', [StoreController::class, 'delete'])->name('destroy');
+
+    Route::get('export/', [StoreController::class, 'export'])->name('export');
+
+});
+
+Route::middleware('auth')->prefix('agents')->name('agents.')->group(function(){
+    Route::get('/', [AgentController::class, 'index'])->name('index');
+    Route::get('/create', [AgentController::class, 'create'])->name('create');
+    Route::post('/store', [AgentController::class, 'store'])->name('store');
+    Route::get('/edit/{agent}', [AgentController::class, 'edit'])->name('edit');
+    Route::put('/update/{agent}', [AgentController::class, 'update'])->name('update');
+    Route::delete('/delete/{agent}', [AgentController::class, 'delete'])->name('destroy');
+
 
 });

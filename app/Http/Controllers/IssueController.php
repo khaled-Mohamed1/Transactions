@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\IssueExport;
 use App\Helpers\Helper;
+use App\Models\Agent;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\CustomerIssue;
@@ -49,7 +50,8 @@ class IssueController extends Controller
      */
     public function create()
     {
-        return view('issues.create');
+        $agents = Agent::get();
+        return view('issues.create',['agents'=>$agents]);
     }
 
     /**
@@ -60,8 +62,6 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-
-//        dd($request->all());
 
         if($request->customer_id == null){
             return redirect()->back()->with('error','يجب ادخال عدد الأطراف قبل اتمام العملية. ');
@@ -87,10 +87,9 @@ class IssueController extends Controller
             [
                 'court_name' => 'required',
                 'customer_qty'  => 'required|numeric',
-                'case_number'  => 'required|numeric',
+                'case_number'  => 'required',
                 'case_amount'  =>  'required|numeric',
                 'execution_request' => 'required',
-                'agent_name' => 'required',
                 'customer_id.*'     => 'required_if:customer_qty,>,0|numeric|digits:9',
 
             ],[
@@ -98,11 +97,9 @@ class IssueController extends Controller
                 'customer_qty.required' => 'يجب ادخال عدد الأفراد',
                 'customer_qty.numeric' => 'يجب ادخال عدد الأفراد بالأرقام',
                 'case_number.required' => 'يجب ادخال رقم القضية',
-                'case_number.numeric' => 'يجب ادخال رقم القضية بالأرقام',
                 'case_amount.required' => 'يجب ادخال مبلغ القضية',
                 'case_amount.numeric' => 'يجب ادخال مبلغ القضية بالأرقام',
                 'execution_request.required' => 'يجب ادخال اسم طالب التنفيذ',
-                'agent_name.required' => 'يجب ادخال اسم الوكيل',
                 'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
 
             ]
@@ -120,7 +117,8 @@ class IssueController extends Controller
                 'case_number' => $request->case_number,
                 'case_amount'       => $request->case_amount,
                 'execution_request'       => $request->execution_request,
-                'agent_name'       => $request->agent_name,
+                'execution_agent_name'       => $request->execution_agent_name,
+                'execution_agent_against_it'       => $request->execution_agent_against_it,
                 'notes'       => $request->notes,
             ]);
 
@@ -208,7 +206,8 @@ class IssueController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('error', $th->getMessage());
-        }    }
+        }
+    }
 
     public function export()
     {

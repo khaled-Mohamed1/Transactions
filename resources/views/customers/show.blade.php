@@ -347,33 +347,29 @@
                                     <th width="10%">رقم القضية</th>
                                     <th width="10%">مبلغ القضية</th>
                                     <th width="10%">طالب التنفيذ</th>
-                                    <th width="15%">الأطراف</th>
-                                    <th width="10%">الوكيل</th>
+                                    <th width="10%">وكيل طالب التنفيذ</th>
+                                    <th width="10%">وكيل المنفذ ضده</th>
                                     <th width="10%">الحاله</th>
                                     <th width="10%">ملاحظات</th>
                                     <th width="10%">تاريخ الإنشاء</th>
-                                    <th width="10%">العمليات</th>
+{{--                                    <th width="10%">العمليات</th>--}}
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 @forelse ($issues as $issue)
                                     <tr>
-                                        <td>{{ $issue->issue_NO }}</td>
-                                        <td>{{ $issue->UserIssue->full_name }}</td>
-                                        <td>{{ $issue->court_name }}</td>
-                                        <td>{{ $issue->case_number }}</td>
-                                        <td>{{ $issue->case_amount }}</td>
-                                        <td>{{ $issue->execution_request }}</td>
-                                        <td>
-                                            @foreach($issue->cusotmerIssues as $customer)
-                                                <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
-                                            @endforeach
-                                        </td>
-                                        <td>{{ $issue->agent_name }}</td>
-                                        <td>{{ $issue->issue_status }}</td>
-                                        <td>{{ $issue->notes }}</td>
-                                        <td>{{ $issue->created_at }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->issue_NO }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->UserIssue->full_name }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->court_name }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->case_number }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->case_amount }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->execution_request }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->execution_agent_name }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->execution_agent_against_it }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->issue_status }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->notes }}</td>
+                                        <td>{{ $issue->IssueCustomerIssue->created_at }}</td>
 {{--                                        <td style="display: flex">--}}
                                             {{--                                        <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
                                             {{--                                           class="btn btn-primary m-2">--}}
@@ -386,7 +382,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="12">لا يوجد بيانات</td>
+                                        <td colspan="11">لا يوجد بيانات</td>
                                     </tr>
                                 @endforelse
                                 </tbody>
@@ -398,7 +394,7 @@
 
                 <hr>
 
-                {{-- Issue --}}
+                {{-- payments --}}
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">الدفعات</h4>
                 </div>

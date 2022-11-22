@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('case_number')->nullable();
             $table->string('case_amount')->nullable();
             $table->string('execution_request')->nullable();
-            $table->string('agent_name')->nullable();
+            $table->string('execution_agent_name')->nullable();
+            $table->string('execution_agent_against_it')->nullable();
             $table->string('customer_qty')->nullable();
             $table->string('issue_status')->default('تم فتح قضية تنفيذية');
             $table->text('notes')->nullable();

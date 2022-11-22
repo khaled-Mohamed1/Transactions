@@ -92,18 +92,18 @@
     @forelse($customer->transactions as $transaction)
 
         <tr>
-            <td>{{ $transaction->transaction_NO }}</td>
-            <td>{{ $transaction->transactions_type }}</td>
-            <td>{{ $transaction->transaction_amount }}</td>
-            <td>{{ $transaction->first_payment }}</td>
-            <td>{{ $transaction->transaction_rest }}</td>
-            <td>{{ $transaction->monthly_payment }}</td>
-            <td>{{ $transaction->date_of_first_payment }}</td>
-            <td>{{ $transaction->draft_NO }}</td>
-            <td>{{ $transaction->agency_NO }}</td>
-            <td>{{ $transaction->endorsement_NO }}</td>
-            <td>{{ $transaction->receipt_NO }}</td>
-            <td>{{ $transaction->created_at }}</td>
+            <td scope="col" colspan="2">{{ $transaction->transaction_NO }}</td>
+            <td scope="col" colspan="2">{{ $transaction->transactions_type }}</td>
+            <td scope="col" colspan="2">{{ $transaction->transaction_amount }}</td>
+            <td scope="col" colspan="2">{{ $transaction->first_payment }}</td>
+            <td scope="col" colspan="2">{{ $transaction->transaction_rest }}</td>
+            <td scope="col" colspan="2">{{ $transaction->monthly_payment }}</td>
+            <td scope="col" colspan="2">{{ $transaction->date_of_first_payment }}</td>
+            <td scope="col" colspan="2">{{ $transaction->draft_NO }}</td>
+            <td scope="col" colspan="2">{{ $transaction->agency_NO }}</td>
+            <td scope="col" colspan="2">{{ $transaction->endorsement_NO }}</td>
+            <td scope="col" colspan="2">{{ $transaction->receipt_NO }}</td>
+            <td scope="col" colspan="2">{{ $transaction->created_at }}</td>
 
         </tr>
     @empty
@@ -140,12 +140,12 @@
     <tbody>
     @forelse ($customer->CustomerDrafts as $draft)
         <tr>
-            <td>{{ $draft->DraftCustomerDraft->draft_NO }}</td>
-            <td>{{ $draft->DraftCustomerDraft->document_type }}</td>
-            <td>{{ $draft->DraftCustomerDraft->customer_qty }}</td>
-            <td>{{ $draft->DraftCustomerDraft->document_qty }}</td>
-            <td>{{ $draft->DraftCustomerDraft->document_affiliate }}</td>
-            <td>{{ $draft->DraftCustomerDraft->created_at }}</td>
+            <td scope="col" colspan="2">{{ $draft->DraftCustomerDraft->draft_NO }}</td>
+            <td scope="col" colspan="2">{{ $draft->DraftCustomerDraft->document_type }}</td>
+            <td scope="col" colspan="2">{{ $draft->DraftCustomerDraft->customer_qty }}</td>
+            <td scope="col" colspan="2">{{ $draft->DraftCustomerDraft->document_qty }}</td>
+            <td scope="col" colspan="2">{{ $draft->DraftCustomerDraft->document_affiliate }}</td>
+            <td scope="col" colspan="2">{{ $draft->DraftCustomerDraft->created_at }}</td>
         </tr>
 
         @empty
@@ -153,6 +153,56 @@
             <td colspan="6">لا يوجد بيانات</td>
         </tr>
         @endforelse
+    </tbody>
+</table>
+
+<br>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th colspan="11">القضايا</th>
+    </tr>
+    </thead>
+</table>
+
+<table class="table user_table">
+    <thead class="table-light">
+    <tr class="text-info">
+        <th scope="col" colspan="2">رقم</th>
+        <th scope="col" colspan="2">إنشاء بواسطة</th>
+        <th scope="col" colspan="2">اسم المحكمة</th>
+        <th scope="col" colspan="2">رقم القضية</th>
+        <th scope="col" colspan="2">مبلغ القضية</th>
+        <th scope="col" colspan="2">طالب التنفيذ</th>
+        <th scope="col" colspan="2">وكيل طالب التنفيذ</th>
+        <th scope="col" colspan="2">وكيل المنفذ ضده</th>
+        <th scope="col" colspan="2">الحاله</th>
+        <th scope="col" colspan="2">ملاحظات</th>
+        <th scope="col" colspan="2">تاريخ الإنشاء</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @forelse ($customer->CustomerIssues as $issue)
+        <tr>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->issue_NO }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->UserIssue->full_name }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->court_name }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->case_number }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->case_amount }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->execution_request }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->execution_agent_name }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->execution_agent_against_it }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->issue_status }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->notes }}</td>
+            <td scope="col" colspan="2">{{ $issue->IssueCustomerIssue->created_at }}</td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="11">لا يوجد بيانات</td>
+        </tr>
+    @endforelse
     </tbody>
 </table>
 
@@ -184,13 +234,13 @@
     <tbody>
     @forelse ($customer->payments as $payment)
         <tr>
-            <td>{{ $payment->payment_NO }}</td>
-            <td>{{ $payment->UserPayment->full_name }}</td>
-            <td>{{ $payment->payment_amount }}</td>
-            <td>{{ $payment->created_at }}</td>
-            <td>{{ $payment->payment_type }}</td>
-            <td>{{ $payment->payment_via }}</td>
-            <td>{{ $payment->notes }}</td>
+            <td scope="col" colspan="2">{{ $payment->payment_NO }}</td>
+            <td scope="col" colspan="2">{{ $payment->UserPayment->full_name }}</td>
+            <td scope="col" colspan="2">{{ $payment->payment_amount }}</td>
+            <td scope="col" colspan="2">{{ $payment->created_at }}</td>
+            <td scope="col" colspan="2">{{ $payment->payment_type }}</td>
+            <td scope="col" colspan="2">{{ $payment->payment_via }}</td>
+            <td scope="col" colspan="2">{{ $payment->notes }}</td>
         </tr>
     @empty
         <tr>

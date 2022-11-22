@@ -29,16 +29,20 @@
                         {{-- court_name --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>اسم المحكمة <span style="color:red;">*</span></label>
-{{--                            <select name="document_type" class="form-control form-control-user @error('document_type') is-invalid @enderror">--}}
-{{--                                <option selected disabled value="">اختار...</option>--}}
-{{--                                <option value="كمبيالة" {{ old('document_type') == 'كمبيالة' ? 'selected' : '' }}>كمبيالة</option>--}}
-{{--                            </select>--}}
-                            <input
-                                type="text"
-                                class="form-control form-control-user customer_qty @error('court_name') is-invalid @enderror"
-                                id="court_name"
-                                name="court_name"
-                                value="{{ old('court_name') }}">
+                            <select name="court_name" class="form-control form-control-user @error('court_name') is-invalid @enderror">
+                                <option selected disabled value="">اختار...</option>
+                                <option value="بداية الشمال" {{ old('court_name') == 'بداية الشمال' ? 'selected' : '' }}>بداية الشمال</option>
+                                <option value="بداية غزة" {{ old('court_name') == 'بداية غزة' ? 'selected' : '' }}>بداية غزة</option>
+                                <option value="بداية دير البلح" {{ old('court_name') == 'بداية دير البلح' ? 'selected' : '' }}>بداية دير البلح</option>
+                                <option value="بداية خانيونس" {{ old('court_name') == 'بداية خانيونس' ? 'selected' : '' }}>بداية خانيونس</option>
+                                <option value="بداية رفح" {{ old('court_name') == 'بداية رفح' ? 'selected' : '' }}>بداية رفح</option>
+                            </select>
+{{--                            <input--}}
+{{--                                type="text"--}}
+{{--                                class="form-control form-control-user customer_qty @error('court_name') is-invalid @enderror"--}}
+{{--                                id="court_name"--}}
+{{--                                name="court_name"--}}
+{{--                                value="{{ old('court_name') }}">--}}
                             @error('court_name')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -76,14 +80,14 @@
                         </div>
 
                         {{-- execution_request --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>طالب التنفيذ <span style="color:red;">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user @error('execution_request') is-invalid @enderror"
-                                id="execution_request"
-                                name="execution_request"
-                                value="{{ old('execution_request') }}">
+                            <select name="execution_request" class="form-control form-control-user @error('execution_request') is-invalid @enderror">
+                                <option selected disabled value="">اختار...</option>
+                                @foreach($agents->where('agent_type','طالب التنفيذ') as $agent)
+                                    <option value="{{$agent->agent_name}}">{{$agent->agent_name}}</option>
+                                @endforeach
+                            </select>
 
                             @error('execution_request')
                             <span class="text-danger">{{$message}}</span>
@@ -91,22 +95,31 @@
                         </div>
 
                         {{-- agent_name --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>الوكيل <span style="color:red;">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user @error('agent_name') is-invalid @enderror"
-                                id="agent_name"
-                                name="agent_name"
-                                value="{{ old('agent_name') }}">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                            <label>وكيل طالب التنفيذ </label>
 
-                            @error('agent_name')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <select name="execution_agent_name" class="form-control form-control-user">
+                                <option selected disabled value="">اختار...</option>
+                                @foreach($agents->where('agent_type','وكيل طالب التنفيذ') as $agent)
+                                    <option value="{{$agent->agent_name}}">{{$agent->agent_name}}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+
+                        {{-- agent_name --}}
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                            <label>وكيل المنفذ ضده </label>
+                            <select name="execution_agent_against_it" class="form-control form-control-user">
+                                <option selected disabled value="">اختار...</option>
+                                @foreach($agents->where('agent_type','وكيل المنفذ ضده') as $agent)
+                                    <option value="{{$agent->agent_name}}">{{$agent->agent_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         {{-- customer_qty --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>عدد الأطراف <span style="color:red;">*</span></label>
                             <input
                                 type="number"

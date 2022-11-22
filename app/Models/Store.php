@@ -6,35 +6,28 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Issue extends Model
+class Store extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'issue_NO',
+        'customer_id',
         'user_id',
-        'court_name',
-        'case_number',
-        'case_amount',
-        'execution_request',
-        'execution_agent_name',
-        'execution_agent_against_it',
-        'customer_qty',
-        'notes',
+        'product_name',
+        'product_qty',
+        'product_price',
     ];
 
 
-    public function UserIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function UserStore(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function cusotmerissues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function CustomerStore(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(CustomerIssue::class,'issue_id');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
-
 
     public function getCreatedAtAttribute($value)
     {
@@ -46,4 +39,5 @@ class Issue extends Model
     {
         return Carbon::parse($value)->timezone('Asia/Gaza')->format('Y-m-d H:i');
     }
+
 }

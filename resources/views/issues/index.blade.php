@@ -9,12 +9,18 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">القضايا</h1>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <a href="{{ route('issues.create') }}" class="btn btn-sm btn-primary">
                         اضافة جديد <i class="fas fa-plus"></i>
                     </a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <a href="{{ route('agents.index') }}" class="btn btn-sm btn-info">
+                        جميع الوكلاء <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
                     <a href="{{ route('issues.export') }}" class="btn btn-sm btn-success">
                         نصدير اكسل <i class="fas fa-check"></i>
                     </a>
@@ -45,10 +51,9 @@
                             <th width="10%">مبلغ القضية</th>
                             <th width="10%">طالب التنفيذ</th>
                             <th width="15%">الأطراف</th>
-                            <th width="10%">الوكيل</th>
+                            <th width="10%">وكيل طالب التنفيذ</th>
+                            <th width="10%">وكيل المنفذ ضده</th>
                             <th width="10%">الحاله</th>
-                            <th width="10%">ملاحظات</th>
-                            <th width="10%">تاريخ الإنشاء</th>
                             <th width="10%">العمليات</th>
                         </tr>
                         </thead>
@@ -66,10 +71,9 @@
                                             <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
                                         @endforeach
                                     </td>
-                                    <td>{{ $issue->agent_name }}</td>
+                                    <td>{{ $issue->execution_agent_name }}</td>
+                                    <td>{{ $issue->execution_agent_against_it }}</td>
                                     <td>{{ $issue->issue_status }}</td>
-                                    <td>{{ $issue->notes }}</td>
-                                    <td>{{ $issue->created_at }}</td>
                                     <td style="display: flex">
 {{--                                        <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
 {{--                                           class="btn btn-primary m-2">--}}
@@ -82,7 +86,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="12">لا يوجد بيانات</td>
+                                    <td colspan="11">لا يوجد بيانات</td>
                                 </tr>
                             @endforelse
                         </tbody>
