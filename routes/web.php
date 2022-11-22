@@ -197,6 +197,7 @@ Route::middleware('auth')->prefix('stores')->name('stores.')->group(function(){
 });
 
 Route::middleware('auth')->prefix('agents')->name('agents.')->group(function(){
+    //test
     Route::get('/', [AgentController::class, 'index'])->name('index');
     Route::get('/create', [AgentController::class, 'create'])->name('create');
     Route::post('/store', [AgentController::class, 'store'])->name('store');
