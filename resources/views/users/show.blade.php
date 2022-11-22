@@ -204,6 +204,7 @@
                                     <th width="10%">عدد الأفراد</th>
                                     <th width="10%">عدد المستند</th>
                                     <th width="10%">مستند تابع</th>
+                                    <th width="20%">الأطراف</th>
                                     <th width="10%">تاريخ الإنشاء</th>
                                 </tr>
                                 </thead>
@@ -218,6 +219,11 @@
                                         <td>{{ $draft->customer_qty }}</td>
                                         <td>{{ $draft->document_qty }}</td>
                                         <td>{{ $draft->document_affiliate }}</td>
+                                        <td>
+                                            @foreach($draft->cusotmerDrafts as $customer)
+                                                {{ $customer->DraftCustomer->customer_NO }} -
+                                            @endforeach
+                                        </td>
                                         <td>{{ $draft->created_at }}</td>
                                     </tr>
                                 @empty
