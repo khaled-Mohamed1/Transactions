@@ -43,6 +43,36 @@
                             @enderror
                         </div>
 
+                        {{-- ID_NO --}}
+                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                            <label>رقم الهوية <span style="color:red;">*</span></label>
+                            <input
+                                type="text"
+                                class="form-control form-control-user customer_qty @error('ID_NO') is-invalid @enderror"
+                                id="ID_NO"
+                                name="ID_NO"
+                                value="{{ $agent->ID_NO }}">
+
+                            @error('ID_NO')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        {{-- address --}}
+                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                            <label>العنوان <span style="color:red;">*</span></label>
+                            <input
+                                type="text"
+                                class="form-control form-control-user customer_qty @error('address') is-invalid @enderror"
+                                id="address"
+                                name="address"
+                                value="{{ $agent->address }}">
+
+                            @error('address')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
                         {{-- agent_type --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>نوع الوكيل <span style="color:red;">*</span></label>

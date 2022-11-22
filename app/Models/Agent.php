@@ -14,6 +14,8 @@ class Agent extends Model
     protected $fillable = [
         'agent_name',
         'agent_type',
+        'ID_NO',
+        'address',
     ];
 
     public function getCreatedAtAttribute($value)

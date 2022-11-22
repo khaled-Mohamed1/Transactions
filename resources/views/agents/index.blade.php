@@ -38,15 +38,19 @@
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr class="text-info">
-                            <th width="33%">الإسم</th>
-                            <th width="33%">نوعه الوكيل</th>
-                            <th width="34%">العمليات</th>
+                            <th width="25%">الإسم</th>
+                            <th width="25%">رقم الهوية</th>
+                            <th width="25%">العنوان</th>
+                            <th width="25%">نوعه الوكيل</th>
+                            <th width="25%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
                         @forelse ($agents as $agent)
                             <tr>
                                 <td>{{ $agent->agent_name }}</td>
+                                <td>{{ $agent->ID_NO }}</td>
+                                <td>{{ $agent->address }}</td>
                                 <td>{{ $agent->agent_type }}</td>
                                 <td style="display: flex">
                                     <a href="{{ route('agents.edit', ['agent' => $agent->id]) }}"
@@ -60,7 +64,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3">لا يوجد بيانات</td>
+                                <td colspan="5">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>

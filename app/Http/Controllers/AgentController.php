@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\DB;
 
 class AgentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:وكلاء-بيانات|وكلاء-اضافة|وكلاء-تعديل|وكلاء-حذف', ['only' => ['index']]);
+        $this->middleware('permission:وكلاء-اضافة', ['only' => ['create','store']]);
+        $this->middleware('permission:وكلاء-تعديل', ['only' => ['edit','update']]);
+        $this->middleware('permission:وكلاء-حذف', ['only' => ['delete']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,14 +53,20 @@ class AgentController extends Controller
     {
 
 //        // Validations
-        $validator = $request->validate(
+        $request->validate(
             [
                 'agent_name' => 'required',
                 'agent_type'  => 'required',
+                'ID_NO'     => 'required|numeric|digits:9',
+                'address'  => 'required',
 
             ],[
                 'agent_name.required' => 'يجب ادخال اسم الوكيل',
                 'agent_type.required' => 'يجب ادخال نوع الوكيل',
+                'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
+                'ID_NO.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
+                'ID_NO.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
+                'address.required' => 'يجب ادخال عنوان سكن العميل',
             ]
         );
 
@@ -61,7 +77,8 @@ class AgentController extends Controller
             $agent = Agent::create([
                 'agent_name'     => $request->agent_name,
                 'agent_type'         => $request->agent_type,
-
+                'ID_NO'         => $request->ID_NO,
+                'address'         => $request->address,
             ]);
 
             // Commit And Redirected To Listing
@@ -113,10 +130,16 @@ class AgentController extends Controller
             [
                 'agent_name' => 'required',
                 'agent_type'  => 'required',
+                'ID_NO'     => 'required|numeric|digits:9',
+                'address'  => 'required',
 
             ],[
                 'agent_name.required' => 'يجب ادخال اسم الوكيل',
                 'agent_type.required' => 'يجب ادخال نوع الوكيل',
+                'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
+                'ID_NO.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
+                'ID_NO.digits' => 'رقم الهوية يتكون من 9 ارقام فقط',
+                'address.required' => 'يجب ادخال عنوان سكن العميل',
             ]
         );
 
@@ -128,6 +151,8 @@ class AgentController extends Controller
             $agent_update = Agent::whereId($agent->id)->update([
                 'agent_name'     => $request->agent_name,
                 'agent_type'         => $request->agent_type,
+                'ID_NO'         => $request->ID_NO,
+                'address'         => $request->address,
             ]);
 
             // Commit And Redirected To Listing

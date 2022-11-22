@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('agent_name')->nullable();
             $table->string('agent_type')->nullable();
+            $table->string('ID_NO')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }
