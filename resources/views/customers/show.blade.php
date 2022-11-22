@@ -288,7 +288,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+
                                 @forelse ($drafts as $draft)
                                     <tr>
                                         <td>{{ $draft->DraftCustomerDraft->draft_NO }}</td>
@@ -317,7 +317,6 @@
                                         <td colspan="9">لا يوجد بيانات</td>
                                     </tr>
                                 @endforelse
-                                </tr>
                                 </tbody>
                             </table>
 

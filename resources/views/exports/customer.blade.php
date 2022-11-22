@@ -1,6 +1,6 @@
 <table class="table user_table">
     <thead class="table-light">
-    <tr>
+    <tr >
         <th scope="col">Customer_NO</th>
         <th scope="col" colspan="2">Full_Name</th>
         <th scope="col" colspan="2">ID_NO</th>
@@ -61,11 +61,19 @@
     </tbody>
 </table>
 
-<hr>
+<br>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th colspan="12">معاملات</th>
+    </tr>
+    </thead>
+</table>
 
 <table class="table user_table">
     <thead class="table-light">
-    <tr class="text-info">
+    <tr>
         <th scope="col" colspan="2">رقم المعاملة</th>
         <th scope="col" colspan="2">نوع المعاملة</th>
         <th scope="col" colspan="2">قيمة المعاملة</th>
@@ -100,7 +108,7 @@
         </tr>
     @empty
         <tr>
-            <td colspan="13">لا يوجد بيانات</td>
+            <td colspan="12">لا يوجد بيانات</td>
         </tr>
     @endforelse
 
@@ -108,36 +116,86 @@
 </table>
 
 
-{{--<hr>--}}
+<br>
 
-{{--<table class="table user_table">--}}
-{{--    <thead class="table-light">--}}
-{{--    <tr class="text-info">--}}
-{{--        <th scope="col" colspan="2">رقم الكمبيالة</th>--}}
-{{--        <th scope="col" colspan="2">نوع المستند</th>--}}
-{{--        <th scope="col" colspan="2">عدد الأفراد</th>--}}
-{{--        <th scope="col" colspan="2">عدد المستند</th>--}}
-{{--        <th scope="col" colspan="2">مستند تابع</th>--}}
-{{--        <th scope="col" colspan="2">تاريخ الإنشاء</th>--}}
-{{--    </tr>--}}
-{{--    </thead>--}}
-{{--    <tbody>--}}
-{{--    <tr>--}}
-{{--    @forelse ($drafts as $draft)--}}
-{{--        <tr>--}}
-{{--            <td>{{ $draft->draft_NO }}</td>--}}
-{{--            <td>{{ $draft->document_type }}</td>--}}
-{{--            <td>{{ $draft->customer_qty }}</td>--}}
-{{--            <td>{{ $draft->document_qty }}</td>--}}
-{{--            <td>{{ $draft->document_affiliate }}</td>--}}
-{{--            <td>{{ $draft->created_at }}</td>--}}
-{{--        </tr>--}}
+<table class="table">
+    <thead>
+    <tr>
+        <th colspan="6">قضايا</th>
+    </tr>
+    </thead>
+</table>
 
-{{--    @empty--}}
-{{--        <tr>--}}
-{{--            <td colspan="6">لا يوجد بيانات</td>--}}
-{{--        </tr>--}}
-{{--        @endforelse--}}
-{{--        </tr>--}}
-{{--    </tbody>--}}
-{{--</table>--}}
+<table class="table user_table">
+    <thead class="table-light">
+    <tr>
+        <th scope="col" colspan="2">رقم الكمبيالة</th>
+        <th scope="col" colspan="2">نوع المستند</th>
+        <th scope="col" colspan="2">عدد الأفراد</th>
+        <th scope="col" colspan="2">عدد المستند</th>
+        <th scope="col" colspan="2">مستند تابع</th>
+        <th scope="col" colspan="2">تاريخ الإنشاء</th>
+    </tr>
+    </thead>
+    <tbody>
+    @forelse ($customer->CustomerDrafts as $draft)
+        <tr>
+            <td>{{ $draft->DraftCustomerDraft->draft_NO }}</td>
+            <td>{{ $draft->DraftCustomerDraft->document_type }}</td>
+            <td>{{ $draft->DraftCustomerDraft->customer_qty }}</td>
+            <td>{{ $draft->DraftCustomerDraft->document_qty }}</td>
+            <td>{{ $draft->DraftCustomerDraft->document_affiliate }}</td>
+            <td>{{ $draft->DraftCustomerDraft->created_at }}</td>
+        </tr>
+
+        @empty
+        <tr>
+            <td colspan="6">لا يوجد بيانات</td>
+        </tr>
+        @endforelse
+    </tbody>
+</table>
+
+<br>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th colspan="7">الدفعات</th>
+    </tr>
+    </thead>
+</table>
+
+
+<table class="table user_table">
+    <thead class="table-light">
+    <tr class="text-info">
+        <th scope="col" colspan="2">رقم الدفعة</th>
+        <th scope="col" colspan="2">إنشاء بواسطة</th>
+        <th scope="col" colspan="2">قيمة الدفعة</th>
+        <th scope="col" colspan="2">تاريخ الدفع</th>
+        <th scope="col" colspan="2">نوعة الدفعة</th>
+        <th scope="col" colspan="2">عن طريق</th>
+        <th scope="col" colspan="2">ملاحظات</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @forelse ($customer->payments as $payment)
+        <tr>
+            <td>{{ $payment->payment_NO }}</td>
+            <td>{{ $payment->UserPayment->full_name }}</td>
+            <td>{{ $payment->payment_amount }}</td>
+            <td>{{ $payment->created_at }}</td>
+            <td>{{ $payment->payment_type }}</td>
+            <td>{{ $payment->payment_via }}</td>
+            <td>{{ $payment->notes }}</td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="7">لا يوجد بيانات</td>
+        </tr>
+    @endforelse
+    </tbody>
+</table>

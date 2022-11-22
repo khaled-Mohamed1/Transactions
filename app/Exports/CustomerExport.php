@@ -24,6 +24,7 @@ class CustomerExport implements FromView
     {
 
         $drafts = CustomerDraft::with('DraftCustomerDraft')->where('id',$this->customer->id)->get();
+//        dd($this->customer->CustomerDrafts->DraftCustomerDraft);
 
         return view('exports.customer', [
             'customer' => $this->customer,
