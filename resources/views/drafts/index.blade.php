@@ -65,14 +65,14 @@
                                 </td>
                                 <td>{{$draft->created_at}}</td>
                                 <td style="display: flex">
-{{--                                    <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
-{{--                                       class="btn btn-primary m-2">--}}
-{{--                                        <i class="fa fa-pen"></i>--}}
-{{--                                    </a>--}}
+                                    <a href="{{ route('drafts.edit', ['draft' => $draft->id]) }}"
+                                       class="btn btn-primary m-2">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
                                     <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$draft->id}}">
                                         <i class="fas fa-trash"></i>
                                     </a>
-                                    <a class="btn btn-primary m-2" href="#">
+                                    <a class="btn btn-info m-2" href="#">
                                         <i class="fas fa-plus"></i>
                                     </a>
                                 </td>

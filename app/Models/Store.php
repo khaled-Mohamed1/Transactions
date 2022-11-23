@@ -11,7 +11,6 @@ class Store extends Model
     use HasFactory;
 
     protected $fillable = [
-        'customer_id',
         'user_id',
         'product_name',
         'product_qty',
