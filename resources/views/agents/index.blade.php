@@ -38,6 +38,7 @@
                     <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr class="text-info">
+                            <th>#</th>
                             <th width="25%">الإسم</th>
                             <th width="25%">رقم الهوية</th>
                             <th width="25%">العنوان</th>
@@ -46,8 +47,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse ($agents as $agent)
+                        @forelse ($agents as $key =>$agent)
                             <tr>
+                                <td>{{++$key}}</td>
                                 <td>{{ $agent->agent_name }}</td>
                                 <td>{{ $agent->ID_NO }}</td>
                                 <td>{{ $agent->address }}</td>
@@ -64,7 +66,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5">لا يوجد بيانات</td>
+                                <td colspan="6">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>

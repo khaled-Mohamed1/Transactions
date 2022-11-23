@@ -52,7 +52,7 @@ class AgentController extends Controller
     public function store(Request $request)
     {
 
-//        // Validations
+        // Validations
         $request->validate(
             [
                 'agent_name' => 'required',
@@ -125,7 +125,7 @@ class AgentController extends Controller
      */
     public function update(Request $request, Agent $agent)
     {
-// Validations
+        // Validations
         $request->validate(
             [
                 'agent_name' => 'required',
@@ -163,7 +163,8 @@ class AgentController extends Controller
             // Rollback and return with Error
             DB::rollBack();
             return redirect()->back()->withInput()->with('error', $th->getMessage());
-        }    }
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

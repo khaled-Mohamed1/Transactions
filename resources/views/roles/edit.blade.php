@@ -60,14 +60,17 @@
                         <label> <span style="color:red;">*</span> كل الصلاحيات</label>
                         <input type="checkbox" name="check-all" class="form-contol" id="checkAllPermissions" {{ (count($permissions) == count($role->permissions->pluck('id')->toArray())) ? 'checked' : '' }}/> تحديد الكل
                         <div class="row">
-                            <div class="col-lg-12">
                                 @foreach ($permissions as $permissionIndex => $permission)
-                                        <div class="form-check form-check-inline">
+                                <div class="col-lg-2">
+
+                                    <div class="form-check form-check-inline">
                                             <input class="form-check-input permission-input" {{ in_array($permission->id, $role->permissions->pluck('id')->toArray()) ? 'checked' : '' }} type="checkbox" name="permissions[]" id="inlineCheckbox_{{$permissionIndex}}"  value="{{$permission->id}}">
                                             <label class="form-check-label" for="inlineCheckbox{{$permissionIndex}}">{{ $permission->name }}</label>
-                                        </div>
-                                @endforeach
-                            </div>
+                                    </div>
+                                    <hr>
+
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 

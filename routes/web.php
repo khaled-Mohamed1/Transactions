@@ -185,7 +185,7 @@ Route::middleware('auth')->prefix('payments')->name('payments.')->group(function
 });
 
 Route::middleware('auth')->prefix('stores')->name('stores.')->group(function(){
-    Route::get('/', [AgentController::class, 'index'])->name('index');
+    Route::get('/', [StoreController::class, 'index'])->name('index');
     Route::get('/create', [StoreController::class, 'create'])->name('create');
     Route::post('/store', [StoreController::class, 'store'])->name('store');
     Route::get('/edit/{store}', [StoreController::class, 'edit'])->name('edit');
