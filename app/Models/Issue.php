@@ -17,9 +17,9 @@ class Issue extends Model
         'court_name',
         'case_number',
         'case_amount',
-        'execution_request',
-        'execution_agent_name',
-        'execution_agent_against_it',
+        'execution_request_id',
+        'execution_agent_name_id',
+        'execution_agent_against_it_id',
         'customer_qty',
         'notes',
     ];
