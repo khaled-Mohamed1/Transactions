@@ -454,10 +454,7 @@ class CustomerController extends Controller
         $templateProcessor->setValue('bank_branch',$data->bank_branch);
         $templateProcessor->setValue('notes',$data->notes);
         $templateProcessor->setValue('bank_account_NO',$data->bank_account_NO);
-//        $values = [
-//            ['userId' => 1, 'userName' => 'Batman', 'userAddress' => 'Gotham City'],
-//            ['userId' => 2, 'userName' => 'Superman', 'userAddress' => 'Metropolis'],
-//        ];
+
 
         $templateProcessor->cloneRowAndSetValues('payment_NO', $payments);
         $fileName = $data->customer_NO;
