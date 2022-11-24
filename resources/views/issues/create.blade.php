@@ -85,7 +85,7 @@
                             <select name="execution_request" class="form-control form-control-user @error('execution_request') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
                                 @foreach($agents->where('agent_type','طالب التنفيذ') as $agent)
-                                    <option value="{{$agent->agent_name}}">{{$agent->agent_name}}</option>
+                                    <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
                                 @endforeach
                             </select>
 
@@ -101,7 +101,7 @@
                             <select name="execution_agent_name" class="form-control form-control-user">
                                 <option selected disabled value="">اختار...</option>
                                 @foreach($agents->where('agent_type','وكيل طالب التنفيذ') as $agent)
-                                    <option value="{{$agent->agent_name}}">{{$agent->agent_name}}</option>
+                                    <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
                                 @endforeach
                             </select>
 
@@ -113,7 +113,7 @@
                             <select name="execution_agent_against_it" class="form-control form-control-user">
                                 <option selected disabled value="">اختار...</option>
                                 @foreach($agents->where('agent_type','وكيل المنفذ ضده') as $agent)
-                                    <option value="{{$agent->agent_name}}">{{$agent->agent_name}}</option>
+                                    <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
                                 @endforeach
                             </select>
                         </div>
