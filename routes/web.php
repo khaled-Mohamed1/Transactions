@@ -172,6 +172,7 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
 //    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
 
     Route::get('export/', [IssueController::class, 'export'])->name('export');
+    Route::get('export/word/{issue}', [IssueController::class, 'exportWORD'])->name('export.WORD');
 
 });
 

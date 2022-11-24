@@ -67,7 +67,7 @@
                                     <td>{{ $issue->case_amount }}</td>
                                     <td>{{ $issue->execution_request_idIssue->agent_name ?? null}}</td>
                                     <td>
-                                        @foreach($issue->cusotmerIssues as $customer)
+                                        @foreach($issue->customerIssues as $customer)
                                             <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
                                         @endforeach
                                     </td>
@@ -81,6 +81,9 @@
 {{--                                        </a>--}}
                                         <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$issue->id}}">
                                             <i class="fas fa-trash"></i>
+                                        </a>
+                                        <a href="{{ route('issues.export.WORD', ['issue' => $issue->id]) }}" class="btn btn-success m-2">
+                                            <i class="las la-print"></i>
                                         </a>
                                     </td>
                                 </tr>

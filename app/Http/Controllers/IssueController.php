@@ -6,9 +6,7 @@ use App\Exports\IssueExport;
 use App\Helpers\Helper;
 use App\Models\Agent;
 use App\Models\Customer;
-use App\Models\CustomerDraft;
 use App\Models\CustomerIssue;
-use App\Models\Draft;
 use App\Models\Issue;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -17,6 +15,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpWord\TemplateProcessor;
+
 
 class IssueController extends Controller
 {
@@ -213,4 +213,28 @@ class IssueController extends Controller
     {
         return Excel::download(new IssueExport(), 'قضايا.xlsx');
     }
+
+
+    public function exportWORD(Request $request,Issue $issue){
+
+        $data = Issue::where('id',$issue->id)->first();
+        $templateProcessor = new TemplateProcessor('wordOffice/issue.docx');
+        $templateProcessor->setValue('court_name',$data->court_name);
+        $templateProcessor->setValue('case_number',$data->case_number);
+        $templateProcessor->setValue('execution_request_name',$data->execution_request_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('execution_request_address',$data->execution_request_idIssue->address ?? null);
+        $templateProcessor->setValue('execution_request_ID_NO',$data->execution_request_idIssue->ID_NO ?? null);
+        $templateProcessor->setValue('execution_agent_against_it_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('execution_agent_against_it_address',$data->execution_agent_against_it_idIssue->address ?? null);
+        $templateProcessor->setValue('execution_agent_against_it_ID_NO',$data->execution_agent_against_it_idIssue->ID_NO ?? null);
+        $templateProcessor->setValue('case_amount',$data->case_amount);
+        $templateProcessor->setValue('created_at',$data->created_at);
+
+
+//        $templateProcessor->cloneRowAndSetValues('payment_NO', $payments);
+        $fileName = $data->issue_NO;
+        $templateProcessor->saveAs($fileName.'.docx');
+        return response()->download($fileName.'.docx')->deleteFileAfterSend(true);
+    }
+
 }

@@ -45,7 +45,7 @@ class Issue extends Model
         return $this->belongsTo(Agent::class, 'execution_agent_against_it_id', 'id');
     }
 
-    public function cusotmerissues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function customerIssues(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CustomerIssue::class,'issue_id');
     }
