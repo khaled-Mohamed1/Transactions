@@ -65,14 +65,14 @@
                                     <td>{{ $issue->court_name }}</td>
                                     <td>{{ $issue->case_number }}</td>
                                     <td>{{ $issue->case_amount }}</td>
-                                    <td>{{ $issue->execution_request }}</td>
+                                    <td>{{ $issue->execution_request_idIssue->agent_name ?? null}}</td>
                                     <td>
                                         @foreach($issue->cusotmerIssues as $customer)
                                             <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
                                         @endforeach
                                     </td>
-                                    <td>{{ $issue->execution_agent_name }}</td>
-                                    <td>{{ $issue->execution_agent_against_it }}</td>
+                                    <td>{{ $issue->execution_agent_name_idIssue->agent_name ?? null}}</td>
+                                    <td>{{ $issue->execution_agent_against_it_idIssue->agent_name ?? null}}</td>
                                     <td>{{ $issue->issue_status }}</td>
                                     <td style="display: flex">
 {{--                                        <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}

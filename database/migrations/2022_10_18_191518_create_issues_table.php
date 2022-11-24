@@ -21,9 +21,15 @@ return new class extends Migration
             $table->string('court_name')->nullable();
             $table->string('case_number')->nullable();
             $table->string('case_amount')->nullable();
-            $table->string('execution_request')->nullable();
-            $table->string('execution_agent_name')->nullable();
-            $table->string('execution_agent_against_it')->nullable();
+            $table->bigInteger('execution_request_id')->unsigned()->nullable();
+            $table->foreign('execution_request_id')->references('id')->on('agents');
+            $table->bigInteger('execution_agent_name_id')->unsigned()->nullable();
+            $table->foreign('execution_agent_name_id')->references('id')->on('agents');
+            $table->bigInteger('execution_agent_against_it_id')->unsigned()->nullable();
+            $table->foreign('execution_agent_against_it_id')->references('id')->on('agents');
+//            $table->string('execution_request')->nullable();
+//            $table->string('execution_agent_name')->nullable();
+//            $table->string('execution_agent_against_it')->nullable();
             $table->string('customer_qty')->nullable();
             $table->string('issue_status')->default('تم فتح قضية تنفيذية');
             $table->text('notes')->nullable();

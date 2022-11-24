@@ -6,9 +6,10 @@
         <th scope="col">اسم المحكمة</th>
         <th scope="col">رقم القضية</th>
         <th scope="col">مبلغ القضية</th>
-        <th scope="col">طالب التنفيذ</th>
-        <th scope="col">الأطراف</th>
-        <th scope="col">الوكيل</th>
+        <th width="10%">طالب التنفيذ</th>
+        <th width="15%">الأطراف</th>
+        <th width="10%">وكيل طالب التنفيذ</th>
+        <th width="10%">وكيل المنفذ ضده</th>
         <th scope="col">الحاله</th>
         <th scope="col">ملاحظات</th>
         <th scope="col">تاريخ الإنشاء</th>
@@ -22,13 +23,14 @@
             <td>{{ $issue->court_name }}</td>
             <td>{{ $issue->case_number }}</td>
             <td>{{ $issue->case_amount }}</td>
-            <td>{{ $issue->execution_request }}</td>
+            <td>{{ $issue->execution_request_idIssue->agent_name ?? null}}</td>
             <td>
                 @foreach($issue->cusotmerIssues as $customer)
                     {{ $customer->IssueCustomer->customer_NO }} -
                 @endforeach
             </td>
-            <td>{{ $issue->agent_name }}</td>
+            <td>{{ $issue->execution_agent_name_idIssue->agent_name ?? null}}</td>
+            <td>{{ $issue->execution_agent_against_it_idIssue->agent_name ?? null}}</td>
             <td>{{ $issue->issue_status }}</td>
             <td>{{ $issue->notes }}</td>
             <td>{{ $issue->created_at }}</td>

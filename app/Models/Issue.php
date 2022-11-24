@@ -30,6 +30,21 @@ class Issue extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function execution_request_idIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Agent::class, 'execution_request_id', 'id');
+    }
+
+    public function execution_agent_name_idIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Agent::class, 'execution_agent_name_id', 'id');
+    }
+
+    public function execution_agent_against_it_idIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Agent::class, 'execution_agent_against_it_id', 'id');
+    }
+
     public function cusotmerissues(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CustomerIssue::class,'issue_id');

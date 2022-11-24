@@ -18,6 +18,21 @@ class Agent extends Model
         'address',
     ];
 
+    public function execution_request_id_issues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Issue::class,'execution_request_id');
+    }
+
+    public function execution_agent_name_id_issues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Issue::class,'execution_agent_name_id');
+    }
+
+    public function execution_agent_against_it_id_issues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Issue::class,'execution_agent_against_it_id');
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timezone('Asia/Gaza')->format('Y-m-d H:i');
