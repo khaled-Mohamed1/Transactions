@@ -8,12 +8,12 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4 border-bottom">
             <h1 class="h3 mb-3 text-gray-800">ملف العميل</h1>
-{{--            <form action="{{route('customers.export.PDF')}}" method="POST">--}}
-{{--                @csrf--}}
-{{--                <input type="hidden" name="customer_id" value="{{$customer->id}}">--}}
-{{--                <button class="btn btn-success" type="submit"><i class="las la-print"></i></button>--}}
+            <form action="{{route('customers.export.WORD')}}" method="POST">
+                @csrf
+                <input type="hidden" name="customer_id" value="{{$customer->id}}">
+                <button class="btn btn-success" type="submit"><i class="las la-print"></i></button>
 
-{{--            </form>--}}
+            </form>
             <div>
 
                 <a href="{{ route('customers.export.customer', ['customer' => $customer->id]) }}" class="btn btn-success m-2">

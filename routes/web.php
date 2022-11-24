@@ -108,7 +108,7 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
 
     //export
     Route::get('export/', [CustomerController::class, 'export'])->name('export');
-    Route::post('export/pdf', [CustomerController::class, 'exportPDF'])->name('export.PDF');
+    Route::post('export/word', [CustomerController::class, 'exportWORD'])->name('export.WORD');
     Route::get('export/adverser', [CustomerController::class, 'exportAdverser'])->name('export.adverser');
     Route::get('export/customers', [CustomerController::class, 'exportCustomers'])->name('export.customers');
     Route::get('export/customer/{customer}', [CustomerController::class, 'exportCustomer'])->name('export.customer');
@@ -128,6 +128,7 @@ Route::middleware('auth')->prefix('transactions')->name('transactions.')->group(
 
     //get customer data
     Route::post('/get', [TransactionController::class, 'get'])->name('get');
+    Route::post('/get_product', [TransactionController::class, 'getProduct'])->name('get.product');
 
 //    Route::get('/import-users', [UserController::class, 'importUsers'])->name('import');
 //    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');

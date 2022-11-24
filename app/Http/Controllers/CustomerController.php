@@ -12,9 +12,7 @@ use App\Imports\CustomerImport;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\CustomerIssue;
-use App\Models\Payment;
 use App\Models\User;
-use ArPHP\I18N\Arabic;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -24,8 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
-
-
+use PhpOffice\PhpWord\TemplateProcessor;
 
 
 class CustomerController extends Controller
@@ -439,24 +436,34 @@ class CustomerController extends Controller
         return view('customers.search', compact('customers'));
     }
 
-//    public function exportPDF(Request $request){
-//
-//        $data = Customer::findOrFail($request->customer_id);
-//        $reportHtml = view('pdf.customerProfile' ,['data'=>$data])->render();
-//
-//        $arabic = new Arabic();
-//        $p = $arabic->arIdentify($reportHtml);
-//
-//        for ($i = count($p)-1; $i >= 0; $i-=2) {
-//            $utf8ar = $arabic->utf8Glyphs(substr($reportHtml, $p[$i-1], $p[$i] - $p[$i-1]));
-//            $reportHtml = substr_replace($reportHtml, $utf8ar, $p[$i-1], $p[$i] - $p[$i-1]);
-//        }
-//
-//            $pdf = PDF::loadHTML($reportHtml)->setPaper('a4','portrait');
-//
-//
-//        return $pdf->download('ملف شخصي.pdf');
-//    }
+    public function exportWORD(Request $request){
+
+        $data = Customer::findOrFail($request->customer_id);
+        $payments = $data->payments->toArray();
+
+        $templateProcessor = new TemplateProcessor('wordOffice/customer.docx');
+        $templateProcessor->setValue('customer_NO',$data->customer_NO);
+        $templateProcessor->setValue('full_name',$data->full_name);
+        $templateProcessor->setValue('ID_NO',$data->ID_NO);
+        $templateProcessor->setValue('phone_NO',$data->phone_NO);
+        $templateProcessor->setValue('region',$data->region);
+        $templateProcessor->setValue('address',$data->address);
+        $templateProcessor->setValue('reserve_phone_NO',$data->reserve_phone_NO);
+        $templateProcessor->setValue('job',$data->job);
+        $templateProcessor->setValue('bank_name',$data->bank_name);
+        $templateProcessor->setValue('bank_branch',$data->bank_branch);
+        $templateProcessor->setValue('notes',$data->notes);
+        $templateProcessor->setValue('bank_account_NO',$data->bank_account_NO);
+//        $values = [
+//            ['userId' => 1, 'userName' => 'Batman', 'userAddress' => 'Gotham City'],
+//            ['userId' => 2, 'userName' => 'Superman', 'userAddress' => 'Metropolis'],
+//        ];
+
+        $templateProcessor->cloneRowAndSetValues('payment_NO', $payments);
+        $fileName = $data->customer_NO;
+        $templateProcessor->saveAs($fileName.'.docx');
+        return response()->download($fileName.'.docx')->deleteFileAfterSend(true);
+    }
 
 
 }
