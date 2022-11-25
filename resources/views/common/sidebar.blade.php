@@ -132,6 +132,32 @@
         <hr class="sidebar-divider d-none d-md-block">
     @endhasrole
 
+    @hasrole('المدير العام')
+    <!-- Heading -->
+    <div class="sidebar-heading text-right text-right text-white" style="font-size: 1.3rem">
+        قسم المدير
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed text-right" href="#" data-toggle="collapse" data-target="#collapsePages"
+           aria-expanded="true" aria-controls="collapsePages">
+            <span>سيد</span>
+            <i class="fas fa-fw fa-folder"></i>
+        </a>
+        <div id="collapsePages" class="collapse text-right" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">وظائف و الصلاحيات</h6>
+                <a class="collapse-item" href="{{ route('roles.index') }}">الوظائف</a>
+                <a class="collapse-item" href="{{ route('permissions.index') }}">الصلاحيات</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    @endhasrole
+
     <li class="nav-item ">
         <a class="nav-link text-right" href="#" data-toggle="modal" data-target="#logoutModal">
             <span>تسجيل خروج</span>

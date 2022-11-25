@@ -47,7 +47,13 @@
                                 <td>{{++$key}}</td>
                                 <td>{{ $store->product_name }}</td>
                                 <td>{{ $store->UserStore->full_name }}</td>
-                                <td>{{ $store->product_qty }}</td>
+                                <td>
+                                    @if($store->product_qty < 15)
+                                        <span class="text-danger">{{ $store->product_qty }} الكمية على وشك النفاذ</span>
+                                    @else
+                                        {{ $store->product_qty }}
+                                    @endif
+                                </td>
                                 <td>{{ $store->product_price }}</td>
                                 <td style="display: flex">
                                     <a href="{{ route('stores.edit', ['store' => $store->id]) }}"

@@ -40,6 +40,11 @@ class Customer extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function purchases(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
     public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Transaction::class);

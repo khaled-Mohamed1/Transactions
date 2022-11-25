@@ -319,7 +319,7 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
-
+                                min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="transaction_amount"
@@ -334,6 +334,7 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>أول دفعة <span style="color:red;">*</span></label>
                             <input
+                                min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="first_payment"
@@ -347,6 +348,7 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
+                                min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="transaction_rest"
@@ -360,6 +362,7 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
                             <input
+                                min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="monthly_payment"
@@ -447,12 +450,53 @@
                             @enderror
                         </div>
 
+
+                        {{-- stores--}}
+                        <div class="col-sm-12 mb-3 mt-5 mb-sm-0">
+                                <h5>المنتجات</h5>
+                                <div class="p-3">
+                                    <table class="table text-center table-bordered" id="tablePest">
+                                        <thead class="text-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>اسم المنتج</th>
+                                            <th>الكمية</th>
+                                            <th>سعر المنتج بالجملة</th>
+                                            <th>نسبة الربح %</th>
+                                            <th>الربح الصافي</th>
+                                            <th><button type="button" name="add"
+                                                        class="btn btn-success btn-xs add"><i
+                                                        class="las la-plus"></i></button></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="product_body">
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            <div class="p-3 col-lg-3">
+
+                            <table class="table  text-center table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th class="text-info">السعر الكلي</th>
+                                        <td id="total"></td>
+                                        <input type="hidden" name="total_price" id="total_input">
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+
+
+                        </div>
+
                         {{-- notes --}}
                         <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
                             <label>الملاحظات </label>
                             <textarea class="form-control form-control-user"
                                       name="notes"  rows="3">{{ $customer->notes  }}</textarea>
                         </div>
+
 
 
                     </div>
@@ -470,4 +514,89 @@
 @endsection
 
 
+@section('scripts')
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            let stores = {!! $stores->toJson() !!};
+            var count = 0;
+            var rowIdx = 0;
+
+            $(document).on('click', '.add', function() {
+                count++;
+                var html = '';
+                html += `<tr id="R${++rowIdx}">`;
+                html += `<td class="row-index text-center"><p>${rowIdx}</p></td>`;
+                html +=
+                    `<td><select name="product_name[]" id="product_name${count}" class="form-control form-control-user product_name" data-sub_agricultural_id="${count}" ><option value="">اختر...</option>@foreach ($stores as $store) <option value="{{ $store->id }}"> {{ $store->product_name }} @endforeach</select></td>`;
+                html +=
+                    `<td><input name="product_qty[]" id="product_qty${count}" type="number" min="1" class="form-control form-control-user product_qty${count}"></td>`;
+                html += `<td class="product_price${count}"</td>`;
+                html += `<td><input name="profit_ratio[]"  type="number" class="form-control form-control-user profit_ratio${count}"></td>`;
+                html += `<input name="profit[]" type="hidden" class="form-control form-control-user test hiddenProfit${count}">`;
+                html += `<td class="profit${count}"></td>`;
+                html +=
+                    `<td><button type="button" name="remove" class="btn btn-danger btn-xs remove"><i class="las la-trash-alt"></i></button></td>`;
+                $('.product_body').append(html);
+            });
+
+
+            $(document).on('click', '.remove', function() {
+                --count;
+                $(this).closest('tr').remove();
+
+            });
+
+            $(document).on('change', '.product_name', function() {
+                var product_id = $(this).val();
+                var sub_agricultural_id = $(this).data('sub_agricultural_id');
+
+                $.ajax({
+                    url: "{{ route('transactions.get.product') }}",
+                    method: "POST",
+                    data: {
+                        product_id: product_id
+                    },
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            $('.product_price'+sub_agricultural_id).html(res.getProduct[0].product_price);
+                        }
+                    },
+                })
+
+                $(document).on('change', '.product_qty'+sub_agricultural_id, function() {
+                    let product_qty = $(this).val();
+                    $(document).on('change', '.profit_ratio'+sub_agricultural_id, function() {
+                        let profit_ratio = $(this).val();
+                        let product_price = $('.product_price'+sub_agricultural_id).html();
+                        let product_value = product_price * product_qty - ((product_price * product_qty) - ((product_price * product_qty) * profit_ratio) / 100)
+                        $('.hiddenProfit'+sub_agricultural_id).val(parseFloat(product_value).toFixed(2));
+                        $('.profit'+sub_agricultural_id).html(parseFloat(product_value).toFixed(2));
+                        let area_sum = 0;
+                        $('.test').each(function() {
+                            var get_value = $(this).val();
+                            if ($.isNumeric(get_value)) {
+                                area_sum += parseFloat(get_value);
+                            }
+                        });
+                        $('#total').html(area_sum.toFixed(2));
+                        $('#total_input').val(area_sum.toFixed(2));
+
+                    });
+                });
+
+            });
+
+
+        });
+    </script>
+
+@endsection
 

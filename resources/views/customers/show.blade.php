@@ -448,6 +448,85 @@
                     </div>
                 </div>
 
+                {{-- purchases --}}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">المشتريات</h4>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr class="text-info">
+                                    <th width="10%">رقم</th>
+                                    <th width="10%">إنشاء بواسطة</th>
+                                    <th width="10%">رقم المعاملة</th>
+                                    <th width="15%">اسم المنتج</th>
+                                    <th width="15%">الكمية</th>
+                                    @hasrole('المدير العام')
+                                    <th width="15%">نسبة %</th>
+                                    <th width="20%">الربح</th>
+                                    @endhasrole
+                                    @hasrole('Admin')
+                                    <th width="15%">نسبة %</th>
+                                    <th width="20%">الربح</th>
+                                    @endhasrole
+                                    {{--                                    <th width="10%">العمليات</th>--}}
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                @forelse ($customer->purchases as $key => $purchase)
+                                    <tr>
+                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $purchase->UserPurchase->full_name }}</td>
+                                        <td>{{ $purchase->TransactionPurchase->transaction_NO ?? null}}</td>
+                                        <td>{{ $purchase->StorePurchase->product_name }}</td>
+                                        <td>{{ $purchase->product_qty }}</td>
+                                        @hasrole('المدير العام')
+                                        <td>{{ $purchase->profit_ratio }}</td>
+                                        <td class="text-success">{{ $purchase->profit }}</td>
+                                        @endhasrole
+                                        @hasrole('Admin')
+                                        <td>{{ $purchase->profit_ratio }}</td>
+                                        <td class="text-success">{{ $purchase->profit }}</td>
+                                        @endhasrole
+
+                                        {{--                                        <td style="display: flex">--}}
+{{--                                            <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$payment->id}}">--}}
+{{--                                                <i class="fas fa-trash"></i>--}}
+{{--                                            </a>--}}
+{{--                                        </td>--}}
+                                    </tr>
+                                @empty
+                                    @hasrole('المدير العام')
+                                    <tr>
+                                        <td colspan="7">لا يوجد بيانات</td>
+                                    </tr>
+                                    @endhasrole
+
+                                    @hasrole('Admin')
+                                    <tr>
+                                        <td colspan="7">لا يوجد بيانات</td>
+                                    </tr>
+                                    @endhasrole
+
+                                    <tr>
+                                        <td colspan="5">لا يوجد بيانات</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
 
                 <hr>
 

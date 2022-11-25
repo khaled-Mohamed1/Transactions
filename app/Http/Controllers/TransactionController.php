@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\TransactionExport;
 use App\Helpers\Helper;
 use App\Models\Customer;
+use App\Models\Purchase;
+use App\Models\Store;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -94,7 +96,22 @@ class TransactionController extends Controller
 //        }else{
 //            $customers = Customer::where('updated_by',auth()->user()->id)->where('status','!=','مرفوض')->where('status','!=','مكتمل')->latest()->get();
 //        }
-        return view('transactions.create',['customer' => $customer]);
+
+        $stores = Store::where('product_qty','>',0)->get();
+        return view('transactions.create',
+            ['customer' => $customer,
+            'stores'=>$stores]);
+    }
+
+    public function getProduct(Request $request)
+    {
+        $getProduct = Store::whereId($request->product_id)->get();
+        if (count($getProduct) > 0) {
+            return response()->json([
+                'status' => 'success',
+                'getProduct' => $getProduct,
+            ]);
+        }
     }
 
     /**
@@ -105,6 +122,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+
         // Validations
         $request->validate([
 
@@ -235,6 +253,30 @@ class TransactionController extends Controller
             $customer->where('id', $request->customer_id)->update([
                 'account'       => $customer->account + $request->transaction_rest,
             ]);
+
+            foreach($request->product_name as $key => $data)
+            {
+                $store = Store::find($request->product_name[$key]);
+                if($request->product_qty[$key] > $store->product_qty){
+                    DB::rollBack();
+                    return redirect()->back()->with('warning',$store->product_name."لا يمكن تجاوز الكمية الأصلية لمنتج");
+                }else{
+                    $store = Store::where('id' , $request->product_name[$key])->decrement('product_qty', $request->product_qty[$key]);
+
+                    // Store Data
+                    $purchase = Purchase::create([
+                        'customer_id'=> $request->customer_id,
+                        'user_id' => auth()->user()->id,
+                        'transaction_id' => $transaction->id,
+                        'store_id' => $request->product_name[$key],
+                        'product_qty' => $request->product_qty[$key],
+                        'profit_ratio' => $request->profit_ratio[$key],
+                        'profit' =>$request->profit[$key],
+                        'total_price' => $request->total_price,
+                    ]);
+                }
+
+            }
 
             // Commit And Redirected To Listing
             DB::commit();

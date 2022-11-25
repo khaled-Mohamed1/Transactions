@@ -23,6 +23,11 @@ class Store extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function purchases(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Purchase::class, 'store_id');
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timezone('Asia/Gaza')->format('Y-m-d H:i');
