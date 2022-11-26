@@ -34,7 +34,7 @@
                         <thead>
                         <tr class="text-info">
                             <th>#</th>
-                            <th width="25%">اسم المنتج</th>
+                            <th width="25%">اسم الصنف</th>
                             <th width="25%">انشاء بواسطة</th>
                             <th width="25%">الكمية المتبقية</th>
                             <th width="25%">السعر بالجملة</th>

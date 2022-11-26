@@ -29,7 +29,7 @@
 
                         {{-- agent_name --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>اسم المنتج <span style="color:red;">*</span></label>
+                            <label>اسم الصنف <span style="color:red;">*</span></label>
                             <input
                                 type="text"
                                 class="form-control form-control-user customer_qty @error('product_name') is-invalid @enderror"

@@ -5,11 +5,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalExample">هل تريد حذف المنتج؟</h5>
+                    <h5 class="modal-title" id="deleteModalExample">هل تريد حذف الصنف؟</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                <div class="modal-body text-right">اختر "حذف" بالأسفل اذا كنت تريد حذف. <span class="text-danger">{{$store->prodcut_name}}</span> المنتج!.</div>
+                <div class="modal-body text-right">اختر "حذف" بالأسفل اذا كنت تريد حذف. <span class="text-danger">{{$store->prodcut_name}}</span> الصنف!.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">إلغاء</button>
                     <a class="btn btn-danger" href="{{ route('logout') }}"

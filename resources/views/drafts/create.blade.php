@@ -49,7 +49,7 @@
                                 id="customer_qty"
                                 name="customer_qty"
                                 min="1"
-                                max="6"
+                                max="12"
                                 value="{{ old('customer_qty') }}">
 
                             @error('customer_qty')
@@ -114,8 +114,8 @@
         $(document).ready(function() {
             $("#customer_qty").change(function(){
 
-                if($(this).val() >= 7 || $(this).val() <= 0){
-                    $(this).val(6)
+                if($(this).val() >= 13 || $(this).val() <= 0){
+                    $(this).val(12)
                 }
 
                 $('#display').empty();
