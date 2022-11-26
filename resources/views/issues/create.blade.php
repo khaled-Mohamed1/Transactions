@@ -51,17 +51,13 @@
 
                         {{-- case_number --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>رقم القضية <span style="color:red;">*</span></label>
+                            <label>رقم القضية </label>
                             <input
                                 type="text"
-                                class="form-control form-control-user customer_qty @error('case_number') is-invalid @enderror"
+                                class="form-control form-control-user customer_qty"
                                 id="case_number"
                                 name="case_number"
                                 value="{{ old('case_number') }}">
-
-                            @error('case_number')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
                         </div>
 
                         {{-- case_amount --}}

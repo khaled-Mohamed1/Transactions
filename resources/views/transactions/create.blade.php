@@ -463,7 +463,13 @@
                                             <th>الكمية</th>
                                             <th>سعر المنتج بالجملة</th>
                                             <th>نسبة الربح %</th>
+                                            @hasrole('المدير العام')
                                             <th>الربح الصافي</th>
+                                            @endhasrole
+                                            @hasrole('Admin')
+                                            <th>الربح الصافي</th>
+                                            @endhasrole
+
                                             <th><button type="button" name="add"
                                                         class="btn btn-success btn-xs add"><i
                                                         class="las la-plus"></i></button></th>
@@ -474,9 +480,11 @@
 
                                     </table>
                                 </div>
+                            @hasrole('المدير العام')
+
                             <div class="p-3 col-lg-3">
 
-                            <table class="table  text-center table-bordered">
+                                <table class="table  text-center table-bordered">
                                 <tbody>
                                     <tr>
                                         <th class="text-info">السعر الكلي</th>
@@ -486,6 +494,23 @@
                                 </tbody>
                             </table>
                             </div>
+                            @endhasrole
+
+                            @hasrole('Admin')
+
+                            <div class="p-3 col-lg-3">
+
+                                <table class="table  text-center table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <th class="text-info">السعر الكلي</th>
+                                        <td id="total"></td>
+                                        <input type="hidden" name="total_price" id="total_input">
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            @endhasrole
 
 
                         </div>

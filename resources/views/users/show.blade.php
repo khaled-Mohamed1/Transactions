@@ -276,7 +276,7 @@
                                         <td>{{ $issue->case_amount }}</td>
                                         <td>{{ $issue->execution_request_idIssue->agent_name ?? null }}</td>
                                         <td>
-                                            @foreach($issue->cusotmerIssues as $customer)
+                                            @foreach($issue->customerIssues as $customer)
                                                 <a href="{{route('customers.show',['customer' => $customer->customer_id])}}">{{ $customer->IssueCustomer->customer_NO }}</a> -
                                             @endforeach
                                         </td>

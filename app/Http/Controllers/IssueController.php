@@ -87,7 +87,7 @@ class IssueController extends Controller
             [
                 'court_name' => 'required',
                 'customer_qty'  => 'required|numeric',
-                'case_number'  => 'required',
+//                'case_number'  => 'required',
                 'case_amount'  =>  'required|numeric',
                 'execution_request' => 'required',
                 'customer_id.*'     => 'required_if:customer_qty,>,0|numeric|digits:9',
@@ -96,8 +96,8 @@ class IssueController extends Controller
                 'court_name.required' => 'يجب ادخال اسم المحكمة',
                 'customer_qty.required' => 'يجب ادخال عدد الأفراد',
                 'customer_qty.numeric' => 'يجب ادخال عدد الأفراد بالأرقام',
-                'case_number.required' => 'يجب ادخال رقم القضية',
-                'case_amount.required' => 'يجب ادخال مبلغ القضية',
+//                'case_number.required' => 'يجب ادخال رقم القضية',
+//                'case_amount.required' => 'يجب ادخال مبلغ القضية',
                 'case_amount.numeric' => 'يجب ادخال مبلغ القضية بالأرقام',
                 'execution_request.required' => 'يجب ادخال اسم طالب التنفيذ',
                 'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
@@ -116,9 +116,9 @@ class IssueController extends Controller
                 'customer_qty'         => $request->customer_qty,
                 'case_number' => $request->case_number,
                 'case_amount'       => $request->case_amount,
-                'execution_request'       => $request->execution_request,
-                'execution_agent_name'       => $request->execution_agent_name,
-                'execution_agent_against_it'       => $request->execution_agent_against_it,
+                'execution_request_id'       => $request->execution_request,
+                'execution_agent_name_id'       => $request->execution_agent_name,
+                'execution_agent_against_it_id'       => $request->execution_agent_against_it,
                 'notes'       => $request->notes,
             ]);
 

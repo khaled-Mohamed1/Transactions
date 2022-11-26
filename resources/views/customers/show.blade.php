@@ -517,9 +517,6 @@
                                     </tr>
                                     @endhasrole
 
-                                    <tr>
-                                        <td colspan="5">لا يوجد بيانات</td>
-                                    </tr>
                                 @endforelse
                                 </tbody>
                             </table>
