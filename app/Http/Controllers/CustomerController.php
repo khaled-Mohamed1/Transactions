@@ -343,7 +343,7 @@ class CustomerController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('customers.show',['customer' => $customer->id])->with('success','تم تعديل العميل بنجاح!');
+            return redirect()->route('customers.index')->with('success','تم تعديل العميل بنجاح!');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -439,6 +439,23 @@ class CustomerController extends Controller
     public function exportWORD(Request $request){
 
         $data = Customer::findOrFail($request->customer_id);
+        $drafts= $data->CustomerDrafts;
+        $array_draft = array();
+        foreach ($drafts as $row){
+            $array_draft[] = $row->DraftCustomerDraft->draft_NO;
+        }
+        $str_draft = implode("- ",$array_draft);
+
+        $issues= $data->CustomerIssues;
+        $array_issue = array();
+        $array_issue_name = array();
+        foreach ($issues as $row){
+            $array_issue[] = $row->IssueCustomerIssue->issue_NO;
+            $array_issue_name[] = $row->IssueCustomerIssue->court_name;
+        }
+        $str_issue = implode("- ",$array_issue);
+        $str_issue_name = implode("- ",$array_issue_name);
+
         $payments = $data->payments->toArray();
 
         $templateProcessor = new TemplateProcessor('wordOffice/customer.docx');
@@ -454,6 +471,9 @@ class CustomerController extends Controller
         $templateProcessor->setValue('bank_branch',$data->bank_branch);
         $templateProcessor->setValue('notes',$data->notes);
         $templateProcessor->setValue('bank_account_NO',$data->bank_account_NO);
+        $templateProcessor->setValue('drafts',$str_draft);
+        $templateProcessor->setValue('issues',$str_issue);
+        $templateProcessor->setValue('issues_name',$str_issue_name);
 
 
         $templateProcessor->cloneRowAndSetValues('payment_NO', $payments);
