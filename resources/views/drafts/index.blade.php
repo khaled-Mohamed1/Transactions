@@ -52,7 +52,7 @@
                         <tbody>
                         @forelse ($drafts as $draft)
                             <tr>
-                                <td>{{ $draft->draft_NO }}</td>
+                                <td><a href="{{route('drafts.show',['draft' => $draft->id])}}">{{ $draft->draft_NO }}</a></td>
                                 <td>{{ $draft->UserDraft->full_name }}</td>
                                 <td>{{ $draft->document_type }}</td>
                                 <td>{{ $draft->customer_qty }}</td>

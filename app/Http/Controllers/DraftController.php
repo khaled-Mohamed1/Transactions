@@ -148,11 +148,13 @@ class DraftController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Draft  $draft
-     * @return Response
+     * @return Application|Factory|View
      */
     public function show(Draft $draft)
     {
-        //
+        return view('drafts.show')->with([
+            'draft'  => $draft,
+        ]);
     }
 
     /**

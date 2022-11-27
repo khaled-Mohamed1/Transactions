@@ -23,6 +23,10 @@
                    class="btn btn-primary m-2">
                     <i class="fa fa-pen"></i>
                 </a>
+                <a href="{{ route('payments.create.payment', ['customer' => $customer->id]) }}"
+                   class="btn btn-primary m-2">
+                    <i class="fa fa-plus">    دفعة</i>
+                </a>
 {{--                <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">--}}
 {{--                    <i class="fas fa-trash"></i>--}}
 {{--                </a>--}}
@@ -30,7 +34,7 @@
                 @else
                     <a href="{{ route('transactions.create', ['customer' => $customer->id]) }}"
                        class="btn btn-info m-2">
-                        <i class="fas fa-plus"></i>
+                        <i class="fas fa-plus">    معاملة</i>
                     </a>
                 @endif
 

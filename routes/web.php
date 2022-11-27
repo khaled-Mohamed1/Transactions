@@ -145,6 +145,7 @@ Route::middleware('auth')->prefix('drafts')->name('drafts.')->group(function(){
     Route::get('/edit/{draft}', [DraftController::class, 'edit'])->name('edit');
     Route::put('/update/{draft}', [DraftController::class, 'update'])->name('update');
     Route::delete('/delete/{draft}', [DraftController::class, 'delete'])->name('destroy');
+    Route::get('/show/{draft}', [DraftController::class, 'show'])->name('show');
 
     //get customer data
     Route::post('/get', [DraftController::class, 'get'])->name('get');
@@ -178,6 +179,7 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
 
 Route::middleware('auth')->prefix('payments')->name('payments.')->group(function(){
     Route::get('/create', [PaymentController::class, 'create'])->name('create');
+    Route::get('/create-customer/{customer}', [PaymentController::class, 'createPayment'])->name('create.payment');
     Route::post('/store', [PaymentController::class, 'store'])->name('store');
     Route::delete('/delete/{payment}', [PaymentController::class, 'delete'])->name('destroy');
 

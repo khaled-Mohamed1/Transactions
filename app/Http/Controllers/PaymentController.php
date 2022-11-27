@@ -46,6 +46,11 @@ class PaymentController extends Controller
         return view('payments.create');
     }
 
+    public function createPayment(Customer $customer)
+    {
+        return view('payments.customer-create',['customer'=>$customer]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
