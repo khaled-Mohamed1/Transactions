@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'اضافة قضية')
+@section('title', 'تعديل قضية')
 
 @section('content')
 
@@ -8,7 +8,7 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">اضافة قضية</h1>
+            <h1 class="h3 mb-0 text-gray-800">تعديل قضية</h1>
             <a href="{{route('issues.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
                     class="fas fa-arrow-left fa-sm text-white-50"></i></a>
         </div>
@@ -19,23 +19,31 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4 text-right">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">اضافة قضية جديد</h6>
+                <h6 class="m-0 font-weight-bold text-primary">تعديل قضية جديد</h6>
             </div>
-            <form method="POST" action="{{route('issues.store')}}">
+            <form method="POST" action="{{route('issues.update',['issue' => $issue->id])}}">
                 @csrf
+                @method('PUT')
                 <div class="card-body">
                     <div class="form-group row">
+
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user"
+                            id="issue_id"
+                            name="issue_id"
+                            value="{{$issue->id}}">
 
                         {{-- court_name --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>اسم المحكمة <span style="color:red;">*</span></label>
-                            <select name="court_name" class="form-control form-control-user @error('court_name') is-invalid @enderror">
+                            <select name="court_name" style="height: 45px" class="form-control form-control-user @error('court_name') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
-                                <option value="بداية الشمال" {{ old('court_name') == 'بداية الشمال' ? 'selected' : '' }}>بداية الشمال</option>
-                                <option value="بداية غزة" {{ old('court_name') == 'بداية غزة' ? 'selected' : '' }}>بداية غزة</option>
-                                <option value="بداية دير البلح" {{ old('court_name') == 'بداية دير البلح' ? 'selected' : '' }}>بداية دير البلح</option>
-                                <option value="بداية خانيونس" {{ old('court_name') == 'بداية خانيونس' ? 'selected' : '' }}>بداية خانيونس</option>
-                                <option value="بداية رفح" {{ old('court_name') == 'بداية رفح' ? 'selected' : '' }}>بداية رفح</option>
+                                <option value="بداية الشمال" {{ $issue->court_name == 'بداية الشمال' ? 'selected' : '' }}>بداية الشمال</option>
+                                <option value="بداية غزة" {{ $issue->court_name == 'بداية غزة' ? 'selected' : '' }}>بداية غزة</option>
+                                <option value="بداية دير البلح" {{ $issue->court_name == 'بداية دير البلح' ? 'selected' : '' }}>بداية دير البلح</option>
+                                <option value="بداية خانيونس" {{ $issue->court_name == 'بداية خانيونس' ? 'selected' : '' }}>بداية خانيونس</option>
+                                <option value="بداية رفح" {{ $issue->court_name == 'بداية رفح' ? 'selected' : '' }}>بداية رفح</option>
                             </select>
                             @error('court_name')
                             <span class="text-danger">{{$message}}</span>
@@ -51,7 +59,7 @@
                                 class="form-control form-control-user customer_qty"
                                 id="case_number"
                                 name="case_number"
-                                value="{{ old('case_number') }}">
+                                value="{{ $issue->case_number }}">
                         </div>
 
                         {{-- case_amount --}}
@@ -62,7 +70,7 @@
                                 class="form-control form-control-user @error('case_amount') is-invalid @enderror"
                                 id="case_amount"
                                 name="case_amount"
-                                value="{{ old('case_amount') }}">
+                                value="{{ $issue->case_amount }}">
 
                             @error('case_amount')
                             <span class="text-danger">{{$message}}</span>
@@ -72,10 +80,10 @@
                         {{-- execution_request --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>طالب التنفيذ <span style="color:red;">*</span></label>
-                            <select name="execution_request" class="form-control form-control-user @error('execution_request') is-invalid @enderror">
+                            <select style="height: 45px" name="execution_request" class="form-control form-control-user @error('execution_request') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
                                 @foreach($agents->where('agent_type','طالب التنفيذ') as $agent)
-                                    <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
+                                    <option value="{{$agent->id}}" {{$issue->execution_request_idIssue->agent_name == $agent->agent_name ? 'selected' : ''}}>{{$agent->agent_name}}</option>
                                 @endforeach
                             </select>
 
@@ -88,10 +96,10 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>وكيل طالب التنفيذ </label>
 
-                            <select name="execution_agent_name" class="form-control form-control-user">
+                            <select style="height: 45px" name="execution_agent_name" class="form-control form-control-user">
                                 <option selected disabled value="">اختار...</option>
                                 @foreach($agents->where('agent_type','وكيل طالب التنفيذ') as $agent)
-                                    <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
+                                    <option value="{{$agent->id}}" {{$issue->execution_agent_name_idIssue->agent_name ?? '' == $agent->agent_name ? 'selected' : ''}}>{{$agent->agent_name}}</option>
                                 @endforeach
                             </select>
 
@@ -100,10 +108,10 @@
                         {{-- agent_name --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>وكيل المنفذ ضده </label>
-                            <select name="execution_agent_against_it" class="form-control form-control-user">
+                            <select style="height: 45px" name="execution_agent_against_it" class="form-control form-control-user">
                                 <option selected disabled value="">اختار...</option>
                                 @foreach($agents->where('agent_type','وكيل المنفذ ضده') as $agent)
-                                    <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
+                                    <option value="{{$agent->id}}" {{$issue->execution_agent_against_it_idIssue->agent_name ?? '' == $agent->agent_name ? 'selected' : ''}}>{{$agent->agent_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -112,13 +120,14 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>عدد الأطراف <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 type="number"
                                 class="form-control form-control-user customer_qty @error('customer_qty') is-invalid @enderror"
                                 id="customer_qty"
                                 name="customer_qty"
                                 min="1"
                                 max="12"
-                                value="{{ old('customer_qty') }}">
+                                value="{{ $issue->customer_qty }}">
 
                             @error('customer_qty')
                             <span class="text-danger">{{$message}}</span>
@@ -133,7 +142,7 @@
                                 class="form-control form-control-user"
                                 id="notes"
                                 name="notes"
-                                value="{{ old('notes') }}">
+                                value="{{ $issue->notes }}">
                         </div>
 
                         <div id="display" class="form-group row col-12">
@@ -159,6 +168,28 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+
+            let qty = $("#customer_qty").val();
+            let array = @json($array);
+
+            for (let i = 0; i < qty; i++){
+                $("#display").append(
+                    `
+                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>رقم الهوية <span style="color:red;">*</span></label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="customer_id"
+                                name="customer_id[]"
+                                value="${array[i]}">
+
+                        </div>`
+
+                );
+            }
+
             $("#customer_qty").change(function(){
 
                 if($(this).val() >=13 || $(this).val() <= 0){
@@ -167,16 +198,18 @@
 
                 $('#display').empty();
 
-                for (let i = 1; i <= $(this).val(); i++){
+                for (let i = 0; i < $(this).val(); i++){
                     $("#display").append(
                         `
                     <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>رقم الهوية <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user"
                                 id="customer_id"
-                                name="customer_id[]">
+                                name="customer_id[]"
+                                value="${array[i] ?? ''}">
 
                         </div>`
 

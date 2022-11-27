@@ -157,22 +157,35 @@ class IssueController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Issue  $issue
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function show(Issue $issue)
     {
-        //
+        return view('issues.show')->with([
+            'issue'  => $issue,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Issue  $issue
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function edit(Issue $issue)
     {
-        //
+        $agents = Agent::get();
+        $ID_NO = $issue->customerIssues;
+        $array = array();
+        foreach ($ID_NO as $row){
+            $array[] = $row->IssueCustomer->ID_NO;
+        }
+
+        return view('issues.edit')->with([
+            'issue'  => $issue,
+            'array'  => $array,
+            'agents'  => $agents,
+        ]);
     }
 
     /**
@@ -180,11 +193,92 @@ class IssueController extends Controller
      *
      * @param Request $request
      * @param  \App\Models\Issue  $issue
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, Issue $issue)
     {
-        //
+        if($request->customer_id == null){
+            return redirect()->back()->with('error','يجب ادخال عدد الأطراف قبل اتمام العملية. ');
+        }
+
+        foreach($request->customer_id as $key => $data)
+        {
+            if($request->customer_id[$key] == null){
+                return redirect()->back()->with('error','يجب ادخال جميع أرقام الهوايا. ');
+            }
+        }
+
+        foreach($request->customer_id as $key => $data)
+        {
+            $customer_id = Customer::where('ID_NO',$request->customer_id[$key])->get()->first();
+            if($customer_id == null){
+                return redirect()->back()->with('error','رقم الهوية الذي ادخلته غير موجود ' . $request->customer_id[$key]);
+            }
+        }
+
+//        // Validations
+        $validator = $request->validate(
+            [
+                'court_name' => 'required',
+                'customer_qty'  => 'required|numeric',
+//                'case_number'  => 'required',
+                'case_amount'  =>  'required|numeric',
+                'execution_request' => 'required',
+                'customer_id.*'     => 'required_if:customer_qty,>,0|numeric|digits:9',
+
+            ],[
+                'court_name.required' => 'يجب ادخال اسم المحكمة',
+                'customer_qty.required' => 'يجب ادخال عدد الأفراد',
+                'customer_qty.numeric' => 'يجب ادخال عدد الأفراد بالأرقام',
+//                'case_number.required' => 'يجب ادخال رقم القضية',
+//                'case_amount.required' => 'يجب ادخال مبلغ القضية',
+                'case_amount.numeric' => 'يجب ادخال مبلغ القضية بالأرقام',
+                'execution_request.required' => 'يجب ادخال اسم طالب التنفيذ',
+                'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
+
+            ]
+        );
+
+        DB::beginTransaction();
+        try {
+
+            // Store Data
+            $issue = Issue::whereId($issue->id)->update([
+                'user_id'    => auth()->user()->id,
+                'court_name'     => $request->court_name,
+                'customer_qty'         => $request->customer_qty,
+                'case_number' => $request->case_number,
+                'case_amount'       => $request->case_amount,
+                'execution_request_id'       => $request->execution_request,
+                'execution_agent_name_id'       => $request->execution_agent_name,
+                'execution_agent_against_it_id'       => $request->execution_agent_against_it,
+                'notes'       => $request->notes,
+            ]);
+
+            CustomerIssue::where('issue_id',$request->issue_id)->delete();
+
+            foreach($request->customer_id as $key => $data)
+            {
+
+                $customer_id = Customer::where('ID_NO',$request->customer_id[$key])->get()->first();
+
+                // Store Data
+                $CustomerDraft = CustomerIssue::create([
+                    'issue_id'     => $request->issue_id,
+                    'customer_id'         => $customer_id->id,
+                ]);
+            }
+
+
+            // Commit And Redirected To Listing
+            DB::commit();
+            return redirect()->route('issues.index')->with('success','تم تعديل القضية بنجاح');
+
+        } catch (\Throwable $th) {
+            // Rollback and return with Error
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', $th->getMessage());
+        }
     }
 
     /**

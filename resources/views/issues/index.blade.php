@@ -33,6 +33,44 @@
         {{-- Alert Messages --}}
         @include('common.alert')
 
+        <div class="row">
+            <div class="col-xl-6 col-md-6 mb-4 text-right">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                    <a href="#" class="text-primary">عدد القضايا</a></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issues->count()}}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-md-6 mb-4 text-right">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                    <a href="#" class="text-info">مبلغ الكلي</a></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issues->sum('case_amount')}}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -60,7 +98,7 @@
                         <tbody>
                             @forelse ($issues as $issue)
                                 <tr>
-                                    <td>{{ $issue->issue_NO }}</td>
+                                    <td><a href="{{route('issues.show',['issue' => $issue->id])}}">{{ $issue->issue_NO }}</a></td>
                                     <td>{{ $issue->UserIssue->full_name }}</td>
                                     <td>{{ $issue->court_name }}</td>
                                     <td>{{ $issue->case_number }}</td>
@@ -75,10 +113,10 @@
                                     <td>{{ $issue->execution_agent_against_it_idIssue->agent_name ?? null}}</td>
                                     <td>{{ $issue->issue_status }}</td>
                                     <td style="display: flex">
-{{--                                        <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
-{{--                                           class="btn btn-primary m-2">--}}
-{{--                                            <i class="fa fa-pen"></i>--}}
-{{--                                        </a>--}}
+                                        <a href="{{ route('issues.edit', ['issue' => $issue->id]) }}"
+                                           class="btn btn-primary m-2">
+                                            <i class="fa fa-pen"></i>
+                                        </a>
                                         <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$issue->id}}">
                                             <i class="fas fa-trash"></i>
                                         </a>

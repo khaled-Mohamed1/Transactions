@@ -165,6 +165,7 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
     Route::get('/edit/{issue}', [IssueController::class, 'edit'])->name('edit');
     Route::put('/update/{issue}', [IssueController::class, 'update'])->name('update');
     Route::delete('/delete/{issue}', [IssueController::class, 'delete'])->name('destroy');
+    Route::get('/show/{issue}', [IssueController::class, 'show'])->name('show');
 
     //get customer data
     Route::post('/get', [IssueController::class, 'get'])->name('get');
