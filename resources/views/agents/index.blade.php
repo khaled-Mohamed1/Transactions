@@ -39,11 +39,12 @@
                         <thead>
                         <tr class="text-info">
                             <th>#</th>
-                            <th width="25%">الإسم</th>
-                            <th width="25%">رقم الهوية</th>
-                            <th width="25%">العنوان</th>
-                            <th width="25%">نوعه الوكيل</th>
-                            <th width="25%">العمليات</th>
+                            <th width="20%">الإسم</th>
+                            <th width="20%">رقم الهوية</th>
+                            <th width="20%">العنوان</th>
+                            <th width="20%">العنوان</th>
+                            <th width="20%">البنوك</th>
+                            <th width="20%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,6 +55,12 @@
                                 <td>{{ $agent->ID_NO }}</td>
                                 <td>{{ $agent->address }}</td>
                                 <td>{{ $agent->agent_type }}</td>
+                                <td>
+                                    @foreach($agent->agentBanks as $key => $bank)
+                                         {{++$key}}-  {{ $bank->bank_name }}
+                                        <br>
+                                    @endforeach
+                                </td>
                                 <td style="display: flex">
                                     <a href="{{ route('agents.edit', ['agent' => $agent->id]) }}"
                                        class="btn btn-primary m-2">

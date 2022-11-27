@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agent;
+use App\Models\AgentBank;
 use App\Models\Issue;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -81,6 +82,22 @@ class AgentController extends Controller
                 'address'         => $request->address,
             ]);
 
+            $id = $agent->id;
+
+            foreach($request->bank_name as $key => $data)
+            {
+
+
+                // Store Data
+                $bank_agent = AgentBank::create([
+                    'agent_id' => $id,
+                    'bank_name' => $request->bank_name[$key],
+                    'bank_branch'=> $request->bank_branch[$key],
+                    'bank_account_NO'=> $request->bank_account_NO[$key],
+                ]);
+            }
+
+
             // Commit And Redirected To Listing
             DB::commit();
             return redirect()->route('agents.index')->with('success','تم انشاء الوكيل بنجاح');
@@ -111,8 +128,10 @@ class AgentController extends Controller
      */
     public function edit(Agent $agent)
     {
+        $banks = $agent->agentBanks;
         return view('agents.edit')->with([
-            'agent'  => $agent
+            'agent'  => $agent,
+            'banks'  => $banks,
         ]);
     }
 
@@ -154,6 +173,21 @@ class AgentController extends Controller
                 'ID_NO'         => $request->ID_NO,
                 'address'         => $request->address,
             ]);
+
+            AgentBank::where('agent_id',$request->agent_id)->delete();
+
+
+            foreach($request->bank_name as $key => $data)
+            {
+
+                // Store Data
+                $bank_agent = AgentBank::create([
+                    'agent_id' => $request->agent_id,
+                    'bank_name' => $request->bank_name[$key],
+                    'bank_branch'=> $request->bank_branch[$key],
+                    'bank_account_NO'=> $request->bank_account_NO[$key],
+                ]);
+            }
 
             // Commit And Redirected To Listing
             DB::commit();

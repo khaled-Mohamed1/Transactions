@@ -18,6 +18,11 @@ class Agent extends Model
         'address',
     ];
 
+    public function agentBanks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AgentBank::class, 'agent_id');
+    }
+
     public function execution_request_id_issues(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Issue::class,'execution_request_id');

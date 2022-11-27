@@ -57,7 +57,7 @@
                         </div>
 
                         {{-- address --}}
-                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>العنوان <span style="color:red;">*</span></label>
                             <input
                                 type="text"
@@ -72,7 +72,7 @@
                         </div>
 
                         {{-- agent_type --}}
-                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع الوكيل <span style="color:red;">*</span></label>
                             <select name="agent_type" class="form-control form-control-user @error('agent_type') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
@@ -85,7 +85,22 @@
                             @enderror
                         </div>
 
+                        {{-- bank_qty --}}
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>عدد البنوك </label>
+                            <input
+                                type="number"
+                                class="form-control form-control-user customer_qty"
+                                id="bank_qty"
+                                name="bank_qty"
+                                min="1"
+                                max="10"
+                                value="{{ old('bank_qty') }}">
+                        </div>
 
+                        <div id="display" class="form-group row col-12">
+
+                        </div>
 
                     </div>
                 </div>
@@ -98,5 +113,80 @@
         </div>
 
     </div>
+
+@endsection
+
+
+@section('scripts')
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#bank_qty").change(function(){
+
+
+                $('#display').empty();
+
+                if($(this).val() >= 11 || $(this).val() <= 0){
+                    $(this).val(10)
+                }
+
+                for (let i = 1; i <= $(this).val(); i++){
+                    $("#display").append(
+                        `
+<div class="row m-auto">
+<div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>اسم البنك - ${i}</label>
+                            <select name="bank_name[]" class="form-control form-control-user" style="height: 45px">
+                                <option disabled >اختر...</option>
+                                <option value="بنك فلسطين">بنك فلسطين</option>
+                                <option value="بنك القدس">بنك القدس</option>
+                                <option value="البنك الإسلامي الفلسطيني">البنك الإسلامي الفلسطيني</option>
+                                <option value="البنك العقاري المصري العربي">البنك العقاري المصري العربي</option>
+                                <option value="بنك الوطني الاسلامي" >بنك الوطني الاسلامي</option>
+                                <option value="بنك الانتاج الفلسطيني" >بنك الانتاج الفلسطيني</option>
+                                <option value="بنك الأردن">بنك الأردن</option>
+                                <option value="بنك القاهرة عمان" >بنك القاهرة عمان</option>
+                                <option value="بنك الاستثمار الفلسطيني" >بنك الاستثمار الفلسطيني</option>
+                                <option value="البنك العربي" >البنك العربي</option>
+                                <option value="البنك الاسلامي العربي" >البنك الاسلامي العربي</option>
+                                <option value="بنك الاسكان للتجارة والتمويل" >بنك الاسكان للتجارة والتمويل</option>
+                                <option value="البنك التجاري الأردني" >البنك التجاري الأردني</option>
+                                <option value="البنك الأهلي الأردني" >البنك الأهلي الأردني</option>
+                                <option value="البنك الوطني" >البنك الوطني</option>
+                                <option value="البريد">البريد</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>فرع البنك -   ${i}</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_branch"
+                                name="bank_branch[]">
+
+                        </div>
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>رقم حساب البنك - ${i}</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_account_NO[]"
+                                name="bank_account_NO[]">
+
+                        </div>
+</div>
+
+                        `
+
+                    );
+                }
+            });
+
+
+        });
+    </script>
 
 @endsection

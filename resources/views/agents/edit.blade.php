@@ -28,6 +28,15 @@
                 <div class="card-body">
                     <div class="form-group row">
 
+
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user"
+                            id="agent_id"
+                            name="agent_id"
+                            value="{{$agent->id}}">
+
+
                         {{-- agent_name --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>اسم الوكيل <span style="color:red;">*</span></label>
@@ -59,7 +68,7 @@
                         </div>
 
                         {{-- address --}}
-                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>العنوان <span style="color:red;">*</span></label>
                             <input
                                 type="text"
@@ -74,7 +83,7 @@
                         </div>
 
                         {{-- agent_type --}}
-                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع الوكيل <span style="color:red;">*</span></label>
                             <select name="agent_type" class="form-control form-control-user @error('agent_type') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
@@ -85,6 +94,23 @@
                             @error('agent_type')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
+                        </div>
+
+                        {{-- bank_qty --}}
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>عدد البنوك </label>
+                            <input
+                                type="number"
+                                class="form-control form-control-user customer_qty"
+                                id="bank_qty"
+                                name="bank_qty"
+                                min="1"
+                                max="10"
+                                value="{{ old('bank_qty') }}">
+                        </div>
+
+                        <div id="display" class="form-group row col-12">
+
                         </div>
 
 
@@ -107,21 +133,191 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-            if ($("#status").val() === 'مقبول') {
-                $("#display").show();
-                console.log($('show',"#status").val())
-            } else {
-                $("#display").hide();
-                console.log('hide',$("#status").val())
+            let array = @json($banks);
+            $("#bank_qty").val(array.length)
+            for (let i = 0; i < array.length; i++){
+                $("#display").append(
+                    `
+<div class="row m-auto">
+<div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>اسم البنك</label>
+                            <select name="bank_name[]" class="form-control form-control-user" style="height: 45px">
+                                <option disabled >اختر...</option>
+                                <option value="بنك فلسطين"${array[i].bank_name == "بنك فلسطين" ? 'selected' : ''}>بنك فلسطين</option>
+                                <option value="بنك القدس" ${array[i].bank_name == "بنك القدس" ? 'selected' : ''}>بنك القدس</option>
+                                <option value="البنك الإسلامي الفلسطيني" ${array[i].bank_name == "بنك الإسلامي الفلسطيني" ? 'selected' : ''}>البنك الإسلامي الفلسطيني</option>
+                                <option value="البنك العقاري المصري العربي" ${array[i].bank_name == "البنك العقاري المصري العربي" ? 'selected' : ''}>البنك العقاري المصري العربي</option>
+                                <option value="بنك الوطني الاسلامي"${array[i].bank_name == "بنك الوطني الاسلامي" ? 'selected' : ''} >بنك الوطني الاسلامي</option>
+                                <option value="بنك الانتاج الفلسطيني"${array[i].bank_name == "بنك الانتاج الفلسطيني" ? 'selected' : ''} >بنك الانتاج الفلسطيني</option>
+                                <option value="بنك الأردن"${array[i].bank_name == "بنك الأردن" ? 'selected' : ''}>بنك الأردن</option>
+                                <option value="بنك القاهرة عمان"${array[i].bank_name == "بنك القاهرة عمان" ? 'selected' : ''} >بنك القاهرة عمان</option>
+                                <option value="بنك الاستثمار الفلسطيني"${array[i].bank_name == "بنك الاستثمار الفلسطيني" ? 'selected' : ''} >بنك الاستثمار الفلسطيني</option>
+                                <option value="البنك العربي"${array[i].bank_name == "البنك العربي" ? 'selected' : ''} >البنك العربي</option>
+                                <option value="البنك الاسلامي العربي"${array[i].bank_name == "البنك الاسلامي العربي" ? 'selected' : ''} >البنك الاسلامي العربي</option>
+                                <option value="بنك الاسكان للتجارة والتمويل"${array[i].bank_name == "بنك الاسكان للتجارة والتمويل" ? 'selected' : ''} >بنك الاسكان للتجارة والتمويل</option>
+                                <option value="البنك التجاري الأردني"${array[i].bank_name == "البنك التجاري الأردني" ? 'selected' : ''} >البنك التجاري الأردني</option>
+                                <option value="البنك الأهلي الأردني"${array[i].bank_name == "البنك الأهلي الأردني" ? 'selected' : ''} >البنك الأهلي الأردني</option>
+                                <option value="البنك الوطني"${array[i].bank_name == "البنك الوطني" ? 'selected' : ''} >البنك الوطني</option>
+                                <option value="البريد"${array[i].bank_name == "البريد" ? 'selected' : ''}>البريد</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>فرع البنك</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_branch"
+                                name="bank_branch[]"
+                                value="${array[i].bank_branch}">
+
+                        </div>
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>رقم حساب البنك</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_account_NO[]"
+                                name="bank_account_NO[]"
+                                value="${array[i].bank_account_NO}">
+
+                        </div>
+</div>
+`
+
+                );
             }
 
-            $("#status").on("change", function() {
-                if ($(this).val() == 'مقبول') {
-                    $("#display").show().siblings();
-                } else {
-                    $("#display").hide();
+            $("#bank_qty").change(function(index){
+
+                if($(this).val() >= 13 || $(this).val() <= 0){
+                    $(this).val(12)
+                }
+
+                console.log(array.length)
+                console.log($(this).val())
+
+                $('#display').empty(index);
+
+                let test = array.length
+                if($(this).val() < array.length){
+                    test = $(this).val();
+                }else{
+                    test = array.length
+                }
+
+                for (let i = 0; i < test; i++){
+                    $("#display").append(
+                        `
+<div class="row m-auto">
+<div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>اسم البنك</label>
+                            <select name="bank_name[]" class="form-control form-control-user" style="height: 45px">
+                                <option disabled >اختر...</option>
+                                <option value="بنك فلسطين"${array[i].bank_name == "بنك فلسطين" ? 'selected' : ''}>بنك فلسطين</option>
+                                <option value="بنك القدس" ${array[i].bank_name == "بنك القدس" ? 'selected' : ''}>بنك القدس</option>
+                                <option value="البنك الإسلامي الفلسطيني" ${array[i].bank_name == "بنك الإسلامي الفلسطيني" ? 'selected' : ''}>البنك الإسلامي الفلسطيني</option>
+                                <option value="البنك العقاري المصري العربي" ${array[i].bank_name == "البنك العقاري المصري العربي" ? 'selected' : ''}>البنك العقاري المصري العربي</option>
+                                <option value="بنك الوطني الاسلامي"${array[i].bank_name == "بنك الوطني الاسلامي" ? 'selected' : ''} >بنك الوطني الاسلامي</option>
+                                <option value="بنك الانتاج الفلسطيني"${array[i].bank_name == "بنك الانتاج الفلسطيني" ? 'selected' : ''} >بنك الانتاج الفلسطيني</option>
+                                <option value="بنك الأردن"${array[i].bank_name == "بنك الأردن" ? 'selected' : ''}>بنك الأردن</option>
+                                <option value="بنك القاهرة عمان"${array[i].bank_name == "بنك القاهرة عمان" ? 'selected' : ''} >بنك القاهرة عمان</option>
+                                <option value="بنك الاستثمار الفلسطيني"${array[i].bank_name == "بنك الاستثمار الفلسطيني" ? 'selected' : ''} >بنك الاستثمار الفلسطيني</option>
+                                <option value="البنك العربي"${array[i].bank_name == "البنك العربي" ? 'selected' : ''} >البنك العربي</option>
+                                <option value="البنك الاسلامي العربي"${array[i].bank_name == "البنك الاسلامي العربي" ? 'selected' : ''} >البنك الاسلامي العربي</option>
+                                <option value="بنك الاسكان للتجارة والتمويل"${array[i].bank_name == "بنك الاسكان للتجارة والتمويل" ? 'selected' : ''} >بنك الاسكان للتجارة والتمويل</option>
+                                <option value="البنك التجاري الأردني"${array[i].bank_name == "البنك التجاري الأردني" ? 'selected' : ''} >البنك التجاري الأردني</option>
+                                <option value="البنك الأهلي الأردني"${array[i].bank_name == "البنك الأهلي الأردني" ? 'selected' : ''} >البنك الأهلي الأردني</option>
+                                <option value="البنك الوطني"${array[i].bank_name == "البنك الوطني" ? 'selected' : ''} >البنك الوطني</option>
+                                <option value="البريد"${array[i].bank_name == "البريد" ? 'selected' : ''}>البريد</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>فرع البنك</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_branch"
+                                name="bank_branch[]"
+                                value="${array[i].bank_branch}">
+
+                        </div>
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>رقم حساب البنك</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_account_NO[]"
+                                name="bank_account_NO[]"
+                                value="${array[i].bank_account_NO}">
+
+                        </div>
+</div>
+`
+
+                    );
+                }
+
+                for (let i = 0; i < $(this).val() - array.length; i++){
+                    $("#display").append(
+                        `
+<div class="row m-auto">
+<div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>اسم البنك</label>
+                            <select name="bank_name[]" class="form-control form-control-user" style="height: 45px">
+                                <option disabled >اختر...</option>
+                                <option value="بنك فلسطين">بنك فلسطين</option>
+                                <option value="بنك القدس">بنك القدس</option>
+                                <option value="البنك الإسلامي الفلسطيني">البنك الإسلامي الفلسطيني</option>
+                                <option value="البنك العقاري المصري العربي">البنك العقاري المصري العربي</option>
+                                <option value="بنك الوطني الاسلامي" >بنك الوطني الاسلامي</option>
+                                <option value="بنك الانتاج الفلسطيني" >بنك الانتاج الفلسطيني</option>
+                                <option value="بنك الأردن">بنك الأردن</option>
+                                <option value="بنك القاهرة عمان" >بنك القاهرة عمان</option>
+                                <option value="بنك الاستثمار الفلسطيني" >بنك الاستثمار الفلسطيني</option>
+                                <option value="البنك العربي" >البنك العربي</option>
+                                <option value="البنك الاسلامي العربي" >البنك الاسلامي العربي</option>
+                                <option value="بنك الاسكان للتجارة والتمويل" >بنك الاسكان للتجارة والتمويل</option>
+                                <option value="البنك التجاري الأردني" >البنك التجاري الأردني</option>
+                                <option value="البنك الأهلي الأردني" >البنك الأهلي الأردني</option>
+                                <option value="البنك الوطني" >البنك الوطني</option>
+                                <option value="البريد">البريد</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>فرع البنك</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_branch"
+                                name="bank_branch[]">
+
+                        </div>
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                            <label>رقم حساب البنك</label>
+                            <input
+                                style="height: 45px"
+                                type="text"
+                                class="form-control form-control-user"
+                                id="bank_account_NO[]"
+                                name="bank_account_NO[]">
+
+                        </div>
+</div>
+
+`
+
+                    );
                 }
             });
+
 
         });
     </script>
