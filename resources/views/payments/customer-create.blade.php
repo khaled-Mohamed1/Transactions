@@ -27,7 +27,6 @@
                     <div class="form-group row">
 
                         <input
-                            disabled
                             type="hidden"
                             class="form-control form-control-user"
                             id="ID_NO"

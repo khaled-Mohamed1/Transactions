@@ -312,12 +312,20 @@ class IssueController extends Controller
     public function exportWORD(Request $request,Issue $issue){
 
         $data = Issue::where('id',$issue->id)->first();
+
+        $customers = $data->customerIssues;
+        $array_issue = array();
+        foreach ($customers as $row){
+            $array_issue[] = $row->IssueCustomer->toArray();
+        }
+
         $templateProcessor = new TemplateProcessor('wordOffice/issue.docx');
         $templateProcessor->setValue('court_name',$data->court_name);
         $templateProcessor->setValue('case_number',$data->case_number);
         $templateProcessor->setValue('execution_request_name',$data->execution_request_idIssue->agent_name ?? null);
         $templateProcessor->setValue('execution_request_address',$data->execution_request_idIssue->address ?? null);
         $templateProcessor->setValue('execution_request_ID_NO',$data->execution_request_idIssue->ID_NO ?? null);
+        $templateProcessor->setValue('execution_agent_name',$data->execution_agent_name_idIssue->agent_name ?? null);
         $templateProcessor->setValue('execution_agent_against_it_name',$data->execution_agent_name_idIssue->agent_name ?? null);
         $templateProcessor->setValue('execution_agent_against_it_address',$data->execution_agent_against_it_idIssue->address ?? null);
         $templateProcessor->setValue('execution_agent_against_it_ID_NO',$data->execution_agent_against_it_idIssue->ID_NO ?? null);
@@ -325,7 +333,8 @@ class IssueController extends Controller
         $templateProcessor->setValue('created_at',$data->created_at);
 
 
-//        $templateProcessor->cloneRowAndSetValues('payment_NO', $payments);
+        $templateProcessor->cloneRowAndSetValues('ID_NO', $array_issue);
+
         $fileName = $data->issue_NO;
         $templateProcessor->saveAs($fileName.'.docx');
         return response()->download($fileName.'.docx')->deleteFileAfterSend(true);
