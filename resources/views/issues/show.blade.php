@@ -138,7 +138,7 @@
                                         <td>{{ $customer->IssueCustomer->address }}</td>
                                         <td>
                                             @if($customer->IssueCustomer->status == 'مقبول' || $customer->IssueCustomer->status == 'مكتمل' || $customer->IssueCustomer->status == 'ملتزم')
-                                                <span class="text-success">{{ $customer->DraftCustomer->status }}</span>
+                                                <span class="text-success">{{ $customer->IssueCustomer->status }}</span>
                                             @elseif($customer->IssueCustomer->status == 'مرفوض' || $customer->IssueCustomer->status == 'متعسر')
                                                 <span class="text-danger">{{ $customer->IssueCustomer->status }}</span>
                                             @elseif($customer->IssueCustomer->status == 'قيد التوقيع')
