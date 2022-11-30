@@ -6,6 +6,8 @@
         <th scope="col">اسم المحكمة</th>
         <th scope="col">رقم القضية</th>
         <th scope="col">مبلغ القضية</th>
+        <th width="10%">العملة</th>
+        <th width="10%">السند</th>
         <th width="10%">طالب التنفيذ</th>
         <th width="15%">الأطراف</th>
         <th width="10%">وكيل طالب التنفيذ</th>
@@ -23,6 +25,8 @@
             <td>{{ $issue->court_name }}</td>
             <td>{{ $issue->case_number }}</td>
             <td>{{ $issue->case_amount }}</td>
+            <td>{{ $issue->currency_type }}</td>
+            <td>{{ $issue->bond_type }}</td>
             <td>{{ $issue->execution_request_idIssue->agent_name ?? null}}</td>
             <td>
                 @foreach($issue->cusotmerIssues as $customer)

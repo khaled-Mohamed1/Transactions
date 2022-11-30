@@ -63,6 +63,8 @@ class HomeController extends Controller
             ->whereYear('created_at', date('Y'))->get()->count();
         $drafts = Draft::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->get()->count();
+        $drafts_tasks = Draft::whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
         $issues = Issue::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->get()->count();
         return view('home',['customers' => $customers,
@@ -75,7 +77,8 @@ class HomeController extends Controller
             'customers_follow'=>$customers_follow,
             'customers_committed'=>$customers_committed,
             'drafts'=>$drafts,
-            'issues'=>$issues]);
+            'issues'=>$issues,
+            'drafts_tasks'=>$drafts_tasks]);
     }
 
     /**

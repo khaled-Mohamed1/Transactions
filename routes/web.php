@@ -149,6 +149,7 @@ Route::middleware('auth')->prefix('drafts')->name('drafts.')->group(function(){
 
     //get customer data
     Route::post('/get', [DraftController::class, 'get'])->name('get');
+    Route::post('/add_task', [DraftController::class, 'addTask'])->name('add.task');
 
 //    Route::get('/import-users', [UserController::class, 'importUsers'])->name('import');
 //    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
@@ -166,6 +167,8 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
     Route::put('/update/{issue}', [IssueController::class, 'update'])->name('update');
     Route::delete('/delete/{issue}', [IssueController::class, 'delete'])->name('destroy');
     Route::get('/show/{issue}', [IssueController::class, 'show'])->name('show');
+    Route::get('/All_issues', [IssueController::class, 'allIndex'])->name('index.all');
+    Route::get('/create/issue/{draft}', [IssueController::class, 'createIssue'])->name('create.issue');
 
     //get customer data
     Route::post('/get', [IssueController::class, 'get'])->name('get');
@@ -175,6 +178,7 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
 
     Route::get('export/', [IssueController::class, 'export'])->name('export');
     Route::get('export/word/{issue}', [IssueController::class, 'exportWORD'])->name('export.WORD');
+    Route::post('export/word/ratify/{issue}', [IssueController::class, 'exportWORDRatify'])->name('export.WORD.ratify');
 
 });
 

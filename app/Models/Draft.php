@@ -17,6 +17,7 @@ class Draft extends Model
         'customer_qty',
         'document_qty',
         'document_affiliate',
+        'updated_by',
     ];
 
 
@@ -28,6 +29,16 @@ class Draft extends Model
     public function cusotmerdrafts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CustomerDraft::class,'draft_id');
+    }
+
+    public function issues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Issue::class);
+    }
+
+    public function UserUpdateDraft(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 
     public function getCreatedAtAttribute($value)

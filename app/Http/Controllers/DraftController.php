@@ -7,6 +7,7 @@ use App\Helpers\Helper;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\Draft;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -36,9 +37,29 @@ class DraftController extends Controller
      */
     public function index()
     {
+        $users = User::where('id',5)->latest()->get();
         $drafts = Draft::orderBy('draft_NO','desc')->paginate(100);
-        return view('drafts.index',['drafts' => $drafts]);
+        return view('drafts.index',['drafts' => $drafts,'users'=>$users]);
     }
+
+    public function addTask(Request $request)
+    {
+
+        if($request->user_id === 'false'){
+            $draft = Draft::findOrFail($request->customer_id)->update([
+                'updated_by' => NULL,
+            ]);
+        }else{
+            $draft = Draft::findOrFail($request->customer_id)->update([
+                'updated_by' => $request->user_id,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

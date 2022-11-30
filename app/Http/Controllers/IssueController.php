@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Exports\IssueExport;
 use App\Helpers\Helper;
 use App\Models\Agent;
+use App\Models\AgentBank;
 use App\Models\Customer;
 use App\Models\CustomerIssue;
+use App\Models\Draft;
 use App\Models\Issue;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -25,10 +28,12 @@ class IssueController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('permission:قضايا-بيانات|قضايا-اضافة|قضايا-تعديل|قضايا-حذف', ['only' => ['index']]);
-        $this->middleware('permission:قضايا-اضافة', ['only' => ['create','store']]);
+        $this->middleware('permission:قضايا-اضافة', ['only' => ['create','store','createIssue']]);
         $this->middleware('permission:قضايا-تعديل', ['only' => ['edit','update']]);
         $this->middleware('permission:قضايا-حذف', ['only' => ['delete']]);
         $this->middleware('permission:قضايا-تصدير', ['only' => ['export']]);
+        $this->middleware('permission:قضايا-جميع', ['only' => ['allIndex']]);
+
     }
 
     /**
@@ -38,9 +43,25 @@ class IssueController extends Controller
      */
     public function index()
     {
-        $issues = Issue::orderBy('issue_NO','desc')->paginate(100);
+        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
+            $drafts = Draft::orderBy('draft_NO','desc')->whereNotNull('updated_by')->paginate(100);
+        }else{
+            $drafts = Draft::orderBy('draft_NO','desc')->where('updated_by', auth()->user()->id)->paginate(100);
 
-        return view('issues.index',['issues' => $issues]);
+        }
+
+        return view('issues.index',['drafts' => $drafts]);
+    }
+
+    public function allIndex(){
+        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
+            $issues = Issue::orderBy('issue_NO','desc')->paginate(100);
+        }else{
+            $issues = Issue::orderBy('issue_NO','desc')->where('user_id', auth()->user()->id)->paginate(100);
+        }
+
+        return view('issues.allIssues', ['issues' => $issues]);
+
     }
 
     /**
@@ -52,6 +73,12 @@ class IssueController extends Controller
     {
         $agents = Agent::get();
         return view('issues.create',['agents'=>$agents]);
+    }
+
+    public function createIssue(Draft $draft)
+    {
+        $agents = Agent::get();
+        return view('issues.create-issue',['agents'=>$agents,'draft'=>$draft]);
     }
 
     /**
@@ -90,6 +117,8 @@ class IssueController extends Controller
 //                'case_number'  => 'required',
                 'case_amount'  =>  'required|numeric',
                 'execution_request' => 'required',
+                'currency_type' => 'required',
+                'bond_type' => 'required',
                 'customer_id.*'     => 'required_if:customer_qty,>,0|numeric|digits:9',
 
             ],[
@@ -99,7 +128,8 @@ class IssueController extends Controller
 //                'case_number.required' => 'يجب ادخال رقم القضية',
 //                'case_amount.required' => 'يجب ادخال مبلغ القضية',
                 'case_amount.numeric' => 'يجب ادخال مبلغ القضية بالأرقام',
-                'execution_request.required' => 'يجب ادخال اسم طالب التنفيذ',
+                'currency_type.required' => 'يجب ادخال نوع العملة',
+                'bond_type.required' => 'يجب ادخال نوع السند',
                 'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
 
             ]
@@ -112,6 +142,7 @@ class IssueController extends Controller
             $issue = Issue::create([
                 'issue_NO' => Helper::IDGenerator(new Issue(), 'issue_NO', 5,2),
                 'user_id'    => auth()->user()->id,
+                'draft_id'    => $request->draft_id,
                 'court_name'     => $request->court_name,
                 'customer_qty'         => $request->customer_qty,
                 'case_number' => $request->case_number,
@@ -119,8 +150,13 @@ class IssueController extends Controller
                 'execution_request_id'       => $request->execution_request,
                 'execution_agent_name_id'       => $request->execution_agent_name,
                 'execution_agent_against_it_id'       => $request->execution_agent_against_it,
+                'currency_type' => $request->currency_type,
+                'bond_type' => $request->bond_type,
                 'notes'       => $request->notes,
             ]);
+
+            $draft = Draft::findOrFail($request->draft_id)->update(['updated_by' => null]);
+
 
             $id = $issue->id;
 
@@ -224,6 +260,8 @@ class IssueController extends Controller
 //                'case_number'  => 'required',
                 'case_amount'  =>  'required|numeric',
                 'execution_request' => 'required',
+                'currency_type' => 'required',
+                'bond_type' => 'required',
                 'customer_id.*'     => 'required_if:customer_qty,>,0|numeric|digits:9',
 
             ],[
@@ -234,6 +272,8 @@ class IssueController extends Controller
 //                'case_amount.required' => 'يجب ادخال مبلغ القضية',
                 'case_amount.numeric' => 'يجب ادخال مبلغ القضية بالأرقام',
                 'execution_request.required' => 'يجب ادخال اسم طالب التنفيذ',
+                'currency_type.required' => 'يجب ادخال نوع العملة',
+                'bond_type.required' => 'يجب ادخال نوع السند',
                 'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
 
             ]
@@ -252,6 +292,8 @@ class IssueController extends Controller
                 'execution_request_id'       => $request->execution_request,
                 'execution_agent_name_id'       => $request->execution_agent_name,
                 'execution_agent_against_it_id'       => $request->execution_agent_against_it,
+                'currency_type' => $request->currency_type,
+                'bond_type' => $request->bond_type,
                 'notes'       => $request->notes,
             ]);
 
@@ -272,7 +314,7 @@ class IssueController extends Controller
 
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('issues.index')->with('success','تم تعديل القضية بنجاح');
+            return redirect()->route('issues.show',['issue' => $issue->id])->with('success','تم تعديل القضية بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -340,4 +382,83 @@ class IssueController extends Controller
         return response()->download($fileName.'.docx')->deleteFileAfterSend(true);
     }
 
+    public function exportWORDRatify(Request $request,Issue $issue)
+    {
+        $issue = Issue::where('id',$issue->id)->first();
+        $bank = AgentBank::where('id',$request->bank_id)->first();
+        $customer = Customer::where('id',$request->customer_id)->first();
+
+
+
+        if($request->payment_type == 'استقطاع'){
+            $templateProcessor = new TemplateProcessor('wordOffice/ratifyAll.docx');
+            $templateProcessor->setValue('court_name',$issue->court_name);
+            $templateProcessor->setValue('case_number',$issue->case_number);
+            $templateProcessor->setValue('case_amount',$issue->case_amount);
+            $templateProcessor->setValue('issue_currency',$issue->currency_type);
+            $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
+            $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
+            $templateProcessor->setValue('execution_agent_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_agent_against_it_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('bank_name',$bank->bank_name);
+            $templateProcessor->setValue('bank_branch',$bank->bank_branch);
+            $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
+            $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
+            $templateProcessor->setValue('customer_name',$customer->full_name);
+            $templateProcessor->setValue('customer_ID_NO',$customer->ID_NO);
+            $templateProcessor->setValue('withholding_amount',$request->withholding_amount);
+            $templateProcessor->setValue('currency_type',$request->currency_type);
+            if ($request->by == 'بنك'){
+                $bank_name = $customer->bank_name;
+                $bank_branch = $customer->bank_branch;
+                $by = $bank_name . ' - ' . $bank_branch;
+            }else{
+                $by = $request->by;
+            }
+            $templateProcessor->setValue('by',$by);
+
+            $fileName = $issue->issue_NO;
+            $templateProcessor->saveAs($fileName.' تصديق.docx');
+            return response()->download($fileName.' تصديق.docx')->deleteFileAfterSend(true);
+        }else{
+            $templateProcessor = new TemplateProcessor('wordOffice/ratifyHalf.docx');
+            $templateProcessor->setValue('court_name',$issue->court_name);
+            $templateProcessor->setValue('case_number',$issue->case_number);
+            $templateProcessor->setValue('case_amount',$issue->case_amount);
+            $templateProcessor->setValue('issue_currency',$issue->currency_type);
+            $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
+            $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
+            $templateProcessor->setValue('execution_agent_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_agent_against_it_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('bank_name',$bank->bank_name);
+            $templateProcessor->setValue('bank_branch',$bank->bank_branch);
+            $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
+            $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
+            $templateProcessor->setValue('customer_name',$customer->full_name);
+            $templateProcessor->setValue('customer_ID_NO',$customer->ID_NO);
+//            $templateProcessor->setValue('customer_bank',$customer->bank_name);
+//            $templateProcessor->setValue('customer_branch',$customer->bank_branch);
+            $templateProcessor->setValue('payment_type',$request->payment_type);
+
+            if ($request->by == 'بنك'){
+                $bank_name = $customer->bank_name;
+                $bank_branch = $customer->bank_branch;
+                $by = $bank_name . ' - ' . $bank_branch;
+            }else{
+                $by = $request->by;
+            }
+
+            $templateProcessor->setValue('by',$by);
+
+            $fileName = $issue->issue_NO;
+            $templateProcessor->saveAs($fileName.' تصديق.docx');
+            return response()->download($fileName.' تصديق.docx')->deleteFileAfterSend(true);
+        }
+
+
+
+
+    }
 }

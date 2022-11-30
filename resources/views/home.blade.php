@@ -237,7 +237,25 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
-                                <a href="{{ route('issues.index') }}" class="text-primary">القضايا (شهري)</a></div>
+                                <a href="{{route('issues.index')}}" class="text-primary">القضايا الحالية (شهري)</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$drafts_tasks}}</div>
+
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4 text-right">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
+                                <a href="{{ route('issues.index.all') }}" class="text-warning">القضايا (شهري)</a></div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issues}}</div>
                         </div>
                         <div class="col-auto">

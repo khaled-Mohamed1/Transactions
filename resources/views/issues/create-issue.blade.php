@@ -26,6 +26,13 @@
                 <div class="card-body">
                     <div class="form-group row">
 
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user customer_qty"
+                            id="draft_id"
+                            name="draft_id"
+                            value="{{ $draft->id }}">
+
                         {{-- court_name --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>اسم المحكمة <span style="color:red;">*</span></label>
@@ -47,6 +54,7 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>رقم القضية </label>
                             <input
+                                disabled
                                 type="text"
                                 class="form-control form-control-user customer_qty"
                                 id="case_number"
@@ -58,7 +66,6 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>مبلغ القضية <span style="color:red;">*</span></label>
                             <input
-                                style="height: 45px;"
                                 type="number"
                                 class="form-control form-control-user @error('case_amount') is-invalid @enderror"
                                 id="case_amount"
@@ -115,7 +122,7 @@
                         {{-- agent_name --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>وكيل المنفذ ضده </label>
-                            <select name="execution_agent_against_it" style="height: 45px;" class="form-control form-control-user">
+                            <select name="execution_agent_against_it" style="height: 45px;" style="height: 45px;" class="form-control form-control-user">
                                 <option selected disabled value="">اختار...</option>
                                 @foreach($agents->where('agent_type','وكيل المنفذ ضده') as $agent)
                                     <option value="{{$agent->id}}">{{$agent->agent_name}}</option>
@@ -123,18 +130,23 @@
                             </select>
                         </div>
 
+
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user customer_qty @error('customer_qty') is-invalid @enderror"
+                            id="customer_qty"
+                            name="customer_qty"
+                            value="{{ $draft->customer_qty }}">
+
                         {{-- customer_qty --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>عدد الأطراف <span style="color:red;">*</span></label>
                             <input
-                                style="height: 45px;"
+                                disabled
                                 type="number"
                                 class="form-control form-control-user customer_qty @error('customer_qty') is-invalid @enderror"
                                 id="customer_qty"
-                                name="customer_qty"
-                                min="1"
-                                max="12"
-                                value="{{ old('customer_qty') }}">
+                                value="{{ $draft->customer_qty }}">
 
                             @error('customer_qty')
                             <span class="text-danger">{{$message}}</span>
@@ -167,7 +179,25 @@
                         </div>
 
                         <div id="display" class="form-group row col-12">
+                            @foreach($draft->cusotmerdrafts as $customer)
+                                <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                                    <label>رقم الهوية <span style="color:red;">*</span></label>
+                                    <input
+                                        disabled
+                                        style="height: 45px"
+                                        type="text"
+                                        class="form-control form-control-user"
+                                        value="{{$customer->DraftCustomer->ID_NO}}">
 
+                                    <input
+                                        style="height: 45px"
+                                        type="hidden"
+                                        class="form-control form-control-user"
+                                        id="customer_id"
+                                        name="customer_id[]"
+                                        value="{{$customer->DraftCustomer->ID_NO}}">
+                                </div>
+                            @endforeach
                         </div>
 
                     </div>
@@ -185,37 +215,37 @@
 @endsection
 
 
-@section('scripts')
+{{--@section('scripts')--}}
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#customer_qty").change(function(){
+{{--    <script type="text/javascript">--}}
+{{--        $(document).ready(function() {--}}
+{{--            $("#customer_qty").change(function(){--}}
 
-                if($(this).val() >=13 || $(this).val() <= 0){
-                    $(this).val(12)
-                }
+{{--                if($(this).val() >=13 || $(this).val() <= 0){--}}
+{{--                    $(this).val(12)--}}
+{{--                }--}}
 
-                $('#display').empty();
+{{--                $('#display').empty();--}}
 
-                for (let i = 1; i <= $(this).val(); i++){
-                    $("#display").append(
-                        `
-                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>رقم الهوية <span style="color:red;">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user"
-                                id="customer_id"
-                                name="customer_id[]">
+{{--                for (let i = 1; i <= $(this).val(); i++){--}}
+{{--                    $("#display").append(--}}
+{{--                        `--}}
+{{--                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>رقم الهوية <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="text"--}}
+{{--                                class="form-control form-control-user"--}}
+{{--                                id="customer_id"--}}
+{{--                                name="customer_id[]">--}}
 
-                        </div>`
+{{--                        </div>`--}}
 
-                    );
-                }
-            });
+{{--                    );--}}
+{{--                }--}}
+{{--            });--}}
 
 
-        });
-    </script>
+{{--        });--}}
+{{--    </script>--}}
 
-@endsection
+{{--@endsection--}}

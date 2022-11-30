@@ -14,6 +14,7 @@ class Issue extends Model
     protected $fillable = [
         'issue_NO',
         'user_id',
+        'draft_id',
         'court_name',
         'case_number',
         'case_amount',
@@ -21,6 +22,8 @@ class Issue extends Model
         'execution_agent_name_id',
         'execution_agent_against_it_id',
         'customer_qty',
+        'currency_type',
+        'bond_type',
         'notes',
     ];
 
@@ -28,6 +31,11 @@ class Issue extends Model
     public function UserIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function DraftIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Draft::class, 'draft_id', 'id');
     }
 
     public function execution_request_idIssue(): \Illuminate\Database\Eloquent\Relations\BelongsTo

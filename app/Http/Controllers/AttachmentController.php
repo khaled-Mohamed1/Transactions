@@ -93,7 +93,8 @@ class AttachmentController extends Controller
             // Rollback and return with Error
             DB::rollBack();
             return redirect()->back()->withInput()->with('error', $th->getMessage());
-        }    }
+        }
+    }
 
     /**
      * Display the specified resource.
