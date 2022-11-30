@@ -302,11 +302,13 @@ class TransactionController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function show(Transaction $transaction)
     {
-        //
+        return view('transactions.show')->with([
+            'transaction'  => $transaction,
+        ]);
     }
 
     /**

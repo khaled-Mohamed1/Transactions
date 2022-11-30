@@ -55,7 +55,7 @@
                         <tbody>
                         @forelse($transactions as $transaction)
                             <tr>
-                                <td>{{ $transaction->transaction_NO }}</td>
+                                <td><a href="{{route('transactions.show',['transaction' => $transaction->id])}}">{{ $transaction->transaction_NO }}</a></td>
                                 <td><a href="{{route('customers.show',['customer' => $transaction->CustomerTransaction->id])}}">{{ $transaction->CustomerTransaction->customer_NO }}</a></td>
                                 <td>{{ $transaction->CustomerTransaction->full_name }}</td>
                                 <td>{{ $transaction->transactions_type }}</td>

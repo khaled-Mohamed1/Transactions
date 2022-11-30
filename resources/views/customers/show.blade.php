@@ -237,7 +237,7 @@
                                 @forelse($customer->transactions as $transaction)
 
                                     <tr>
-                                        <td>{{ $transaction->transaction_NO }}</td>
+                                        <td><a href="{{route('transactions.show',['transaction' => $transaction->id])}}">{{ $transaction->transaction_NO }}</a></td>
                                         <td>{{ $transaction->transactions_type }}</td>
                                         <td>{{ $transaction->transaction_amount }}</td>
                                         <td>{{ $transaction->first_payment }}</td>
@@ -295,7 +295,8 @@
 
                                 @forelse ($drafts as $draft)
                                     <tr>
-                                        <td>{{ $draft->DraftCustomerDraft->draft_NO }}</td>
+                                        <td><a href="{{route('drafts.show',['draft' => $draft->DraftCustomerDraft->id])}}">{{ $draft->DraftCustomerDraft->draft_NO }}</a></td>
+
                                         <td>{{ $draft->DraftCustomerDraft->UserDraft->full_name }}</td>
                                         <td>{{ $draft->DraftCustomerDraft->document_type }}</td>
                                         <td>{{ $draft->DraftCustomerDraft->customer_qty }}</td>
@@ -363,7 +364,7 @@
                                 <tbody>
                                 @forelse ($issues as $issue)
                                     <tr>
-                                        <td>{{ $issue->IssueCustomerIssue->issue_NO }}</td>
+                                        <td><a href="{{route('issues.show',['issue' => $issue->IssueCustomerIssue->id])}}">{{ $issue->IssueCustomerIssue->issue_NO }}</a></td>
                                         <td>{{ $issue->IssueCustomerIssue->UserIssue->full_name }}</td>
                                         <td>{{ $issue->IssueCustomerIssue->court_name }}</td>
                                         <td>{{ $issue->IssueCustomerIssue->case_number }}</td>

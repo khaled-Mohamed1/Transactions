@@ -125,6 +125,7 @@ Route::middleware('auth')->prefix('transactions')->name('transactions.')->group(
     Route::get('/edit/{transaction}', [TransactionController::class, 'edit'])->name('edit');
     Route::put('/update/{transaction}', [TransactionController::class, 'update'])->name('update');
     Route::delete('/delete/{transaction}', [TransactionController::class, 'delete'])->name('destroy');
+    Route::get('/show/{transaction}', [TransactionController::class, 'show'])->name('show');
 
     //get customer data
     Route::post('/get', [TransactionController::class, 'get'])->name('get');
