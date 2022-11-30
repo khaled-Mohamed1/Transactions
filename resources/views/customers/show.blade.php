@@ -423,6 +423,7 @@
                                     <th width="10%">رقم الدفعة</th>
                                     <th width="10%">إنشاء بواسطة</th>
                                     <th width="10%">قيمة الدفعة</th>
+                                    <th width="10%">نوع العملة</th>
                                     <th width="15%">تاريخ الدفع</th>
                                     <th width="15%">نوعة الدفعة</th>
                                     <th width="15%">عن طريق</th>
@@ -437,6 +438,7 @@
                                         <td>{{ $payment->payment_NO }}</td>
                                         <td>{{ $payment->UserPayment->full_name }}</td>
                                         <td>{{ $payment->payment_amount }}</td>
+                                        <td>{{ $payment->currency_type }}</td>
                                         <td>{{ $payment->created_at }}</td>
                                         <td>{{ $payment->payment_type }}</td>
                                         <td>{{ $payment->payment_via }}</td>

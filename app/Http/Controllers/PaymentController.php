@@ -65,6 +65,7 @@ class PaymentController extends Controller
                 'payment_amount'  => 'required|numeric',
                 'payment_type'  => 'required',
                 'payment_via'  =>  'required',
+                'currency_type'  =>  'required',
 
             ],[
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
@@ -74,6 +75,7 @@ class PaymentController extends Controller
                 'payment_amount.numeric' => 'يجب ادخال قيمة الدفعة بالأرقام',
                 'payment_type.required' => 'يجب ادخال نوع الدفعة',
                 'payment_via.required' => 'يجب ادخال طريق الدفعة',
+                'currency_type.required' => 'يجب ادخال طريق الدفعة',
 
             ]
         );
@@ -94,6 +96,7 @@ class PaymentController extends Controller
                 'payment_type' => $request->payment_type,
                 'payment_via' => $request->payment_via,
                 'notes' => $request->notes,
+                'currency_type' => $request->currency_type,
 
             ]);
 

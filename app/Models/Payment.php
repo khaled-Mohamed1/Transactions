@@ -18,6 +18,7 @@ class Payment extends Model
         'payment_type',
         'payment_via',
         'notes',
+        'currency_type'
     ];
 
 

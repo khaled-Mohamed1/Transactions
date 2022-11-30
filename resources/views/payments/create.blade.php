@@ -62,7 +62,7 @@
                         </div>
 
                         {{-- payment_amount --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>قيمة الدفعة <span style="color:red;">*</span></label>
                             <input
                                 type="number"
@@ -76,8 +76,22 @@
                             @enderror
                         </div>
 
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                            <label>نوع العملة <span style="color:red;">*</span></label>
+                            <select name="currency_type" style="height: 45px;" class="form-control form-control-user @error('currency_type') is-invalid @enderror">
+                                <option selected disabled value="">اختار...</option>
+                                <option value="شيكل" {{ old('currency_type') == 'شيكل' ? 'selected' : '' }}>شيكل</option>
+                                <option value="دولار" {{ old('currency_type') == 'دولار' ? 'selected' : '' }}>دولار</option>
+                                <option value="دينار" {{ old('currency_type') == 'دينار' ? 'selected' : '' }}>دينار</option>
+                            </select>
+
+                            @error('currency_type')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
                         {{-- phone_NO --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>نوع الدفعة <span style="color:red;">*</span></label>
                             <input
                                 type="text"
@@ -92,7 +106,7 @@
                         </div>
 
                         {{-- payment_via --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>عن طريق <span style="color:red;">*</span></label>
                             <input
                                 type="text"
