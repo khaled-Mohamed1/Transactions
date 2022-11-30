@@ -203,6 +203,58 @@
 
                 <hr>
 
+                {{-- Drafts --}}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">الكمبيالات</h4>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr class="text-info">
+                                    <th width="10%">رقم الكمبيالة</th>
+                                    <th width="15%">إنشاء بواسطة</th>
+                                    <th width="10%">نوع المستند</th>
+                                    <th width="10%">عدد الأفراد</th>
+                                    <th width="10%">عدد المستند</th>
+                                    <th width="10%">مستند تابع</th>
+                                    <th width="10%">تاريخ الإنشاء</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if($issue->DraftIssue == null)
+                                    <tr>
+                                        <td colspan="7">لا يوجد بيانات</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td><a href="{{route('drafts.show',['draft' => $issue->DraftIssue->id])}}">{{ $issue->DraftIssue->draft_NO }}</a></td>
+                                        <td>{{ $draft->DraftCustomerDraft->UserDraft->full_name }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->document_type }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->customer_qty }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->document_qty }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->document_affiliate }}</td>
+                                        <td>{{ $draft->DraftCustomerDraft->created_at }}</td>
+                                    </tr>
+                                @endif
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">ملاحظات</h4>
                 </div>

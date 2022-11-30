@@ -45,7 +45,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
                                     <a href="#" class="text-primary">عدد القضايا</a></div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issues->count()}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issuesAll->count()}}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
@@ -62,7 +62,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
                                     <a href="#" class="text-info">مبلغ الكلي</a></div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issues->sum('case_amount')}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$issuesAll->sum('case_amount')}}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>

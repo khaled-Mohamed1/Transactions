@@ -56,11 +56,13 @@ class IssueController extends Controller
     public function allIndex(){
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             $issues = Issue::orderBy('issue_NO','desc')->paginate(100);
+            $issuesAll = Issue::get();
         }else{
             $issues = Issue::orderBy('issue_NO','desc')->where('user_id', auth()->user()->id)->paginate(100);
+            $issuesAll = Issue::get();
         }
 
-        return view('issues.allIssues', ['issues' => $issues]);
+        return view('issues.allIssues', ['issues' => $issues,'issuesAll'=>$issuesAll]);
 
     }
 
