@@ -170,6 +170,7 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
     Route::get('/show/{issue}', [IssueController::class, 'show'])->name('show');
     Route::get('/All_issues', [IssueController::class, 'allIndex'])->name('index.all');
     Route::get('/create/issue/{draft}', [IssueController::class, 'createIssue'])->name('create.issue');
+    Route::get('/create/issue/customer/{customer}', [IssueController::class, 'createIssueCustomer'])->name('create.issue.customer');
 
     //get customer data
     Route::post('/get', [IssueController::class, 'get'])->name('get');

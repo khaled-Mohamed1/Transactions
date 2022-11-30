@@ -83,6 +83,12 @@ class IssueController extends Controller
         return view('issues.create-issue',['agents'=>$agents,'draft'=>$draft]);
     }
 
+    public function createIssueCustomer(Customer $customer)
+    {
+        $agents = Agent::get();
+        return view('issues.create-issue-customer',['agents'=>$agents,'customer'=>$customer]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -91,6 +97,7 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
+
 
         if($request->customer_id == null){
             return redirect()->back()->with('error','يجب ادخال عدد الأطراف قبل اتمام العملية. ');
@@ -144,7 +151,7 @@ class IssueController extends Controller
             $issue = Issue::create([
                 'issue_NO' => Helper::IDGenerator(new Issue(), 'issue_NO', 5,2),
                 'user_id'    => auth()->user()->id,
-                'draft_id'    => $request->draft_id,
+                'draft_id'    => $request->draft_id ?? null,
                 'court_name'     => $request->court_name,
                 'customer_qty'         => $request->customer_qty,
                 'case_number' => $request->case_number,
@@ -157,7 +164,12 @@ class IssueController extends Controller
                 'notes'       => $request->notes,
             ]);
 
-            $draft = Draft::findOrFail($request->draft_id)->update(['updated_by' => null]);
+            if($request->draft_id != null){
+                $draft = Draft::findOrFail($request->draft_id)->update(['updated_by' => null]);
+
+            }
+
+
 
 
             $id = $issue->id;

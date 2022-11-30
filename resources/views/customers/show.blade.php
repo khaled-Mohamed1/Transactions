@@ -334,6 +334,12 @@
                 {{-- Issue --}}
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">القضايا</h4>
+                    <div>
+                        <a href="{{route('issues.create.issue.customer',['customer'=>$customer->id])}}"
+                           class="btn btn-primary m-2">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="card shadow mb-4">
