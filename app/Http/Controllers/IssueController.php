@@ -166,7 +166,8 @@ class IssueController extends Controller
 
             if($request->draft_id != null){
                 $draft = Draft::findOrFail($request->draft_id)->update(['updated_by' => null]);
-
+                $draft = Draft::findOrFail($request->draft_id)->decrement('document_qty', 1);
+                $draft = Draft::findOrFail($request->draft_id)->decrement('document_affiliate', 1);
             }
 
 

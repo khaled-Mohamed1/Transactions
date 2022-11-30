@@ -39,9 +39,9 @@
                         <thead>
                         <tr class="text-info">
                             <th width="10%">رقم الكمبيالة</th>
-                            <th width="15%">إنشاء بواسطة</th>
                             <th width="10%">نوع المستند</th>
                             <th width="10%">عدد المستند</th>
+                            <th width="10%">مستند تابع</th>
                             <th width="20%">الأطراف</th>
                             <th width="10%">عدد القضايا</th>
                             <th width="10%">العمليات</th>
@@ -58,8 +58,8 @@
                         @forelse ($drafts as $draft)
                             <tr>
                                 <td><a href="{{route('drafts.show',['draft' => $draft->id])}}">{{ $draft->draft_NO }}</a></td>
-                                <td>{{ $draft->UserDraft->full_name }}</td>
                                 <td>{{ $draft->document_type }}</td>
+                                <td>{{ $draft->document_qty }}</td>
                                 <td>{{ $draft->document_affiliate }}</td>
                                 <td>
                                     @foreach($draft->cusotmerDrafts as $customer)
@@ -78,6 +78,9 @@
                                 </td>
                                 @hasrole('Admin')
                                 <td>
+                                @if($draft->document_qty <= 0 || $draft->document_affiliate <= 0 )
+                                    <span class="text-danger">لا يمكن اجراء قضية</span>
+                                @else
                                     <form action="" method="POST" class="test">
                                         <input type="hidden" name="customer_id" id="customer_id{{$draft->id}}" value="{{$draft->id}}">
                                         <select name="user_id" id="select{{$draft->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
@@ -91,23 +94,30 @@
                                         <span class="text-danger">{{$message}}</span>
                                         @enderror
                                     </form>
-                                </td>
+                                    @endif
+
+                                    </td>
                                 @endhasrole
                                 @hasrole('المدير العام')
                                 <td>
-                                    <form action="" method="POST" class="test">
-                                        <input type="hidden" name="customer_id" id="customer_id{{$draft->id}}" value="{{$draft->id}}">
-                                        <select name="user_id" id="select{{$draft->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
-                                            <option  value="false">إلغاء</option>
-                                            @foreach($users as $user)
-                                                <option id="option{{$draft->id}}" value="{{$user->id}}" {{old('user_id') ? ((old('user_id') == $user->id) ? 'selected' : '')
+                                    @if($draft->document_qty <= 0 || $draft->document_affiliate <= 0 )
+                                        <span class="text-danger">لا يمكن اجراء قضية</span>
+                                        @else
+                                        <form action="" method="POST" class="test">
+                                            <input type="hidden" name="customer_id" id="customer_id{{$draft->id}}" value="{{$draft->id}}">
+                                            <select name="user_id" id="select{{$draft->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
+                                                <option  value="false">إلغاء</option>
+                                                @foreach($users as $user)
+                                                    <option id="option{{$draft->id}}" value="{{$user->id}}" {{old('user_id') ? ((old('user_id') == $user->id) ? 'selected' : '')
                                                 : (($user->id == $draft->updated_by) ? 'selected' : '')}}>{{$user->full_name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('user_id')
-                                        <span class="text-danger">{{$message}}</span>
-                                        @enderror
-                                    </form>
+                                                @endforeach
+                                            </select>
+                                            @error('user_id')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
+                                        </form>
+                                    @endif
+
                                 </td>
                                 @endhasrole
 
