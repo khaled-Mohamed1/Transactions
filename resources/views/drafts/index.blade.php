@@ -79,7 +79,7 @@
                                 @hasrole('Admin')
                                 <td>
                                 @if($draft->document_qty <= 0 || $draft->document_affiliate <= 0 )
-                                    <span class="text-danger">لا يمكن اجراء قضية</span>
+                                        <span class="text-danger">لا يمكن اجراء قضية</span>
                                 @else
                                     <form action="" method="POST" class="test">
                                         <input type="hidden" name="customer_id" id="customer_id{{$draft->id}}" value="{{$draft->id}}">
@@ -100,7 +100,7 @@
                                 @endhasrole
                                 @hasrole('المدير العام')
                                 <td>
-                                    @if($draft->document_qty <= 0 || $draft->document_affiliate <= 0 )
+                                    @if($draft->customer_qty <= 0 || $draft->document_affiliate <= 0 )
                                         <span class="text-danger">لا يمكن اجراء قضية</span>
                                         @else
                                         <form action="" method="POST" class="test">
