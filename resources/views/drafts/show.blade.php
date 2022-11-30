@@ -153,31 +153,61 @@
                 <hr>
 
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">ملاحظات</h4>
+                    <h4 class="text-right">القضايا</h4>
                 </div>
 
-                @forelse($draft->cusotmerdrafts as $customer)
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary text-right">العميل {{$customer->DraftCustomer->full_name}}</h6>
+                            <h6 class="m-0 font-weight-bold text-primary text-right">العميل</h6>
 
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                                <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr class="text-info">
+                                        <th width="10%">رقم</th>
+                                        <th width="10%">إنشاء بواسطة</th>
+                                        <th width="10%">اسم المحكمة</th>
+                                        <th width="10%">رقم القضية</th>
+                                        <th width="10%">مبلغ القضية</th>
+                                        <th width="10%">طالب التنفيذ</th>
+                                        <th width="10%">وكيل طالب التنفيذ</th>
+                                        <th width="10%">وكيل المنفذ ضده</th>
+                                        <th width="10%">الحاله</th>
+                                        <th width="10%">ملاحظات</th>
+                                        <th width="10%">تاريخ الإنشاء</th>
+                                        {{--                                    <th width="10%">العمليات</th>--}}
+                                    </tr>
+                                    </thead>
 
-                                <h6 class="text-right">{{$customer->DraftCustomer->notes ?? 'لا يوجد ملاحظات'}}</h6>
+                                    <tbody>
+                                    @forelse($draft->issues as $issue)
+                                        <tr>
+                                            <td><a href="{{route('issues.show',['issue' => $issue->IssueCustomerIssue->id])}}">{{ $issue->IssueCustomerIssue->issue_NO }}</a></td>
+                                            <td>{{ $issue->IssueCustomerIssue->UserIssue->full_name }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->court_name }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->case_number }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->case_amount }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->execution_request_idIssue->agent_name ?? null }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->execution_agent_name_idIssue->agent_name ?? null }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->execution_agent_against_it_idIssue->agent_name ?? null }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->issue_status }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->notes }}</td>
+                                            <td>{{ $issue->IssueCustomerIssue->created_at }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="11">لا يوجد بيانات</td>
+                                        </tr>
+                                    @endforelse
+                                    </tbody>
+                                </table>
 
                             </div>
                         </div>
                     </div>
-                @empty
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary text-right">لا يوجد ملاحظات</h6>
 
-                        </div>
-                    </div>
-                @endforelse
 
 
 
