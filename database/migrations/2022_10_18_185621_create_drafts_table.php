@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('document_affiliate')->nullable();
             $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->foreign('updated_by')->references('id')->on('users');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

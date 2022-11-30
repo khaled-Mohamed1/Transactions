@@ -18,6 +18,7 @@ class Draft extends Model
         'document_qty',
         'document_affiliate',
         'updated_by',
+        'notes'
     ];
 
 

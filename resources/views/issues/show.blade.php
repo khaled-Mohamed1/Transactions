@@ -235,12 +235,12 @@
                                 @else
                                     <tr>
                                         <td><a href="{{route('drafts.show',['draft' => $issue->DraftIssue->id])}}">{{ $issue->DraftIssue->draft_NO }}</a></td>
-                                        <td>{{ $draft->DraftCustomerDraft->UserDraft->full_name }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->document_type }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->customer_qty }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->document_qty }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->document_affiliate }}</td>
-                                        <td>{{ $draft->DraftCustomerDraft->created_at }}</td>
+                                        <td>{{ $issue->DraftIssue->UserDraft->full_name }}</td>
+                                        <td>{{ $issue->DraftIssue->document_type }}</td>
+                                        <td>{{ $issue->DraftIssue->customer_qty }}</td>
+                                        <td>{{ $issue->DraftIssue->document_qty }}</td>
+                                        <td>{{ $issue->DraftIssue->document_affiliate }}</td>
+                                        <td>{{ $issue->DraftIssue->created_at }}</td>
                                     </tr>
                                 @endif
 
