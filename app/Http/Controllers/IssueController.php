@@ -380,7 +380,16 @@ class IssueController extends Controller
             $array_issue[] = $row->IssueCustomer->toArray();
         }
 
-        $templateProcessor = new TemplateProcessor('wordOffice/issue.docx');
+//        dd(count($array_issue));
+        if(count($array_issue) <= 3){
+            $templateProcessor = new TemplateProcessor('wordOffice/issue1-3.docx');
+        }elseif (count($array_issue) >= 4 && count($array_issue) <= 6){
+            $templateProcessor = new TemplateProcessor('wordOffice/issue4-6.docx');
+        }elseif(count($array_issue) >= 7){
+            $templateProcessor = new TemplateProcessor('wordOffice/issue7-9.docx');
+        }
+
+//        $templateProcessor = new TemplateProcessor('wordOffice/issue1-3.docx');
         $templateProcessor->setValue('court_name',$data->court_name);
         $templateProcessor->setValue('case_number',$data->case_number);
         $templateProcessor->setValue('execution_request_name',$data->execution_request_idIssue->agent_name ?? null);
@@ -391,7 +400,7 @@ class IssueController extends Controller
         $templateProcessor->setValue('execution_agent_against_it_address',$data->execution_agent_against_it_idIssue->address ?? null);
         $templateProcessor->setValue('execution_agent_against_it_ID_NO',$data->execution_agent_against_it_idIssue->ID_NO ?? null);
         $templateProcessor->setValue('case_amount',$data->case_amount);
-        $templateProcessor->setValue('created_at',$data->created_at);
+        $templateProcessor->setValue('created_at',Carbon::now()->format('Y-m-d'));
 
 
         $templateProcessor->cloneRowAndSetValues('ID_NO', $array_issue);
