@@ -6,12 +6,12 @@
         <th scope="col">اسم المحكمة</th>
         <th scope="col">رقم القضية</th>
         <th scope="col">مبلغ القضية</th>
-        <th width="10%">العملة</th>
-        <th width="10%">السند</th>
-        <th width="10%">طالب التنفيذ</th>
-        <th width="15%">الأطراف</th>
-        <th width="10%">وكيل طالب التنفيذ</th>
-        <th width="10%">وكيل المنفذ ضده</th>
+        <th scope="col">العملة</th>
+        <th scope="col">السند</th>
+        <th scope="col">طالب التنفيذ</th>
+        <th scope="col">الأطراف</th>
+        <th scope="col">وكيل طالب التنفيذ</th>
+        <th scope="col">وكيل المنفذ ضده</th>
         <th scope="col">الحاله</th>
         <th scope="col">ملاحظات</th>
         <th scope="col">تاريخ الإنشاء</th>
@@ -29,7 +29,7 @@
             <td>{{ $issue->bond_type }}</td>
             <td>{{ $issue->execution_request_idIssue->agent_name ?? null}}</td>
             <td>
-                @foreach($issue->cusotmerIssues as $customer)
+                @foreach($issue->customerIssues as $customer)
                     {{ $customer->IssueCustomer->customer_NO }} -
                 @endforeach
             </td>
