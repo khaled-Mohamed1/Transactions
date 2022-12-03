@@ -226,7 +226,6 @@
         <th scope="col" colspan="2">قيمة الدفعة</th>
         <th scope="col" colspan="2">تاريخ الدفع</th>
         <th scope="col" colspan="2">نوعة الدفعة</th>
-        <th scope="col" colspan="2">عن طريق</th>
         <th scope="col" colspan="2">ملاحظات</th>
     </tr>
     </thead>
@@ -239,7 +238,6 @@
             <td scope="col" colspan="2">{{ $payment->payment_amount }}</td>
             <td scope="col" colspan="2">{{ $payment->created_at }}</td>
             <td scope="col" colspan="2">{{ $payment->payment_type }}</td>
-            <td scope="col" colspan="2">{{ $payment->payment_via }}</td>
             <td scope="col" colspan="2">{{ $payment->notes }}</td>
         </tr>
     @empty

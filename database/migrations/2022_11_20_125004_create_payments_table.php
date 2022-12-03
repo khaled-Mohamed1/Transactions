@@ -22,7 +22,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->float('payment_amount')->nullable();
             $table->string('payment_type')->nullable();
-            $table->string('payment_via')->nullable();
             $table->string('currency_type')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

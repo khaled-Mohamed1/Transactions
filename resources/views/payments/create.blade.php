@@ -62,7 +62,7 @@
                         </div>
 
                         {{-- payment_amount --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>قيمة الدفعة <span style="color:red;">*</span></label>
                             <input
                                 type="number"
@@ -76,7 +76,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع العملة <span style="color:red;">*</span></label>
                             <select name="currency_type" style="height: 45px;" class="form-control form-control-user @error('currency_type') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
@@ -91,34 +91,20 @@
                         </div>
 
                         {{-- phone_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع الدفعة <span style="color:red;">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user @error('payment_type') is-invalid @enderror"
-                                id="payment_type"
-                                name="payment_type"
-                                value="{{ old('payment_type') }}">
+                            <select name="payment_type" style="height: 45px;" class="form-control form-control-user @error('payment_type') is-invalid @enderror">
+                                <option selected disabled value="">اختار...</option>
+                                <option value="تحويل" {{ old('payment_type') == 'تحويل' ? 'selected' : '' }}>تحويل</option>
+                                <option value="نقد" {{ old('payment_type') == 'نقد' ? 'selected' : '' }}>نقد</option>
+                                <option value="شيك" {{ old('payment_type') == 'شيك' ? 'selected' : '' }}>شيك</option>
+                            </select>
 
                             @error('payment_type')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
 
-                        {{-- payment_via --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عن طريق <span style="color:red;">*</span></label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user @error('payment_via') is-invalid @enderror"
-                                id="payment_via"
-                                name="payment_via"
-                                value="{{ old('payment_via') }}">
-
-                            @error('payment_via')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
 
                         {{-- notes --}}
                         <div class="col-sm-12 mb-3 mt-3 mb-sm-0">

@@ -426,7 +426,6 @@
                                     <th width="10%">نوع العملة</th>
                                     <th width="15%">تاريخ الدفع</th>
                                     <th width="15%">نوعة الدفعة</th>
-                                    <th width="15%">عن طريق</th>
                                     <th width="20%">ملاحظات</th>
                                     <th width="10%">العمليات</th>
                                 </tr>
@@ -441,7 +440,6 @@
                                         <td>{{ $payment->currency_type }}</td>
                                         <td>{{ $payment->created_at }}</td>
                                         <td>{{ $payment->payment_type }}</td>
-                                        <td>{{ $payment->payment_via }}</td>
                                         <td>{{ $payment->notes }}</td>
                                         <td style="display: flex">
                                             <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$payment->id}}">

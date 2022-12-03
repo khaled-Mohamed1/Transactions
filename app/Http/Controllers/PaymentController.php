@@ -94,7 +94,6 @@ class PaymentController extends Controller
                 'customer_id' => $customer_id->id,
                 'payment_amount' => $request->payment_amount,
                 'payment_type' => $request->payment_type,
-                'payment_via' => $request->payment_via,
                 'notes' => $request->notes,
                 'currency_type' => $request->currency_type,
 
