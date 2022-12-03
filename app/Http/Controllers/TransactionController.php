@@ -149,10 +149,10 @@ class TransactionController extends Controller
                 'monthly_payment'     => 'required',
                 'date_of_first_payment'     => 'required',
 
-                'draft_NO'   =>  'required',
-                'agency_NO'   =>  'required',
-                'endorsement_NO'   =>  'required',
-                'receipt_NO'   =>  'required',
+//                'draft_NO'   =>  'required',
+//                'agency_NO'   =>  'required',
+//                'endorsement_NO'   =>  'required',
+//                'receipt_NO'   =>  'required',
             ]
             ,[
 
@@ -170,18 +170,18 @@ class TransactionController extends Controller
 //                'reserve_phone_NO.required' => 'يجب ادخال رقم جوال احتياطي للعميل',
 //                'reserve_phone_NO.numeric' => 'يجب ادخال رقم الجوال بالأرقام',
 //                'reserve_phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
-                'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
-                'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
-                'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
-                'job.required_if' => 'يجب ادخال الوظيفة العميل',
-                'salary.required_if' => 'يجب ادخال دخل العميل',
-                'bank_name.required_if' => 'يجب ادخال اسم البنك',
-                'bank_branch.required_if' => 'يجب ادخال فرع البنك',
-                'bank_account_NO.required_if' => 'يجب ادخال رقم حساب البنك',
-                'draft_NO.required' => 'يجب ادخال عدد الكمبيالات',
-                'agency_NO.required' => 'يجب ادخال عدد الوكالات',
-                'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
-                'receipt_NO.required' => 'يجب ادخال عدد الوصل',
+//                'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
+//                'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
+//                'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
+//                'job.required_if' => 'يجب ادخال الوظيفة العميل',
+//                'salary.required_if' => 'يجب ادخال دخل العميل',
+//                'bank_name.required_if' => 'يجب ادخال اسم البنك',
+//                'bank_branch.required_if' => 'يجب ادخال فرع البنك',
+//                'bank_account_NO.required_if' => 'يجب ادخال رقم حساب البنك',
+//                'draft_NO.required' => 'يجب ادخال عدد الكمبيالات',
+//                'agency_NO.required' => 'يجب ادخال عدد الوكالات',
+//                'endorsement_NO.required' => 'يجب ادخال عدد الاقرارات',
+//                'receipt_NO.required' => 'يجب ادخال عدد الوصل',
 
                 'transactions_type.required' => 'يجب ادخال نوع المعاملة',
                 'transaction_amount.required' => 'يجب ادخال قيمة المعاملة',
@@ -206,10 +206,6 @@ class TransactionController extends Controller
                 'transaction_rest'       => $request->transaction_rest,
                 'monthly_payment'       => $request->monthly_payment,
                 'date_of_first_payment'       => $request->date_of_first_payment,
-                'draft_NO'       => $request->draft_NO,
-                'agency_NO'       => $request->agency_NO,
-                'endorsement_NO'       => $request->endorsement_NO,
-                'receipt_NO'       => $request->receipt_NO,
             ]);
 
             if($transaction->transaction_NO == 500000){

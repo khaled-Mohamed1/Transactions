@@ -48,6 +48,7 @@
                             <label>الأسم كامل</label>
                             <input
                                 {{--                                disabled--}}
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('full_name') is-invalid @enderror"
                                 id="full_name"
@@ -62,6 +63,7 @@
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>رقم الإستدلالي</label>
                             <input
+                                style="height: 45px"
                                 disabled
                                 type="text"
                                 class="form-control form-control-user @error('customer_NO') is-invalid @enderror"
@@ -78,6 +80,7 @@
                             <label>رقم الهوية</label>
                             <input
                                 {{--                                disabled--}}
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('ID_NO') is-invalid @enderror"
                                 id="ID_NO"
@@ -94,6 +97,7 @@
                             <label>رقم الجوال</label>
                             <input
 {{--                                disabled--}}
+style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('phone_NO') is-invalid @enderror"
                                 id="phone_NO"
@@ -109,6 +113,7 @@
                             <label>المنطقة</label>
                             <input
 {{--                                disabled--}}
+style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('region') is-invalid @enderror"
                                 id="region"
@@ -124,6 +129,7 @@
                             <label>العنوان</label>
                             <input
 {{--                                disabled--}}
+style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('address') is-invalid @enderror"
                                 id="address"
@@ -139,6 +145,7 @@
                             <label>الحساب</label>
                             <input
 {{--                                disabled--}}
+style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('account') is-invalid @enderror"
                                 id="account"
@@ -153,7 +160,7 @@
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع المعاملة <span style="color:red;">*</span></label>
                             <select name="transactions_type" class="form-control form-control-user @error('transactions_type') is-invalid @enderror"
-                                    style="height: 40px">
+                                    style="height: 45px">
                                 <option  disabled selected>اختر...</option>
                                 <option value="ودي" {{ old('transactions_type') == 'ودي' ? 'selected' : '' }}>ودي</option>
                                 <option value="استقطاع" {{ old('transactions_type') == 'استقطاع' ? 'selected' : '' }}>استقطاع</option>
@@ -169,21 +176,20 @@
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>رقم البديل </label>
                             <input
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user"
                                 id="examplereserve_phone_NO"
                                 name="reserve_phone_NO"
                                 value="{{ $customer->reserve_phone_NO }}">
 
-{{--                            @error('reserve_phone_NO')--}}
-{{--                            <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
                         </div>
 
                         {{-- date_of_birth --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>تاريخ الميلاد <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 type="date"
                                 class="form-control form-control-user @error('date_of_birth') is-invalid @enderror"
                                 id="exampledate_of_birth"
@@ -198,7 +204,7 @@
                         {{-- marital_status --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>الحالة الإجتماعية <span style="color:red;">*</span></label>
-                            <select name="marital_status" class="form-control form-control-user @error('marital_status') is-invalid @enderror">
+                            <select name="marital_status" style="height: 45px" class="form-control form-control-user @error('marital_status') is-invalid @enderror">
                                 <option disabled {{ $customer->marital_status == null ? 'selected' : '' }}>اختر...</option>
                                 <option value="اعزب" {{ $customer->marital_status == 'اعزب' ? 'selected' : '' }}>اعزب</option>
                                 <option value="متزوج" {{ $customer->marital_status == 'متزوج' ? 'selected' : '' }}>متزوج</option>
@@ -214,6 +220,7 @@
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>أفراد العائلة <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 type="number"
                                 class="form-control form-control-user @error('number_of_children') is-invalid @enderror"
                                 id="examplenumber_of_children"
@@ -228,13 +235,23 @@
 
                         {{-- job --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>الوظيفة</label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user @error('job') is-invalid @enderror"
-                                id="ejob"
-                                name="job"
-                                value="{{ $customer->job  }}">
+                            <label>الوظيفة <span style="color:red;">*</span></label>
+                            <select name="job"                                 style="height: 45px"
+                                    class="form-control form-control-user @error('job') is-invalid @enderror">
+                                <option disabled selected>اختر...</option>
+                                <option value="متقاعد عسكري غزة" {{ $customer->job == 'متقاعد عسكري غزة' ? 'selected' : '' }}>متقاعد عسكري غزة</option>
+                                <option value="متقاعد مدني غزة" {{ $customer->job == 'متقاعد مدني غزة' ? 'selected' : '' }}>متقاعد مدني غزة</option>
+                                <option value="متقاعد عسكري رام الله" {{ $customer->job == 'متقاعد عسكري رام الله' ? 'selected' : '' }}>متقاعد عسكري رام الله</option>
+                                <option value="متقاعد مدني رام الله" {{ $customer->job == 'متقاعد مدني رام الله' ? 'selected' : '' }}>متقاعد مدني رام الله</option>
+                                <option value="موظف عسكري غزة" {{ $customer->job == 'موظف عسكري غزة' ? 'selected' : '' }}>موظف عسكري غزة</option>
+                                <option value="موظف مدني غزة" {{ $customer->job == 'موظف مدني غزة' ? 'selected' : '' }}>موظف مدني غزة</option>
+                                <option value="موظف عسكري رام الله" {{ $customer->job == 'موظف عسكري رام الله' ? 'selected' : '' }}>موظف عسكري رام الله</option>
+                                <option value="موظف مدني رام الله" {{ $customer->job == 'موظف مدني رام الله' ? 'selected' : '' }}>موظف مدني رام الله</option>
+                                <option value="وكالة" {{ $customer->job == 'وكالة' ? 'selected' : '' }}>وكالة</option>
+                                <option value="قطاع خاص" {{ $customer->job == 'قطاع خاص' ? 'selected' : '' }}>قطاع خاص</option>
+                                <option value="بدون" {{ $customer->job == 'بدون' ? 'selected' : '' }}>بدون</option>
+
+                            </select>
 
                             @error('job')
                             <span class="text-danger">{{$message}}</span>
@@ -245,6 +262,7 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>الدخل</label>
                             <input
+                                style="height: 45px"
                                 type="number"
                                 class="form-control form-control-user @error('salary') is-invalid @enderror"
                                 id="salary"
@@ -260,7 +278,7 @@
                         {{-- bank_name --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>اسم البنك</label>
-                            <select name="bank_name" class="form-control form-control-user @error('bank_name') is-invalid @enderror">
+                            <select name="bank_name" style="height: 45px" class="form-control form-control-user @error('bank_name') is-invalid @enderror">
                                 <option disabled {{ $customer->bank_name == null ? 'selected' : '' }}>اختر...</option>
                                 <option value="بنك فلسطين" {{ $customer->bank_name == 'بنك فلسطين' ? 'selected' : '' }}>بنك فلسطين</option>
                                 <option value="بنك القدس" {{ $customer->bank_name == 'بنك القدس' ? 'selected' : '' }}>بنك القدس</option>
@@ -289,6 +307,7 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>فرع البنك</label>
                             <input
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('bank_branch') is-invalid @enderror"
                                 id="bank_branch"
@@ -304,6 +323,7 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>رقم حساب البنك</label>
                             <input
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('bank_account_NO') is-invalid @enderror"
                                 id="bank_account_NO"
@@ -319,10 +339,11 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
-                                id="transaction_amount"
+                                id="transaction_amount_Disable"
                                 name="transaction_amount">
 
                             @error('transaction_amount')
@@ -330,10 +351,18 @@
                             @enderror
                         </div>
 
+                        <input
+                            min="1"
+                            type="text"
+                            class="form-control form-control-user"
+                            id="transaction_amount"
+                            name="transaction_amount">
+
                         {{-- first_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>أول دفعة <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
@@ -348,6 +377,7 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
@@ -362,6 +392,7 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>قيمة الدفعة الشهرية <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
@@ -376,6 +407,7 @@
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>تاريخ أول دفعة <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px"
                                 type="date"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="date_of_first_payment"
@@ -385,70 +417,70 @@
                             @enderror
                         </div>
 
-                        {{-- draft_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الكمبيالات <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('draft_NO') is-invalid @enderror"
-                                id="draft_NO"
-                                name="draft_NO"
-                                min="0"
-                                value="4">
+{{--                        --}}{{-- draft_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الكمبيالات <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('draft_NO') is-invalid @enderror"--}}
+{{--                                id="draft_NO"--}}
+{{--                                name="draft_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="4">--}}
 
-                            @error('draft_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('draft_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
 
-                        {{-- agency_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الوكالات <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('agency_NO') is-invalid @enderror"
-                                id="agency_NO"
-                                name="agency_NO"
-                                min="0"
-                                value="4">
+{{--                        --}}{{-- agency_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الوكالات <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('agency_NO') is-invalid @enderror"--}}
+{{--                                id="agency_NO"--}}
+{{--                                name="agency_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="4">--}}
 
-                            @error('agency_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('agency_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
-                        {{-- endorsement_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الإستقراء <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('endorsement_NO') is-invalid @enderror"
-                                id="endorsement_NO"
-                                name="endorsement_NO"
-                                min="0"
-                                value="1">
+{{--                        --}}{{-- endorsement_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الإستقراء <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('endorsement_NO') is-invalid @enderror"--}}
+{{--                                id="endorsement_NO"--}}
+{{--                                name="endorsement_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="1">--}}
 
-                            @error('endorsement_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('endorsement_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
-                        {{-- receipt_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الوصل <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('receipt_NO') is-invalid @enderror"
-                                id="receipt_NO"
-                                name="receipt_NO"
-                                min="0"
-                                value="1">
+{{--                        --}}{{-- receipt_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الوصل <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('receipt_NO') is-invalid @enderror"--}}
+{{--                                id="receipt_NO"--}}
+{{--                                name="receipt_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="1">--}}
 
-                            @error('receipt_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('receipt_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
 
                         {{-- stores--}}
@@ -563,7 +595,7 @@
                     `<td><select name="product_name[]" id="product_name${count}" class="form-control form-control-user product_name" data-sub_agricultural_id="${count}" ><option value="">اختر...</option>@foreach ($stores as $store) <option value="{{ $store->id }}"> {{ $store->product_name }} @endforeach</select></td>`;
                 html +=
                     `<td><input name="product_qty[]" id="product_qty${count}" type="number" min="1" class="form-control form-control-user product_qty${count}"></td>`;
-                html += `<td class="product_price${count}"</td>`;
+                html += `<td class="product_price${count} test2"</td>`;
                 html += `<td><input name="profit_ratio[]"  type="number" class="form-control form-control-user profit_ratio${count}"></td>`;
                 html += `<input name="profit[]" type="hidden" class="form-control form-control-user test hiddenProfit${count}">`;
                 html += `<td class="profit${count}"></td>`;
@@ -613,7 +645,6 @@
                         });
                         $('#total').html(area_sum.toFixed(2));
                         $('#total_input').val(area_sum.toFixed(2));
-
                     });
                 });
 

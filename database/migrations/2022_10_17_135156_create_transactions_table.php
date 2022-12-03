@@ -26,10 +26,10 @@ return new class extends Migration
             $table->float('transaction_rest')->nullable();
             $table->float('monthly_payment')->nullable();
             $table->date('date_of_first_payment')->nullable();
-            $table->string('draft_NO')->nullable();
-            $table->string('agency_NO')->nullable();
-            $table->string('endorsement_NO')->nullable();
-            $table->string('receipt_NO')->nullable();
+            $table->string('draft_NO')->default(4);
+            $table->string('agency_NO')->default(4);
+            $table->string('endorsement_NO')->default(1);
+            $table->string('receipt_NO')->default(1);
             $table->timestamps();
         });
     }

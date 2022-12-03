@@ -155,6 +155,10 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
+
         // Validations
         $request->validate([
                 'full_name'    => 'required',
@@ -162,6 +166,16 @@ class CustomerController extends Controller
                 'phone_NO' => 'required|numeric|digits:10',
                 'region'       =>  'required',
                 'address'       =>  'required',
+
+            'date_of_birth' =>  'required|date',
+            'marital_status' =>  'required',
+            'number_of_children' =>  'required',
+            'job'   =>  'required',
+            'salary'   =>  'required',
+            'bank_name'   =>  'required',
+            'bank_branch'   =>  'required',
+            'bank_account_NO'   =>  'required',
+
             ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
@@ -172,6 +186,16 @@ class CustomerController extends Controller
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
+
+                'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
+                'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
+                'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
+                'job.required' => 'يجب ادخال الوظيفة العميل',
+                'salary.required' => 'يجب ادخال دخل العميل',
+                'bank_name.required' => 'يجب ادخال اسم البنك',
+                'bank_branch.required' => 'يجب ادخال فرع البنك',
+                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
+
             ]
         );
 
@@ -179,6 +203,8 @@ class CustomerController extends Controller
 
         DB::beginTransaction();
         try {
+
+
 
             $repeater_customer = Customer::where('ID_NO', $request->ID_NO)->first();
             if($repeater_customer !== null){
@@ -200,7 +226,16 @@ class CustomerController extends Controller
                 'region' => $request->region,
                 'address'       => $request->address,
                 'notes'       => $request->notes,
-                'created_by' => auth()->user()->id
+                'created_by' => auth()->user()->id,
+                'reserve_phone_NO'    => $request->reserve_phone_NO,
+                'date_of_birth'     => $request->date_of_birth,
+                'marital_status'         => $request->marital_status,
+                'number_of_children' => $request->number_of_children,
+                'job'       => $request->job,
+                'salary'       => $request->salary,
+                'bank_name'       => $request->bank_name,
+                'bank_branch'       => $request->bank_branch,
+                'bank_account_NO'       => $request->bank_account_NO,
             ]);
 
             if($customer->customer_NO == 400000){
@@ -269,13 +304,15 @@ class CustomerController extends Controller
                 'phone_NO' => 'required|numeric|digits:10',
                 'region'       =>  'required',
                 'address'       =>  'required',
-//                'transactions_type'     => 'required_if:status,مقبول',
-//                'transaction_amount'     => 'required_if:status,مقبول',
-//                'first_payment'     => 'required_if:status,مقبول',
-//                'transaction_rest'     => 'required_if:status,مقبول',
-//                'monthly_payment'     => 'required_if:status,مقبول',
-//                'date_of_first_payment'     => 'required_if:status,مقبول',
 
+                'date_of_birth' =>  'required|date',
+                'marital_status' =>  'required',
+                'number_of_children' =>  'required',
+                'job'   =>  'required',
+                'salary'   =>  'required',
+                'bank_name'   =>  'required',
+                'bank_branch'   =>  'required',
+                'bank_account_NO'   =>  'required',
 
             ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
@@ -288,12 +325,17 @@ class CustomerController extends Controller
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
-//                'transactions_type.required_if' => 'يجب ادخال نوع المعاملة',
-//                'transaction_amount.required_if' => 'يجب ادخال قيمة المعاملة',
-//                'first_payment.required_if' => 'يجب ادخال الدفعة الأولى',
-//                'transaction_rest.required_if' => 'يجب ادخال باقي قيمة المعاملة',
-//                'monthly_payment.required_if' => 'يجب ادخال قيمة دفعة المعاملة',
-//                'date_of_first_payment.required_if' => 'يجب ادخال تاريخ دفعة أول دفعة',
+
+                'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
+                'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
+                'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
+                'job.required' => 'يجب ادخال الوظيفة العميل',
+                'salary.required' => 'يجب ادخال دخل العميل',
+                'bank_name.required' => 'يجب ادخال اسم البنك',
+                'bank_branch.required' => 'يجب ادخال فرع البنك',
+                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
+
+
             ]
         );
 
@@ -314,32 +356,17 @@ class CustomerController extends Controller
                 'status' => $status ?? $request->status,
                 'account' => $request->account,
                 'notes' => $request->notes,
+                'reserve_phone_NO'    => $request->reserve_phone_NO,
+                'date_of_birth'     => $request->date_of_birth,
+                'marital_status'         => $request->marital_status,
+                'number_of_children' => $request->number_of_children,
+                'job'       => $request->job,
+                'salary'       => $request->salary,
+                'bank_name'       => $request->bank_name,
+                'bank_branch'       => $request->bank_branch,
+                'bank_account_NO'       => $request->bank_account_NO,
             ]);
 
-
-//            $transaction = Transaction::create([
-//                'transaction_NO' => Helper::IDGenerator(new Transaction(), 'transaction_NO', 5,5),
-//                'user_id' => auth()->user()->id,
-//                'customer_id'    => $customer->id,
-//            ]);
-//
-//            $test = 1;
-//
-//            Transaction::where('id',$transaction->id)->update([
-//                'transactions_type'     => $request->transactions_type,
-//                'transaction_amount'         => $request->transaction_amount,
-//                'first_payment' => $request->first_payment,
-//                'transaction_rest'       => $request->transaction_rest,
-//                'monthly_payment'       => $request->monthly_payment,
-//                'date_of_first_payment'       => $request->date_of_first_payment,
-//            ]);
-
-//            $customer_st = Customer::find($customer->id);
-//            if($customer_st->status == 'مقبول'){
-//                Customer::whereId($customer->id)->update([
-//                    'status' => 'قيد التوقيع',
-//                ]);
-//            }
 
             // Commit And Redirected To Listing
             DB::commit();
