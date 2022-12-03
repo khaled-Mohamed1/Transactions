@@ -90,6 +90,7 @@
                                 <option value="طالب التنفيذ" {{old('agent_type') ? ((old('agent_type') == 'طالب التنفيذ') ? 'selected' : '') : (($agent->agent_type == 'طالب التنفيذ') ? 'selected' : '')}}>طالب التنفيذ</option>
                                 <option value="وكيل طالب التنفيذ" {{old('agent_type') ? ((old('agent_type') == 'وكيل طالب التنفيذ') ? 'selected' : '') : (($agent->agent_type == 'وكيل طالب التنفيذ') ? 'selected' : '')}}>وكيل طالب التنفيذ</option>
                                 <option value="وكيل المنفذ ضده" {{old('agent_type') ? ((old('agent_type') == 'وكيل المنفذ ضده') ? 'selected' : '') : (($agent->agent_type == 'وكيل المنفذ ضده') ? 'selected' : '')}}>وكيل المنفذ ضده</option>
+                                <option value="المحول له" {{old('agent_type') ? ((old('agent_type') == 'المحول له') ? 'selected' : '') : (($agent->agent_type == 'المحول له') ? 'selected' : '')}}>المحول له</option>
                             </select>
                             @error('agent_type')
                             <span class="text-danger">{{$message}}</span>
