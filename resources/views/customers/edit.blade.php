@@ -250,7 +250,7 @@
                         </div>
 
                         {{-- bank_branch --}}
-                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>فرع البنك <span style="color:red;">*</span></label>
                             <input
                                 style="height: 45px"
@@ -267,7 +267,7 @@
                         </div>
 
                         {{-- bank_account_NO --}}
-                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>رقم حساب البنك <span style="color:red;">*</span></label>
                             <input
                                 style="height: 45px"
@@ -280,6 +280,34 @@
                             @error('bank_account_NO')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
+                        </div>
+
+                        {{-- status --}}
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                            <label>الحالة </label>
+                            <select name="status" id="status" class="form-control form-control-user h-50"
+                                    style="height: 45px">
+                                @if($customer->status == 'قيد التوقيع' || $customer->status == 'متعسر' || $customer->status == 'مكتمل')
+                                    <option value="{{$customer->status}}">{{$customer->status}}</option>
+                                @endif
+
+                                <option value="مقبول" {{old('status') ? ((old('status') == 'مقبول') ? 'selected' : '')
+                                                        : (($customer->status == 'مقبول') ? 'selected' : '')}}>مقبول</option>
+                                <option value="مرفوض" {{old('status') ? ((old('status') == 'مرفوض') ? 'selected' : '')
+                                                        : (($customer->status == 'مرفوض') ? 'selected' : '')}}>مرفوض</option>
+                            </select>
+
+                        </div>
+
+                        {{-- Account --}}
+                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
+                            <label>الحساب </label>
+                            <input
+                                type="text"
+                                class="form-control form-control-user h-50"
+                                id="exampleaccount"
+                                name="account"
+                                value="{{ old('account') ? old('account') : $customer->account}}">
                         </div>
 
                         {{-- notes --}}

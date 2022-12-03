@@ -296,6 +296,7 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
 
+
         // Validations
         $request->validate(
             [
@@ -346,6 +347,7 @@ class CustomerController extends Controller
             if($request->status == 'مقبول' || $request->status == 'قيد التوقيع'){
                 $status = 'قيد التوقيع';
             }
+
 
             $customer_updated = Customer::whereId($customer->id)->update([
                 'full_name'    => $request->full_name,
