@@ -170,7 +170,7 @@
                                 <option value="موظف عسكري رام الله" {{ old('job') == 'موظف عسكري رام الله' ? 'selected' : '' }}>موظف عسكري رام الله</option>
                                 <option value="متقاعد مدني رام الله" {{ old('job') == 'متقاعد مدني رام الله' ? 'selected' : '' }}>متقاعد مدني رام الله</option>
                                 <option value="موظف مدني رام الله" {{ old('job') == 'موظف مدني رام الله' ? 'selected' : '' }}>موظف مدني رام الله</option>
-                                <option value="موظف عسكري غزة" {{ old('job') == 'موظف عسكري غزة' ? 'selected' : '' }}>متقاعد مدني رام الله</option>
+                                <option value="موظف عسكري غزة" {{ old('job') == 'موظف عسكري غزة' ? 'selected' : '' }}>موظف عسكري غزة</option>
                                 <option value="موظف مدني غزة" {{ old('job') == 'موظف مدني غزة' ? 'selected' : '' }}>موظف مدني غزة</option>
                                 <option value="متقاعد عسكري غزة" {{ old('job') == 'متقاعد عسكري غزة' ? 'selected' : '' }}>متقاعد عسكري غزة</option>
                                 <option value="متقاعد مدني غزة" {{ old('job') == 'متقاعد مدني غزة' ? 'selected' : '' }}>متقاعد مدني غزة</option>
