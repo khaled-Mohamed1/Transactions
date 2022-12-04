@@ -527,8 +527,65 @@ class IssueController extends Controller
             return response()->download($fileName.' تصديق.docx')->deleteFileAfterSend(true);
         }
 
+    }
+
+    public function exportWORDReimbursement(Request $request,Issue $issue)
+    {
+        $issue = Issue::where('id',$issue->id)->first();
+        $customer = Customer::where('id',$request->customer_id)->first();
+
+            if($issue->execution_agent_name_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/reimbursement-n.docx');
+            }elseif($issue->execution_agent_name_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/reimbursement-y.docx');
+            }
+            $templateProcessor->setValue('court_name',$issue->court_name);
+            $templateProcessor->setValue('case_number',$issue->case_number);
+            $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
+            $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
+            $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
+            $templateProcessor->setValue('customer_name',$customer->full_name);
+            $templateProcessor->setValue('customer_ID_NO',$customer->ID_NO);
 
 
+
+            $fileName = $issue->issue_NO;
+            $templateProcessor->saveAs($fileName.' تسديد.docx');
+            return response()->download($fileName.' تسديد.docx')->deleteFileAfterSend(true);
+
+    }
+
+    public function exportWORDReservation(Request $request,Issue $issue)
+    {
+        $issue = Issue::where('id',$issue->id)->first();
+        $customer = Customer::where('id',$request->customer_id)->first();
+
+        if($issue->execution_agent_name_id == null){
+            $templateProcessor = new TemplateProcessor('wordOffice/reservation-n.docx');
+        }elseif($issue->execution_agent_name_id != null){
+            $templateProcessor = new TemplateProcessor('wordOffice/reservation-y.docx');
+        }
+        $templateProcessor->setValue('court_name',$issue->court_name);
+        $templateProcessor->setValue('case_number',$issue->case_number);
+        $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
+        $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
+        $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
+        $templateProcessor->setValue('customer_name',$customer->full_name);
+        $templateProcessor->setValue('customer_ID_NO',$customer->ID_NO);
+
+        $bank_name = $customer->bank_name;
+        $bank_branch = $customer->bank_branch;
+        $by = $bank_name . ' - ' . $bank_branch;
+
+        $templateProcessor->setValue('by',$by);
+
+        $fileName = $issue->issue_NO;
+        $templateProcessor->saveAs($fileName.' تسديد.docx');
+        return response()->download($fileName.' تسديد.docx')->deleteFileAfterSend(true);
 
     }
 }

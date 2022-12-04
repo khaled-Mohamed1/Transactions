@@ -18,13 +18,22 @@
                 {{--                <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$customer->id}}">--}}
                 {{--                    <i class="fas fa-trash"></i>--}}
                 {{--                </a>--}}
-                <a href="{{ route('issues.export.WORD', ['issue' => $issue->id]) }}" class="btn btn-success m-2">
+                <a title="طباعة" href="{{ route('issues.export.WORD', ['issue' => $issue->id]) }}" class="btn btn-success m-2">
                     <i class="las la-print"></i>
                 </a>
-                <a href="{{ route('issues.edit', ['issue' => $issue->id]) }}"
+                <a title="تعديل" href="{{ route('issues.edit', ['issue' => $issue->id]) }}"
                    class="btn btn-primary m-2">
                     <i class="fa fa-pen"></i>
                 </a>
+
+                <a class="btn btn-dark m-2" title="تسديد قضية" href="#" data-toggle="modal" data-target="#reimbursementModal">
+                    <i class="fa fa-plus"></i>
+                </a>
+
+                <a class="btn btn-secondary m-2" title="فك حجز" href="#" data-toggle="modal" data-target="#reservationModal">
+                    <i class="fa fa-plus"></i>
+                </a>
+
 
             </div>
         </div>
@@ -294,6 +303,8 @@
 
 
     @include('issues.ratify-modal')
+    @include('issues.reimbursement-modal')
+    @include('issues.reservation-modal')
 
 @endsection
 

@@ -181,6 +181,8 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
     Route::get('export/', [IssueController::class, 'export'])->name('export');
     Route::get('export/word/{issue}', [IssueController::class, 'exportWORD'])->name('export.WORD');
     Route::post('export/word/ratify/{issue}', [IssueController::class, 'exportWORDRatify'])->name('export.WORD.ratify');
+    Route::post('export/word/reimbursement/{issue}', [IssueController::class, 'exportWORDReimbursement'])->name('export.WORD.reimbursement');
+    Route::post('export/word/reservation/{issue}', [IssueController::class, 'exportWORDReservation'])->name('export.WORD.reservation');
 
 });
 
