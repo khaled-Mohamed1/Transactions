@@ -445,7 +445,15 @@ class IssueController extends Controller
 
 
         if($request->payment_type == 'استقطاع'){
-            $templateProcessor = new TemplateProcessor('wordOffice/ratifyAll.docx');
+            if($issue->execution_agent_name_id == null && $issue->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyAlln-n.docx');
+            }elseif($issue->execution_agent_name_id != null && $issue->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyAlly-y.docx');
+            }elseif($issue->execution_agent_name_id == null && $issue->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyAlln-y.docx');
+            }elseif($issue->execution_agent_name_id != null && $issue->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyAlly-n.docx');
+            }
             $templateProcessor->setValue('court_name',$issue->court_name);
             $templateProcessor->setValue('case_number',$issue->case_number);
             $templateProcessor->setValue('case_amount',$issue->case_amount);
@@ -453,8 +461,8 @@ class IssueController extends Controller
             $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
             $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
             $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
-            $templateProcessor->setValue('execution_agent_name',$data->execution_agent_name_idIssue->agent_name ?? null);
-            $templateProcessor->setValue('execution_agent_against_it_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_agent_against_it_name',$issue->execution_agent_against_it_idIssue->agent_name ?? null);
             $templateProcessor->setValue('bank_name',$bank->bank_name);
             $templateProcessor->setValue('bank_branch',$bank->bank_branch);
             $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
@@ -476,7 +484,15 @@ class IssueController extends Controller
             $templateProcessor->saveAs($fileName.' تصديق.docx');
             return response()->download($fileName.' تصديق.docx')->deleteFileAfterSend(true);
         }else{
-            $templateProcessor = new TemplateProcessor('wordOffice/ratifyHalf.docx');
+            if($issue->execution_agent_name_id == null && $issue->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyHalfn-n.docx');
+            }elseif($issue->execution_agent_name_id != null && $issue->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyHalfy-y.docx');
+            }elseif($issue->execution_agent_name_id == null && $issue->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyHalfn-y.docx');
+            }elseif($issue->execution_agent_name_id != null && $issue->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/ratifyHalfy-n.docx');
+            }
             $templateProcessor->setValue('court_name',$issue->court_name);
             $templateProcessor->setValue('case_number',$issue->case_number);
             $templateProcessor->setValue('case_amount',$issue->case_amount);
@@ -484,8 +500,8 @@ class IssueController extends Controller
             $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
             $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
             $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
-            $templateProcessor->setValue('execution_agent_name',$data->execution_agent_name_idIssue->agent_name ?? null);
-            $templateProcessor->setValue('execution_agent_against_it_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
+            $templateProcessor->setValue('execution_agent_against_it_name',$issue->execution_agent_against_it_idIssue->agent_name ?? null);
             $templateProcessor->setValue('bank_name',$bank->bank_name);
             $templateProcessor->setValue('bank_branch',$bank->bank_branch);
             $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
