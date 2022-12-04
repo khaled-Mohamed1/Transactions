@@ -74,10 +74,10 @@
                                     @endif
                                 </td>
                                 <td style="display: flex">
-                                    <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"
-                                       class="btn btn-primary m-2">
-                                        <i class="fa fa-pen"></i>
-                                    </a>
+{{--                                    <a href="{{ route('transactions.edit', ['transaction' => $transaction->id]) }}"--}}
+{{--                                       class="btn btn-primary m-2">--}}
+{{--                                        <i class="fa fa-pen"></i>--}}
+{{--                                    </a>--}}
                                     <a class="btn btn-danger m-2" href="#" data-toggle="modal" data-target="#deleteModal{{$transaction->id}}">
                                         <i class="fas fa-trash"></i>
                                     </a>

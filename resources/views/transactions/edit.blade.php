@@ -219,12 +219,17 @@
                         {{-- job --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>الوظيفة</label>
-                            <input
-                                type="text"
-                                class="form-control form-control-user @error('job') is-invalid @enderror"
-                                id="examplejob"
-                                name="job"
-                                value="{{ $transaction->CustomerTransaction->job }}">
+                            <option value="متقاعد عسكري رام الله" {{ $customer->job == 'متقاعد عسكري رام الله' ? 'selected' : '' }}>متقاعد عسكري رام الله</option>
+                            <option value="موظف عسكري رام الله" {{ $customer->job == 'موظف عسكري رام الله' ? 'selected' : '' }}>موظف عسكري رام الله</option>
+                            <option value="متقاعد مدني رام الله" {{ $customer->job == 'متقاعد مدني رام الله' ? 'selected' : '' }}>متقاعد مدني رام الله</option>
+                            <option value="موظف مدني رام الله" {{ $customer->job == 'موظف مدني رام الله' ? 'selected' : '' }}>موظف مدني رام الله</option>
+                            <option value="موظف عسكري غزة" {{ $customer->job == 'موظف عسكري غزة' ? 'selected' : '' }}>متقاعد مدني رام الله</option>
+                            <option value="موظف مدني غزة" {{ $customer->job == 'موظف مدني غزة' ? 'selected' : '' }}>موظف مدني غزة</option>
+                            <option value="متقاعد عسكري غزة" {{ $customer->job == 'متقاعد عسكري غزة' ? 'selected' : '' }}>متقاعد عسكري غزة</option>
+                            <option value="متقاعد مدني غزة" {{ $customer->job == 'متقاعد مدني غزة' ? 'selected' : '' }}>متقاعد مدني غزة</option>
+                            <option value="وكالة" {{ $customer->job == 'وكالة' ? 'selected' : '' }}>وكالة</option>
+                            <option value="قطاع خاص" {{ $customer->job == 'قطاع خاص' ? 'selected' : '' }}>قطاع خاص</option>
+                            <option value="بدون" {{ $customer->job == 'بدون' ? 'selected' : '' }}>بدون</option>
 
                             @error('job')
                             <span class="text-danger">{{$message}}</span>
@@ -379,70 +384,70 @@
                             @enderror
                         </div>
 
-                        {{-- draft_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الكمبيالات <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('draft_NO') is-invalid @enderror"
-                                id="draft_NO"
-                                name="draft_NO"
-                                min="0"
-                                value="{{ $transaction->draft_NO  ?? 4}}">
+{{--                        --}}{{-- draft_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الكمبيالات <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('draft_NO') is-invalid @enderror"--}}
+{{--                                id="draft_NO"--}}
+{{--                                name="draft_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="{{ $transaction->draft_NO  ?? 4}}">--}}
 
-                            @error('draft_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('draft_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
 
-                        {{-- agency_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الوكالات <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('agency_NO') is-invalid @enderror"
-                                id="agency_NO"
-                                name="agency_NO"
-                                min="0"
-                                value="{{ $transaction->agency_NO  ?? 4}}">
+{{--                        --}}{{-- agency_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الوكالات <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('agency_NO') is-invalid @enderror"--}}
+{{--                                id="agency_NO"--}}
+{{--                                name="agency_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="{{ $transaction->agency_NO  ?? 4}}">--}}
 
-                            @error('agency_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('agency_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
-                        {{-- endorsement_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الإستقراء <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('endorsement_NO') is-invalid @enderror"
-                                id="endorsement_NO"
-                                name="endorsement_NO"
-                                min="0"
-                                value="{{ $transaction->endorsement_NO  ?? 1}}">
+{{--                        --}}{{-- endorsement_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الإستقراء <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('endorsement_NO') is-invalid @enderror"--}}
+{{--                                id="endorsement_NO"--}}
+{{--                                name="endorsement_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="{{ $transaction->endorsement_NO  ?? 1}}">--}}
 
-                            @error('endorsement_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('endorsement_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
-                        {{-- receipt_NO --}}
-                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>عدد الوصل <span style="color:red;">*</span></label>
-                            <input
-                                type="number"
-                                class="form-control form-control-user @error('receipt_NO') is-invalid @enderror"
-                                id="receipt_NO"
-                                name="receipt_NO"
-                                min="0"
-                                value="{{ $transaction->receipt_NO  ?? 1}}">
+{{--                        --}}{{-- receipt_NO --}}
+{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
+{{--                            <label>عدد الوصل <span style="color:red;">*</span></label>--}}
+{{--                            <input--}}
+{{--                                type="number"--}}
+{{--                                class="form-control form-control-user @error('receipt_NO') is-invalid @enderror"--}}
+{{--                                id="receipt_NO"--}}
+{{--                                name="receipt_NO"--}}
+{{--                                min="0"--}}
+{{--                                value="{{ $transaction->receipt_NO  ?? 1}}">--}}
 
-                            @error('receipt_NO')
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
+{{--                            @error('receipt_NO')--}}
+{{--                            <span class="text-danger">{{$message}}</span>--}}
+{{--                            @enderror--}}
+{{--                        </div>--}}
 
                         {{-- notes --}}
                         <div class="col-sm-12 mb-3 mt-3 mb-sm-0">

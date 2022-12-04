@@ -123,6 +123,8 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
 
+
+
         // Validations
         $request->validate([
 
@@ -250,29 +252,33 @@ class TransactionController extends Controller
                 'account'       => $customer->account + $request->transaction_rest,
             ]);
 
-            foreach($request->product_name as $key => $data)
-            {
-                $store = Store::find($request->product_name[$key]);
-                if($request->product_qty[$key] > $store->product_qty){
-                    DB::rollBack();
-                    return redirect()->back()->with('warning',$store->product_name."لا يمكن تجاوز الكمية الأصلية لمنتج");
-                }else{
-                    $store = Store::where('id' , $request->product_name[$key])->decrement('product_qty', $request->product_qty[$key]);
+            if ($request->product_name != null){
+                foreach($request->product_name as $key => $data)
+                {
+                    $store = Store::find($request->product_name[$key]);
+                    if($request->product_qty[$key] > $store->product_qty){
+                        DB::rollBack();
+                        return redirect()->back()->with('warning',$store->product_name."لا يمكن تجاوز الكمية الأصلية لمنتج");
+                    }else{
+                        $store = Store::where('id' , $request->product_name[$key])->decrement('product_qty', $request->product_qty[$key]);
 
-                    // Store Data
-                    $purchase = Purchase::create([
-                        'customer_id'=> $request->customer_id,
-                        'user_id' => auth()->user()->id,
-                        'transaction_id' => $transaction->id,
-                        'store_id' => $request->product_name[$key],
-                        'product_qty' => $request->product_qty[$key],
-                        'profit_ratio' => $request->profit_ratio[$key],
-                        'profit' =>$request->profit[$key],
-                        'total_price' => $request->total_price,
-                    ]);
+                        // Store Data
+                        $purchase = Purchase::create([
+                            'customer_id'=> $request->customer_id,
+                            'user_id' => auth()->user()->id,
+                            'transaction_id' => $transaction->id,
+                            'store_id' => $request->product_name[$key],
+                            'product_qty' => $request->product_qty[$key],
+                            'profit_ratio' => $request->profit_ratio[$key],
+                            'profit' =>$request->profit[$key],
+                            'total_price' => $request->total_price,
+                        ]);
+                    }
+
                 }
-
             }
+
+
 
             // Commit And Redirected To Listing
             DB::commit();
