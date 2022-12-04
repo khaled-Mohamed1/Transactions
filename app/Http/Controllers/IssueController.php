@@ -379,16 +379,40 @@ class IssueController extends Controller
         foreach ($customers as $row){
             $array_issue[] = $row->IssueCustomer->toArray();
         }
-
 //        dd(count($array_issue));
         if(count($array_issue) <= 3){
-            $templateProcessor = new TemplateProcessor('wordOffice/issue1-3.docx');
-        }elseif (count($array_issue) >= 4 && count($array_issue) <= 6){
-            $templateProcessor = new TemplateProcessor('wordOffice/issue4-6.docx');
-        }elseif(count($array_issue) >= 7){
-            $templateProcessor = new TemplateProcessor('wordOffice/issue7-9.docx');
-        }
+            if($data->execution_agent_name_id == null && $data->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue1-3n-n.docx');
+            }elseif($data->execution_agent_name_id != null && $data->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue1-3y-y.docx');
+            }elseif($data->execution_agent_name_id == null && $data->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue1-3n-y.docx');
+            }elseif($data->execution_agent_name_id != null && $data->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue1-3y-n.docx');
+            }
 
+        }elseif (count($array_issue) >= 4 && count($array_issue) <= 6){
+            if($data->execution_agent_name_id == null && $data->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue4-6n-n.docx');
+            }elseif($data->execution_agent_name_id != null && $data->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue4-6y-y.docx');
+            }elseif($data->execution_agent_name_id == null && $data->execution_agent_against_it_id != null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue4-6n-y.docx');
+            }elseif($data->execution_agent_name_id != null && $data->execution_agent_against_it_id == null){
+                $templateProcessor = new TemplateProcessor('wordOffice/issue4-6y-n.docx');
+            }
+
+        }elseif(count($array_issue) >= 7) {
+            if ($data->execution_agent_name_id == null && $data->execution_agent_against_it_id == null) {
+                $templateProcessor = new TemplateProcessor('wordOffice/issue7-9n-n.docx');
+            } elseif ($data->execution_agent_name_id != null && $data->execution_agent_against_it_id != null) {
+                $templateProcessor = new TemplateProcessor('wordOffice/issue7-9y-y.docx');
+            } elseif ($data->execution_agent_name_id == null && $data->execution_agent_against_it_id != null) {
+                $templateProcessor = new TemplateProcessor('wordOffice/issue7-9n-y.docx');
+            } elseif ($data->execution_agent_name_id != null && $data->execution_agent_against_it_id == null) {
+                $templateProcessor = new TemplateProcessor('wordOffice/issue7-9y-n.docx');
+            }
+        }
 //        $templateProcessor = new TemplateProcessor('wordOffice/issue1-3.docx');
         $templateProcessor->setValue('court_name',$data->court_name);
         $templateProcessor->setValue('case_number',$data->case_number);
@@ -396,11 +420,13 @@ class IssueController extends Controller
         $templateProcessor->setValue('execution_request_address',$data->execution_request_idIssue->address ?? null);
         $templateProcessor->setValue('execution_request_ID_NO',$data->execution_request_idIssue->ID_NO ?? null);
         $templateProcessor->setValue('execution_agent_name',$data->execution_agent_name_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('execution_against_name',$data->execution_agent_against_it_idIssue->agent_name ?? null);
         $templateProcessor->setValue('execution_agent_against_it_name',$data->execution_agent_name_idIssue->agent_name ?? null);
         $templateProcessor->setValue('execution_agent_against_it_address',$data->execution_agent_against_it_idIssue->address ?? null);
         $templateProcessor->setValue('execution_agent_against_it_ID_NO',$data->execution_agent_against_it_idIssue->ID_NO ?? null);
         $templateProcessor->setValue('case_amount',$data->case_amount);
         $templateProcessor->setValue('created_at',Carbon::now()->format('Y-m-d'));
+        $templateProcessor->setValue('currency',$data->currency_type);
 
 
         $templateProcessor->cloneRowAndSetValues('ID_NO', $array_issue);
