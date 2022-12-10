@@ -30,6 +30,7 @@
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>اسم الوكيل <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px;"
                                 type="text"
                                 class="form-control form-control-user customer_qty @error('agent_name') is-invalid @enderror"
                                 id="agent_name"
@@ -45,6 +46,7 @@
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>رقم الهوية <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px;"
                                 type="text"
                                 class="form-control form-control-user customer_qty @error('ID_NO') is-invalid @enderror"
                                 id="ID_NO"
@@ -60,6 +62,7 @@
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>العنوان <span style="color:red;">*</span></label>
                             <input
+                                style="height: 45px;"
                                 type="text"
                                 class="form-control form-control-user customer_qty @error('address') is-invalid @enderror"
                                 id="address"
@@ -74,7 +77,8 @@
                         {{-- agent_type --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>نوع الوكيل <span style="color:red;">*</span></label>
-                            <select name="agent_type" class="form-control form-control-user @error('agent_type') is-invalid @enderror">
+                            <select name="agent_type"                                 style="height: 45px;"
+                                    class="form-control form-control-user @error('agent_type') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
                                 <option value="طالب التنفيذ" {{ old('agent_type') == 'طالب التنفيذ' ? 'selected' : '' }}>طالب التنفيذ</option>
                                 <option value="وكيل طالب التنفيذ" {{ old('agent_type') == 'وكيل طالب التنفيذ' ? 'selected' : '' }}>وكيل طالب التنفيذ</option>
@@ -90,6 +94,8 @@
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>عدد البنوك </label>
                             <input
+                                style="height: 45px;"
+
                                 type="number"
                                 class="form-control form-control-user customer_qty"
                                 id="bank_qty"

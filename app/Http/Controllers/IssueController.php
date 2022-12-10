@@ -216,8 +216,11 @@ class IssueController extends Controller
      */
     public function show(Issue $issue)
     {
+//        $agents = Agent::where('agent_type')->get();
+        $agents = Agent::get();
         return view('issues.show')->with([
             'issue'  => $issue,
+            'agents'  => $agents,
         ]);
     }
 
@@ -584,8 +587,43 @@ class IssueController extends Controller
         $templateProcessor->setValue('by',$by);
 
         $fileName = $issue->issue_NO;
-        $templateProcessor->saveAs($fileName.' تسديد.docx');
-        return response()->download($fileName.' تسديد.docx')->deleteFileAfterSend(true);
+        $templateProcessor->saveAs($fileName.' فك حجز.docx');
+        return response()->download($fileName.' فك حجز.docx')->deleteFileAfterSend(true);
+
+    }
+
+    public function exportWORDConversion(Request $request,Issue $issue)
+    {
+        $issue = Issue::where('id',$issue->id)->first();
+        $bank = AgentBank::where('id',$request->bank_id)->first();
+        $agent = Agent::where('id',$request->agent_id)->first();
+
+        if($issue->execution_agent_name_id == null){
+            $templateProcessor = new TemplateProcessor('wordOffice/conversion-n.docx');
+        }elseif($issue->execution_agent_name_id != null){
+            $templateProcessor = new TemplateProcessor('wordOffice/conversion-y.docx');
+        }
+        $templateProcessor->setValue('court_name',$issue->court_name);
+        $templateProcessor->setValue('case_number',$issue->case_number);
+        $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
+        $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
+        $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
+        $templateProcessor->setValue('agent_name',$agent->agent_name);
+        $templateProcessor->setValue('agent_ID_NO',$agent->ID_NO);
+        $templateProcessor->setValue('bank_name',$bank->bank_name);
+        $templateProcessor->setValue('bank_branch',$bank->bank_branch);
+        $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
+//        $bank_name = $agent->bank_name;
+//        $bank_branch = $customer->bank_branch;
+//        $by = $bank_name . ' - ' . $bank_branch;
+//
+//        $templateProcessor->setValue('by',$by);
+
+        $fileName = $issue->issue_NO;
+        $templateProcessor->saveAs($fileName.' تحويل.docx');
+        return response()->download($fileName.' تحويل.docx')->deleteFileAfterSend(true);
 
     }
 }

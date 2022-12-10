@@ -34,6 +34,10 @@
                     <i class="fa fa-plus"></i>
                 </a>
 
+                <a class="btn btn-facebook m-2" title="تحويل وصرف" href="#" data-toggle="modal" data-target="#conversionModal">
+                    <i class="fa fa-plus"></i>
+                </a>
+
 
             </div>
         </div>
@@ -305,6 +309,7 @@
     @include('issues.ratify-modal')
     @include('issues.reimbursement-modal')
     @include('issues.reservation-modal')
+    @include('issues.conversion-modal')
 
 @endsection
 

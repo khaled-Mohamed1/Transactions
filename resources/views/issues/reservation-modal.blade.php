@@ -36,7 +36,7 @@
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">إلغاء</button>
                 <a class="btn btn-success" href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('issue-reservation-form').submit();">
-                    تسديد
+                    فك حجز
                 </a>
 
             </div>
