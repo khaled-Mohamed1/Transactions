@@ -216,8 +216,7 @@ class IssueController extends Controller
      */
     public function show(Issue $issue)
     {
-//        $agents = Agent::where('agent_type')->get();
-        $agents = Agent::get();
+        $agents = Agent::where('agent_type','المحول له')->get();
         return view('issues.show')->with([
             'issue'  => $issue,
             'agents'  => $agents,
