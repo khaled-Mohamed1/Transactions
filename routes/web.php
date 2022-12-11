@@ -157,6 +157,9 @@ Route::middleware('auth')->prefix('drafts')->name('drafts.')->group(function(){
 
     Route::get('export/', [DraftController::class, 'export'])->name('export');
 
+    Route::get('/import-drafts', [DraftController::class, 'importDrafts'])->name('import');
+    Route::post('/upload-drafts', [DraftController::class, 'uploadDrafts'])->name('upload');
+
 });
 
 // Issue

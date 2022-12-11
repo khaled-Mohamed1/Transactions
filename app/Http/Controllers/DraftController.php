@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\DraftExport;
 use App\Helpers\Helper;
+use App\Imports\ImportDraft;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\Draft;
@@ -11,6 +12,7 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -312,4 +314,25 @@ class DraftController extends Controller
     {
         return Excel::download(new DraftExport(), 'الكمبيالات.xlsx');
     }
+
+    public function importDrafts()
+    {
+        return view('drafts.import');
+    }
+
+    public function uploadDrafts(Request $request): RedirectResponse
+    {
+        $request->validate([
+                'file'    => 'required',
+            ]
+            ,[
+                'file.required' => 'يجب ادخال ملف اكسل',
+            ]);
+
+        Excel::import(new ImportDraft(), $request->file('file'));
+
+
+        return redirect()->route('drafts.index')->with('success', 'تم استيراد بيانات الكمبيالات');
+    }
+
 }

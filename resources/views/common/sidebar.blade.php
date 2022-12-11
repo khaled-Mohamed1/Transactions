@@ -72,7 +72,7 @@ width: 20rem !important;position: relative">
                     <a class="collapse-item" href="{{ route('customers.index.rejected') }}">العملاء المرفوضين</a>
                     <a class="collapse-item" href="{{ route('customers.index.follow') }}">المتابعة</a>
                     {{--                <a class="collapse-item" href="{{ route('users.create') }}">Add New</a>--}}
-                    <a class="collapse-item" href="{{ route('customers.import') }}">استيراد بيانات</a>
+{{--                    <a class="collapse-item" href="{{ route('customers.import') }}">استيراد بيانات</a>--}}
                 </div>
             </div>
         </li>
@@ -101,6 +101,8 @@ width: 20rem !important;position: relative">
                     <a class="collapse-item" href="{{ route('issues.index') }}">قضايا</a>
                     <a class="collapse-item" href="{{ route('stores.index') }}">المخازن</a>
                     {{--                <a class="collapse-item" href="{{ route('users.import') }}">Import Data</a>--}}
+{{--                    <a class="collapse-item" href="{{ route('drafts.import') }}">استيراد بيانات كمبيالات</a>--}}
+
                 </div>
             </div>
         </li>
