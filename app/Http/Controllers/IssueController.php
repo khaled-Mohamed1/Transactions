@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exports\IssueExport;
 use App\Helpers\Helper;
+use App\Imports\ImportDraft;
+use App\Imports\IssueImport;
 use App\Models\Agent;
 use App\Models\AgentBank;
 use App\Models\Customer;
@@ -625,4 +627,25 @@ class IssueController extends Controller
         return response()->download($fileName.' تحويل.docx')->deleteFileAfterSend(true);
 
     }
+
+    public function importIssues()
+    {
+        return view('issues.import');
+    }
+
+    public function uploadIssues(Request $request): RedirectResponse
+    {
+        $request->validate([
+                'file'    => 'required',
+            ]
+            ,[
+                'file.required' => 'يجب ادخال ملف اكسل',
+            ]);
+
+        Excel::import(new IssueImport(), $request->file('file'));
+
+
+        return redirect()->route('issues.index')->with('success', 'تم استيراد بيانات القضايا');
+    }
+
 }

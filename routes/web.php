@@ -188,6 +188,10 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
     Route::post('export/word/reservation/{issue}', [IssueController::class, 'exportWORDReservation'])->name('export.WORD.reservation');
     Route::post('export/word/conversion/{issue}', [IssueController::class, 'exportWORDConversion'])->name('export.WORD.conversion');
 
+
+    Route::get('/import-issues', [IssueController::class, 'importIssues'])->name('import');
+    Route::post('/upload-issues', [IssueController::class, 'uploadIssues'])->name('upload');
+
 });
 
 Route::middleware('auth')->prefix('payments')->name('payments.')->group(function(){
