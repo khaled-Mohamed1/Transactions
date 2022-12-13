@@ -84,7 +84,7 @@ class HomeController extends Controller
     /**
      * User Profile
      * @param Nill
-     * @return View Profile
+     * @return View|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      * @author Shani Singh
      */
     public function getProfile()
@@ -95,7 +95,7 @@ class HomeController extends Controller
     /**
      * Update Profile
      * @param $profileData
-     * @return Boolean With Success Message
+     * @return \Illuminate\Http\RedirectResponse With Success Message
      * @author Shani Singh
      */
     public function updateProfile(Request $request)
@@ -132,7 +132,7 @@ class HomeController extends Controller
     /**
      * Change Password
      * @param Old Password, New Password, Confirm New Password
-     * @return Boolean With Success Message
+     * @return \Illuminate\Http\RedirectResponse With Success Message
      * @author Shani Singh
      */
     public function changePassword(Request $request)
@@ -159,5 +159,67 @@ class HomeController extends Controller
             DB::rollBack();
             return back()->with('error', $th->getMessage());
         }
+    }
+
+
+    public function state(Request $request){
+
+        if($request->state == 'شهري'){
+            $customers = Customer::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->get()->count();
+            $customers_adverser = Customer::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->where('status','متعسر')->get()->count();
+            $customers_new = Customer::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->where('status','جديد')->get()->count();
+            $customers_tasks = Customer::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
+            $customers_follow = Customer::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->where('repeater',true)->get()->count();
+            $customers_rejects = Customer::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->where('status','مرفوض')->get()->count();
+            $customers_committed = Customer::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->where('status','ملتزم')->get()->count();
+            $transaction_amount = Transaction::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->get()->sum('transaction_amount');
+            $transactions = Transaction::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->get()->count();
+            $drafts = Draft::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->get()->count();
+            $drafts_tasks = Draft::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
+            $issues = Issue::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))->get()->count();
+        }else{
+            $customers = Customer::whereYear('created_at', date('Y'))->get()->count();
+            $customers_adverser = Customer::whereYear('created_at', date('Y'))->where('status','متعسر')->get()->count();
+            $customers_new = Customer::whereYear('created_at', date('Y'))->where('status','جديد')->get()->count();
+            $customers_tasks = Customer::whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
+            $customers_follow = Customer::whereYear('created_at', date('Y'))->where('repeater',true)->get()->count();
+            $customers_rejects = Customer::whereYear('created_at', date('Y'))->where('status','مرفوض')->get()->count();
+            $customers_committed = Customer::whereYear('created_at', date('Y'))->where('status','ملتزم')->get()->count();
+            $transaction_amount = Transaction::whereYear('created_at', date('Y'))->get()->sum('transaction_amount');
+            $transactions = Transaction::whereYear('created_at', date('Y'))->get()->count();
+            $drafts = Draft::whereYear('created_at', date('Y'))->get()->count();
+            $drafts_tasks = Draft::whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
+            $issues = Issue::whereYear('created_at', date('Y'))->get()->count();
+        }
+
+
+        return response()->json([
+        'status' => 'success',
+            'state' => $request->state,
+            'customers' => $customers,
+            'customers_adverser' => $customers_adverser,
+            'transaction_amount' => $transaction_amount,
+            'transactions' => $transactions,
+            'customers_new' => $customers_new,
+            'customers_tasks'=>$customers_tasks,
+            'customers_rejects'=>$customers_rejects,
+            'customers_follow'=>$customers_follow,
+            'customers_committed'=>$customers_committed,
+            'drafts'=>$drafts,
+            'issues'=>$issues,
+            'drafts_tasks'=>$drafts_tasks
+        ]);
     }
 }

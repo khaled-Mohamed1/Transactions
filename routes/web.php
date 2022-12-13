@@ -30,6 +30,7 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/state', [App\Http\Controllers\HomeController::class, 'state'])->name('state');
 
 // Profile Routes
 Route::prefix('profile')->name('profile.')->middleware('auth')->group(function(){
