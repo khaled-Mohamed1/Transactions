@@ -281,21 +281,21 @@
             <h4 class="text-right">نماذج طباعة</h4>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4 text-right">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
-                                <a href="{{ asset('wordOffice/كمبيالة_1.docx') }}" target="_blank" class="text-primary">كمبيالة نموذج - 1</a></div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="las la-print fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--        <div class="col-xl-3 col-md-6 mb-4 text-right">--}}
+{{--            <div class="card border-left-primary shadow h-100 py-2">--}}
+{{--                <div class="card-body">--}}
+{{--                    <div class="row no-gutters align-items-center">--}}
+{{--                        <div class="col mr-2">--}}
+{{--                            <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">--}}
+{{--                                <a href="{{ asset('wordOffice/كمبيالة_1.docx') }}" target="_blank" class="text-primary">كمبيالة نموذج - 1</a></div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-auto">--}}
+{{--                            <i class="las la-print fa-2x text-gray-300"></i>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         @foreach($forms as $form)
             <div class="col-xl-3 col-md-6 mb-4 text-right">
