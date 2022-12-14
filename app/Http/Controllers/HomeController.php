@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attachment;
 use App\Models\Customer;
 use App\Models\Draft;
+use App\Models\Form;
 use App\Models\Issue;
 use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -23,6 +28,8 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:رفع-نماذج', ['only' => ['import','storeImport']]);
+
     }
 
     /**
@@ -67,6 +74,9 @@ class HomeController extends Controller
             ->whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
         $issues = Issue::whereMonth('created_at', date('m'))
             ->whereYear('created_at', date('Y'))->get()->count();
+
+        $forms = Form::latest()->get();
+
         return view('home',['customers' => $customers,
                                 'customers_adverser' => $customers_adverser,
                                 'transaction_amount' => $transaction_amount,
@@ -78,7 +88,8 @@ class HomeController extends Controller
             'customers_committed'=>$customers_committed,
             'drafts'=>$drafts,
             'issues'=>$issues,
-            'drafts_tasks'=>$drafts_tasks]);
+            'drafts_tasks'=>$drafts_tasks,
+            'forms'=>$forms]);
     }
 
     /**
@@ -222,4 +233,51 @@ class HomeController extends Controller
             'drafts_tasks'=>$drafts_tasks
         ]);
     }
+
+    public function import(){
+        return view('import');
+    }
+
+    public function storeImport(Request $request){
+
+        $request->validate([
+            'file' => 'required|mimes:pdf,doc,docx,xlsx',
+            'name' => 'required'
+
+        ],[
+                'file.required' => 'يجب ادخال النموذج',
+                'name.required' => 'يجب ادخال اسم النموذج',
+            ]
+        );
+
+
+        DB::beginTransaction();
+        try {
+            $file = $request->file('file');
+
+            $name = $file->getClientOriginalName();
+
+            $form = Form::create([
+                'name' => $request->name,
+                'path' => 'http://transaction.sellbuyltd.com/storage/app/public/forms/' . $name,
+//                'path'         => $name,
+            ]);
+
+//            Storage::disk('public')->put('forms/' . $name, file_get_contents($request->file));
+            $request->file->move(public_path('/forms'), $name);
+
+
+            // Commit And Redirected To Listing
+            DB::commit();
+            return redirect()->route('home')->with('success','تم اضافة النموذج بنجاح');
+
+        } catch (\Throwable $th) {
+            // Rollback and return with Error
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', $th->getMessage());
+        }
+
+    }
+
+
 }

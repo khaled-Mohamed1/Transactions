@@ -71,7 +71,7 @@ class PermissionSeeder extends Seeder
             'مخازن-اضافة',
             'مخازن-تعديل',
             'مخازن-حذف',
-
+            'رفع-نماذج',
 
         ];
 

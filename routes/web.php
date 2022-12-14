@@ -31,6 +31,8 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/state', [App\Http\Controllers\HomeController::class, 'state'])->name('state');
+Route::get('/import', [App\Http\Controllers\HomeController::class, 'import'])->name('import');
+Route::post('/store_import', [App\Http\Controllers\HomeController::class, 'storeImport'])->name('storeImport');
 
 // Profile Routes
 Route::prefix('profile')->name('profile.')->middleware('auth')->group(function(){
