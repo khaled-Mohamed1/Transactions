@@ -498,7 +498,12 @@ class CustomerController extends Controller
         $templateProcessor->setValue('job',$data->job);
         $templateProcessor->setValue('bank_name',$data->bank_name);
         $templateProcessor->setValue('bank_branch',$data->bank_branch);
-        $templateProcessor->setValue('notes',$data->notes);
+
+        $parts = explode(",", $data->notes);
+        $newString = implode("\n", $parts);
+
+
+        $templateProcessor->setValue('notes',$newString);
         $templateProcessor->setValue('bank_account_NO',$data->bank_account_NO);
         $templateProcessor->setValue('drafts',$str_draft);
         $templateProcessor->setValue('issues',$str_issue);
