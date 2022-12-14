@@ -255,6 +255,7 @@ class IssueController extends Controller
      */
     public function update(Request $request, Issue $issue)
     {
+
         if($request->customer_id == null){
             return redirect()->back()->with('error','يجب ادخال عدد الأطراف قبل اتمام العملية. ');
         }
@@ -304,12 +305,11 @@ class IssueController extends Controller
         DB::beginTransaction();
         try {
 
+
             // Store Data
-            $issue = Issue::whereId($issue->id)->update([
-                'user_id'    => auth()->user()->id,
+            $issue = Issue::where('id',$request->issue_id)->update([
                 'court_name'     => $request->court_name,
                 'customer_qty'         => $request->customer_qty,
-                'case_number' => $request->case_number,
                 'case_amount'       => $request->case_amount,
                 'execution_request_id'       => $request->execution_request,
                 'execution_agent_name_id'       => $request->execution_agent_name,
@@ -319,11 +319,22 @@ class IssueController extends Controller
                 'notes'       => $request->notes,
             ]);
 
+
+            if($request->case_number){
+                Issue::where('id',$request->issue_id)->update([
+                    'case_number' => $request->case_number,
+                   'issue_status' =>  'بانتظار تصديق الاتفاق'
+                ]);
+            }
+
+
+
             CustomerIssue::where('issue_id',$request->issue_id)->delete();
+
+
 
             foreach($request->customer_id as $key => $data)
             {
-
                 $customer_id = Customer::where('ID_NO',$request->customer_id[$key])->get()->first();
 
                 // Store Data
@@ -334,9 +345,10 @@ class IssueController extends Controller
             }
 
 
+
             // Commit And Redirected To Listing
             DB::commit();
-            return redirect()->route('issues.show',['issue' => $issue->id])->with('success','تم تعديل القضية بنجاح');
+            return redirect()->route('issues.show',['issue' => $request->issue_id])->with('success','تم تعديل القضية بنجاح');
 
         } catch (\Throwable $th) {
             // Rollback and return with Error
@@ -444,7 +456,9 @@ class IssueController extends Controller
         $issue = Issue::where('id',$issue->id)->first();
         $bank = AgentBank::where('id',$request->bank_id)->first();
         $customer = Customer::where('id',$request->customer_id)->first();
-
+        Issue::where('id',$issue->id)->update([
+            'issue_status' => 'بانتظار اصدار قرار'
+        ]);
 
 
         if($request->payment_type == 'استقطاع'){
@@ -564,7 +578,9 @@ class IssueController extends Controller
     {
         $issue = Issue::where('id',$issue->id)->first();
         $customer = Customer::where('id',$request->customer_id)->first();
-
+        Issue::where('id',$issue->id)->update([
+            'issue_status' => 'بانتظار رد البنك'
+        ]);
         if($issue->execution_agent_name_id == null){
             $templateProcessor = new TemplateProcessor('wordOffice/reservation-n.docx');
         }elseif($issue->execution_agent_name_id != null){

@@ -9,7 +9,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">تعديل قضية</h1>
-            <a href="{{route('issues.index')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
+            <a href="{{route('issues.show',['issue'=>$issue->id])}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">رجوع <i
                     class="fas fa-arrow-left fa-sm text-white-50"></i></a>
         </div>
 
@@ -186,7 +186,7 @@
 
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success btn-user float-right mb-3">تعديل</button>
-                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('issues.index') }}">إلغاء</a>
+                    <a class="btn btn-primary float-right mr-3 mb-3" href="{{ route('issues.show',['issue'=>$issue->id]) }}">إلغاء</a>
                 </div>
             </form>
         </div>
