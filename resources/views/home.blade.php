@@ -304,7 +304,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold  text-uppercase mb-1" style="font-size: 1.1rem">
-                                    <a href="{{ asset('forms/'.$form->path) }}" target="_blank" class="text-primary">{{$form->name}}</a></div>
+                                    <a href="{{$form->path}}" target="_blank" class="text-primary">{{$form->name}}</a></div>
                             </div>
                             <div class="col-auto">
                                 <i class="las la-print fa-2x text-gray-300"></i>
