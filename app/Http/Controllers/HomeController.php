@@ -241,7 +241,7 @@ class HomeController extends Controller
     public function storeImport(Request $request){
 
         $request->validate([
-            'file' => 'required|mimes:pdf,doc,docx,xlsx',
+            'file' => 'required|mimes:pdf,xlx,csv,doc,docx,xlsx',
             'name' => 'required'
 
         ],[
@@ -259,7 +259,7 @@ class HomeController extends Controller
 
             $form = Form::create([
                 'name' => $request->name,
-                'path' => 'http://transaction.sellbuyltd.com/storage/app/public/forms/' . $name,
+                'path' => 'http://transaction.sellbuyltd.com/public/forms/' . $name,
 //                'path'         => $name,
             ]);
 
