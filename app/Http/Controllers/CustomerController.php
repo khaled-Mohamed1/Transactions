@@ -172,9 +172,9 @@ class CustomerController extends Controller
             'number_of_children' =>  'required',
             'job'   =>  'required',
             'salary'   =>  'required',
-            'bank_name'   =>  'required',
-            'bank_branch'   =>  'required',
-            'bank_account_NO'   =>  'required',
+//            'bank_name'   =>  'required',
+//            'bank_branch'   =>  'required',
+//            'bank_account_NO'   =>  'required',
 
             ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
@@ -192,9 +192,9 @@ class CustomerController extends Controller
                 'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
                 'job.required' => 'يجب ادخال الوظيفة العميل',
                 'salary.required' => 'يجب ادخال دخل العميل',
-                'bank_name.required' => 'يجب ادخال اسم البنك',
-                'bank_branch.required' => 'يجب ادخال فرع البنك',
-                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
+//                'bank_name.required' => 'يجب ادخال اسم البنك',
+//                'bank_branch.required' => 'يجب ادخال فرع البنك',
+//                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
 
             ]
         );

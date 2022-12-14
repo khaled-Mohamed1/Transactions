@@ -203,7 +203,7 @@
 
                         {{-- bank_name --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>اسم البنك <span style="color:red;">*</span></label>
+                            <label>اسم البنك </label>
                             <select name="bank_name" class="form-control form-control-user @error('bank_name') is-invalid @enderror">
                                 <option disabled {{ old('bank_name') == null ? 'selected' : '' }}>اختر...</option>
                                 <option value="بنك فلسطين" {{ old('bank_name') == 'بنك فلسطين' ? 'selected' : '' }}>بنك فلسطين</option>
@@ -231,7 +231,7 @@
 
                         {{-- bank_branch --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                            <label>فرع البنك <span style="color:red;">*</span></label>
+                            <label>فرع البنك </label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('bank_branch') is-invalid @enderror"
@@ -246,7 +246,7 @@
 
                         {{-- bank_account_NO --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                            <label>رقم حساب البنك <span style="color:red;">*</span></label>
+                            <label>رقم حساب البنك </label>
                             <input
                                 type="text"
                                 class="form-control form-control-user @error('bank_account_NO') is-invalid @enderror"
