@@ -184,17 +184,17 @@
                                     <tbody>
                                     @forelse($draft->issues as $issue)
                                         <tr>
-                                            <td><a href="{{route('issues.show',['issue' => $issue->IssueCustomerIssue->id])}}">{{ $issue->IssueCustomerIssue->issue_NO }}</a></td>
-                                            <td>{{ $issue->IssueCustomerIssue->UserIssue->full_name }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->court_name }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->case_number }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->case_amount }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->execution_request_idIssue->agent_name ?? null }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->execution_agent_name_idIssue->agent_name ?? null }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->execution_agent_against_it_idIssue->agent_name ?? null }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->issue_status }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->notes }}</td>
-                                            <td>{{ $issue->IssueCustomerIssue->created_at }}</td>
+                                            <td><a href="{{route('issues.show',['issue' => $issue->id])}}">{{ $issue->issue_NO }}</a></td>
+                                            <td>{{ $issue->UserIssue->full_name }}</td>
+                                            <td>{{ $issue->court_name }}</td>
+                                            <td>{{ $issue->case_number }}</td>
+                                            <td>{{ $issue->case_amount }}</td>
+                                            <td>{{ $issue->execution_request_idIssue->agent_name ?? null }}</td>
+                                            <td>{{ $issue->execution_agent_name_idIssue->agent_name ?? null }}</td>
+                                            <td>{{ $issue->execution_agent_against_it_idIssue->agent_name ?? null }}</td>
+                                            <td>{{ $issue->issue_status }}</td>
+                                            <td>{{ $issue->notes }}</td>
+                                            <td>{{ $issue->created_at }}</td>
                                         </tr>
                                     @empty
                                         <tr>

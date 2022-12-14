@@ -100,7 +100,6 @@ class IssueController extends Controller
     public function store(Request $request)
     {
 
-
         if($request->customer_id == null){
             return redirect()->back()->with('error','يجب ادخال عدد الأطراف قبل اتمام العملية. ');
         }
@@ -153,7 +152,7 @@ class IssueController extends Controller
             $issue = Issue::create([
                 'issue_NO' => Helper::IDGenerator(new Issue(), 'issue_NO', 5,2),
                 'user_id'    => auth()->user()->id,
-                'draft_id'    => $request->draft_id ?? null,
+                'draft_id'    => $request->draft_id,
                 'court_name'     => $request->court_name,
                 'customer_qty'         => $request->customer_qty,
                 'case_number' => $request->case_number,

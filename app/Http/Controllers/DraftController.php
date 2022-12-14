@@ -175,6 +175,7 @@ class DraftController extends Controller
      */
     public function show(Draft $draft)
     {
+
         return view('drafts.show')->with([
             'draft'  => $draft,
         ]);

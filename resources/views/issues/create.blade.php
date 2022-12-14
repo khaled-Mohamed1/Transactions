@@ -26,10 +26,16 @@
                 <div class="card-body">
                     <div class="form-group row">
 
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user customer_qty"
+                            id="draft_id"
+                            name="draft_id">
+
                         {{-- court_name --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>اسم المحكمة <span style="color:red;">*</span></label>
-                            <select name="court_name" class="form-control form-control-user @error('court_name') is-invalid @enderror">
+                            <select name="court_name" style="height: 45px;" class="form-control form-control-user @error('court_name') is-invalid @enderror">
                                 <option selected disabled value="">اختار...</option>
                                 <option value="بداية الشمال" {{ old('court_name') == 'بداية الشمال' ? 'selected' : '' }}>بداية الشمال</option>
                                 <option value="بداية غزة" {{ old('court_name') == 'بداية غزة' ? 'selected' : '' }}>بداية غزة</option>
