@@ -241,7 +241,7 @@ class HomeController extends Controller
     public function storeImport(Request $request){
 
         $request->validate([
-            'file' => 'required|mimes:pdf,xlx,csv,doc,docx,xlsx',
+            'file' => 'required',
             'name' => 'required'
 
         ],[
