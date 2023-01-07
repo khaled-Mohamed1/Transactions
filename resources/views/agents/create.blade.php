@@ -140,27 +140,14 @@
                 for (let i = 1; i <= $(this).val(); i++){
                     $("#display").append(
                         `
-<div class="row m-auto">
-<div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="row m-auto">
+                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>اسم البنك - ${i}</label>
                             <select name="bank_name[]" class="form-control form-control-user" style="height: 45px">
-                                <option disabled >اختر...</option>
-                                <option value="بنك فلسطين">بنك فلسطين</option>
-                                <option value="بنك القدس">بنك القدس</option>
-                                <option value="البنك الإسلامي الفلسطيني">البنك الإسلامي الفلسطيني</option>
-                                <option value="البنك العقاري المصري العربي">البنك العقاري المصري العربي</option>
-                                <option value="بنك الوطني الاسلامي" >بنك الوطني الاسلامي</option>
-                                <option value="بنك الانتاج الفلسطيني" >بنك الانتاج الفلسطيني</option>
-                                <option value="بنك الأردن">بنك الأردن</option>
-                                <option value="بنك القاهرة عمان" >بنك القاهرة عمان</option>
-                                <option value="بنك الاستثمار الفلسطيني" >بنك الاستثمار الفلسطيني</option>
-                                <option value="البنك العربي" >البنك العربي</option>
-                                <option value="البنك الاسلامي العربي" >البنك الاسلامي العربي</option>
-                                <option value="بنك الاسكان للتجارة والتمويل" >بنك الاسكان للتجارة والتمويل</option>
-                                <option value="البنك التجاري الأردني" >البنك التجاري الأردني</option>
-                                <option value="البنك الأهلي الأردني" >البنك الأهلي الأردني</option>
-                                <option value="البنك الوطني" >البنك الوطني</option>
-                                <option value="البريد">البريد</option>
+                                <option disabled selected >اختر...</option>
+                                @foreach($banks as $bank)
+                                    <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                @endforeach
                             </select>
                         </div>
 

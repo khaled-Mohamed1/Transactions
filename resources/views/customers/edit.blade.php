@@ -184,18 +184,9 @@
                             <select name="job"                                 style="height: 45px"
                                     class="form-control form-control-user @error('job') is-invalid @enderror">
                                 <option disabled selected>اختر...</option>
-                                <option value="متقاعد عسكري رام الله" {{ $customer->job == 'متقاعد عسكري رام الله' ? 'selected' : '' }}>متقاعد عسكري رام الله</option>
-                                <option value="موظف عسكري رام الله" {{ $customer->job == 'موظف عسكري رام الله' ? 'selected' : '' }}>موظف عسكري رام الله</option>
-                                <option value="متقاعد مدني رام الله" {{ $customer->job == 'متقاعد مدني رام الله' ? 'selected' : '' }}>متقاعد مدني رام الله</option>
-                                <option value="موظف مدني رام الله" {{ $customer->job == 'موظف مدني رام الله' ? 'selected' : '' }}>موظف مدني رام الله</option>
-                                <option value="موظف عسكري غزة" {{ $customer->job == 'موظف عسكري غزة' ? 'selected' : '' }}>موظف عسكري غزة</option>
-                                <option value="موظف مدني غزة" {{ $customer->job == 'موظف مدني غزة' ? 'selected' : '' }}>موظف مدني غزة</option>
-                                <option value="متقاعد عسكري غزة" {{ $customer->job == 'متقاعد عسكري غزة' ? 'selected' : '' }}>متقاعد عسكري غزة</option>
-                                <option value="متقاعد مدني غزة" {{ $customer->job == 'متقاعد مدني غزة' ? 'selected' : '' }}>متقاعد مدني غزة</option>
-                                <option value="وكالة" {{ $customer->job == 'وكالة' ? 'selected' : '' }}>وكالة</option>
-                                <option value="قطاع خاص" {{ $customer->job == 'قطاع خاص' ? 'selected' : '' }}>قطاع خاص</option>
-                                <option value="بدون" {{ $customer->job == 'بدون' ? 'selected' : '' }}>بدون</option>
-
+                                @foreach($jobs as $job)
+                                    <option value="{{$job->id}}" {{ $customer->CustomerJob->name == $job->name ? 'selected' : '' }}>{{$job->name}}</option>
+                                @endforeach
                             </select>
 
                             @error('job')
@@ -222,26 +213,13 @@
 
                         {{-- bank_name --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>اسم البنك <span style="color:red;">*</span></label>
-                            <select name="bank_name"                                 style="height: 45px"
+                            <label>اسم البنك </label>
+                            <select name="bank_name" style="height: 45px"
                                     class="form-control form-control-user @error('bank_name') is-invalid @enderror">
                                 <option disabled {{ $customer->bank_name == null ? 'selected' : '' }}>اختر...</option>
-                                <option value="بنك فلسطين" {{ $customer->bank_name == 'بنك فلسطين' ? 'selected' : '' }}>بنك فلسطين</option>
-                                <option value="بنك القدس" {{ $customer->bank_name == 'بنك القدس' ? 'selected' : '' }}>بنك القدس</option>
-                                <option value="البنك الإسلامي الفلسطيني" {{ $customer->bank_name == 'البنك الإسلامي الفلسطيني' ? 'selected' : '' }}>البنك الإسلامي الفلسطيني</option>
-                                <option value="البنك العقاري المصري العربي" {{ $customer->bank_name == 'البنك العقاري المصري العربي' ? 'selected' : '' }}>البنك العقاري المصري العربي</option>
-                                <option value="بنك الوطني الاسلامي" {{ $customer->bank_name == 'بنك الوطني الاسلامي' ? 'selected' : '' }}>بنك الوطني الاسلامي</option>
-                                <option value="بنك الانتاج الفلسطيني" {{ $customer->bank_name == 'بنك الانتاج الفلسطيني' ? 'selected' : '' }}>بنك الانتاج الفلسطيني</option>
-                                <option value="بنك الأردن" {{ $customer->bank_name == 'بنك الأردن' ? 'selected' : '' }}>بنك الأردن</option>
-                                <option value="بنك القاهرة عمان" {{ $customer->bank_name == 'بنك القاهرة عمان' ? 'selected' : '' }}>بنك القاهرة عمان</option>
-                                <option value="بنك الاستثمار الفلسطيني" {{ $customer->bank_name == 'بنك الاستثمار الفلسطيني' ? 'selected' : '' }}>بنك الاستثمار الفلسطيني</option>
-                                <option value="البنك العربي" {{ $customer->bank_name == 'البنك العربي' ? 'selected' : '' }}>البنك العربي</option>
-                                <option value="البنك الاسلامي العربي" {{ $customer->bank_name == 'البنك الاسلامي العربي' ? 'selected' : '' }}>البنك الاسلامي العربي</option>
-                                <option value="بنك الاسكان للتجارة والتمويل" {{ $customer->bank_name == 'بنك الاسكان للتجارة والتمويل' ? 'selected' : '' }}>بنك الاسكان للتجارة والتمويل</option>
-                                <option value="البنك التجاري الأردني" {{ $customer->bank_name == 'البنك التجاري الأردني' ? 'selected' : '' }}>البنك التجاري الأردني</option>
-                                <option value="البنك الأهلي الأردني" {{ $customer->bank_name == 'البنك الأهلي الأردني' ? 'selected' : '' }}>البنك الأهلي الأردني</option>
-                                <option value="البنك الوطني" {{ $customer->bank_name == 'البنك الوطني' ? 'selected' : '' }}>البنك الوطني</option>
-                                <option value="البريد" {{ $customer->bank_name == 'البريد' ? 'selected' : '' }}>البريد</option>
+                                @foreach($banks as $bank)
+                                    <option value="{{$bank->id}}" {{ $customer->CustomerBank->name == $bank->name ? 'selected' : '' }}>{{$bank->name}}</option>
+                                @endforeach
                             </select>
 
                             @error('bank_name')
@@ -251,7 +229,7 @@
 
                         {{-- bank_branch --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>فرع البنك <span style="color:red;">*</span></label>
+                            <label>فرع البنك </label>
                             <input
                                 style="height: 45px"
 
@@ -268,7 +246,7 @@
 
                         {{-- bank_account_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>رقم حساب البنك <span style="color:red;">*</span></label>
+                            <label>رقم حساب البنك </label>
                             <input
                                 style="height: 45px"
                                 type="text"

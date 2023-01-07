@@ -12,6 +12,8 @@ use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\CustomerJobController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -104,6 +106,7 @@ Route::middleware('auth')->prefix('customers')->name('customers.')->group(functi
     //Task
     Route::get('/tasks', [CustomerController::class, 'indexTask'])->name('index.task');
     Route::post('/add_task', [CustomerController::class, 'addTask'])->name('add.task');
+    Route::post('/add_task_issue/{customer}', [CustomerController::class, 'addTaskIssue'])->name('add.task.issue');
 
     //import
     Route::get('/import-customers', [CustomerController::class, 'importCustomers'])->name('import');
@@ -153,7 +156,7 @@ Route::middleware('auth')->prefix('drafts')->name('drafts.')->group(function(){
 
     //get customer data
     Route::post('/get', [DraftController::class, 'get'])->name('get');
-    Route::post('/add_task', [DraftController::class, 'addTask'])->name('add.task');
+    Route::post('/add_task/{draft}', [DraftController::class, 'addTask'])->name('add.task');
 
 //    Route::get('/import-users', [UserController::class, 'importUsers'])->name('import');
 //    Route::post('/upload-users', [UserController::class, 'uploadUsers'])->name('upload');
@@ -170,6 +173,7 @@ Route::middleware('auth')->prefix('issues')->name('issues.')->group(function(){
     Route::get('/', [IssueController::class, 'index'])->name('index');
     Route::get('/create', [IssueController::class, 'create'])->name('create');
     Route::post('/store', [IssueController::class, 'store'])->name('store');
+    Route::post('/store_customer', [IssueController::class, 'storeCustomer'])->name('store.customer');
     Route::get('/edit/{issue}', [IssueController::class, 'edit'])->name('edit');
     Route::put('/update/{issue}', [IssueController::class, 'update'])->name('update');
     Route::delete('/delete/{issue}', [IssueController::class, 'delete'])->name('destroy');
@@ -228,6 +232,34 @@ Route::middleware('auth')->prefix('agents')->name('agents.')->group(function(){
     Route::get('/edit/{agent}', [AgentController::class, 'edit'])->name('edit');
     Route::put('/update/{agent}', [AgentController::class, 'update'])->name('update');
     Route::delete('/delete/{agent}', [AgentController::class, 'delete'])->name('destroy');
+});
 
+Route::middleware('auth')->prefix('banks')->name('banks.')->group(function(){
+    //test
+    Route::get('/', [BankController::class, 'index'])->name('index');
+    Route::get('/create', [BankController::class, 'create'])->name('create');
+    Route::post('/store', [BankController::class, 'store'])->name('store');
+    Route::get('/edit/{bank}', [BankController::class, 'edit'])->name('edit');
+    Route::put('/update/{bank}', [BankController::class, 'update'])->name('update');
+    Route::delete('/delete/{bank}', [BankController::class, 'delete'])->name('destroy');
+});
 
+Route::middleware('auth')->prefix('banks')->name('banks.')->group(function(){
+    //test
+    Route::get('/', [BankController::class, 'index'])->name('index');
+    Route::get('/create', [BankController::class, 'create'])->name('create');
+    Route::post('/store', [BankController::class, 'store'])->name('store');
+    Route::get('/edit/{bank}', [BankController::class, 'edit'])->name('edit');
+    Route::put('/update/{bank}', [BankController::class, 'update'])->name('update');
+    Route::delete('/delete/{bank}', [BankController::class, 'delete'])->name('destroy');
+});
+
+Route::middleware('auth')->prefix('jobs')->name('jobs.')->group(function(){
+    //test
+    Route::get('/', [CustomerJobController::class, 'index'])->name('index');
+    Route::get('/create', [CustomerJobController::class, 'create'])->name('create');
+    Route::post('/store', [CustomerJobController::class, 'store'])->name('store');
+    Route::get('/edit/{CustomerJob}', [CustomerJobController::class, 'edit'])->name('edit');
+    Route::put('/update/{CustomerJob}', [CustomerJobController::class, 'update'])->name('update');
+    Route::delete('/delete/{CustomerJob}', [CustomerJobController::class, 'delete'])->name('destroy');
 });

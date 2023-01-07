@@ -46,13 +46,18 @@ class IssueController extends Controller
     public function index()
     {
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
+            $customer_issues = Customer::orderBy('customer_NO','desc')->whereNotNull('updated_issue_by')->paginate(100);
             $drafts = Draft::orderBy('draft_NO','desc')->whereNotNull('updated_by')->paginate(100);
         }else{
+            $customer_issues = Customer::orderBy('customer_NO','desc')->where('updated_issue_by', auth()->user()->id)->paginate(100);
             $drafts = Draft::orderBy('draft_NO','desc')->where('updated_by', auth()->user()->id)->paginate(100);
 
         }
 
-        return view('issues.index',['drafts' => $drafts]);
+        return view('issues.index',[
+            'drafts' => $drafts,
+            'customer_issues' => $customer_issues
+        ]);
     }
 
     public function allIndex(){
@@ -99,25 +104,6 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-
-        if($request->customer_id == null){
-            return redirect()->back()->with('error','يجب ادخال عدد الأطراف قبل اتمام العملية. ');
-        }
-
-        foreach($request->customer_id as $key => $data)
-        {
-            if($request->customer_id[$key] == null){
-                return redirect()->back()->with('error','يجب ادخال جميع أرقام الهوايا. ');
-            }
-        }
-
-        foreach($request->customer_id as $key => $data)
-        {
-            $customer_id = Customer::where('ID_NO',$request->customer_id[$key])->get()->first();
-            if($customer_id == null){
-                return redirect()->back()->with('error','رقم الهوية الذي ادخلته غير موجود ' . $request->customer_id[$key]);
-            }
-        }
 
 //        // Validations
         $validator = $request->validate(
@@ -175,9 +161,6 @@ class IssueController extends Controller
 
             }
 
-
-
-
             $id = $issue->id;
 
             foreach($request->customer_id as $key => $data)
@@ -191,6 +174,94 @@ class IssueController extends Controller
                     'customer_id'         => $customer_id->id,
                 ]);
             }
+
+            if($issue->issue_NO == 200000){
+                $issue->issue_NO = $issue->issue_NO + 1;
+                $issue->save();
+            }
+
+            // Commit And Redirected To Listing
+            DB::commit();
+            return redirect()->route('issues.index')->with('success','تم انشاء القضية بنجاح');
+
+        } catch (\Throwable $th) {
+            // Rollback and return with Error
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', $th->getMessage());
+        }
+
+    }
+
+    public function storeCustomer(Request $request)
+    {
+
+//        // Validations
+        $validator = $request->validate(
+            [
+                'court_name' => 'required',
+                'customer_qty'  => 'required|numeric',
+//                'case_number'  => 'required',
+                'case_amount'  =>  'required|numeric',
+                'execution_request' => 'required',
+                'currency_type' => 'required',
+                'bond_type' => 'required',
+                'customer_id.*'     => 'required_if:customer_qty,>,0|numeric|digits:9',
+
+            ],[
+                'court_name.required' => 'يجب ادخال اسم المحكمة',
+                'customer_qty.required' => 'يجب ادخال عدد الأفراد',
+                'customer_qty.numeric' => 'يجب ادخال عدد الأفراد بالأرقام',
+//                'case_number.required' => 'يجب ادخال رقم القضية',
+//                'case_amount.required' => 'يجب ادخال مبلغ القضية',
+                'case_amount.numeric' => 'يجب ادخال مبلغ القضية بالأرقام',
+                'currency_type.required' => 'يجب ادخال نوع العملة',
+                'bond_type.required' => 'يجب ادخال نوع السند',
+                'customer_id.*.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
+
+            ]
+        );
+
+        DB::beginTransaction();
+        try {
+
+            // Store Data
+            $issue = Issue::create([
+                'issue_NO' => Helper::IDGenerator(new Issue(), 'issue_NO', 5,2),
+                'user_id'    => auth()->user()->id,
+                'draft_id'    => $request->draft_id,
+                'court_name'     => $request->court_name,
+                'customer_qty'         => $request->customer_qty,
+                'case_number' => $request->case_number,
+                'case_amount'       => $request->case_amount,
+                'execution_request_id'       => $request->execution_request,
+                'execution_agent_name_id'       => $request->execution_agent_name,
+                'execution_agent_against_it_id'       => $request->execution_agent_against_it,
+                'currency_type' => $request->currency_type,
+                'bond_type' => $request->bond_type,
+                'notes'       => $request->notes,
+            ]);
+
+            if($request->draft_id != null){
+                $draft = Draft::findOrFail($request->draft_id);
+                $draft->update([
+                    'updated_by' => null,
+                    'document_qty' => $draft->document_qty - 1,
+                    'document_affiliate' => $draft->document_affiliate - 1
+                ]);
+
+            }
+
+            $id = $issue->id;
+
+
+            $customer_id = Customer::where('ID_NO',$request->customer_id)->get()->first();
+            $customer_id->updated_issue_by = NULL;
+            $customer_id->save();
+            // Store Data
+            $CustomerDraft = CustomerIssue::create([
+                'issue_id'     => $id,
+                'customer_id'         => $customer_id->id,
+            ]);
 
             if($issue->issue_NO == 200000){
                 $issue->issue_NO = $issue->issue_NO + 1;
@@ -256,24 +327,6 @@ class IssueController extends Controller
     public function update(Request $request, Issue $issue)
     {
 
-        if($request->customer_id == null){
-            return redirect()->back()->with('error','يجب ادخال عدد الأطراف قبل اتمام العملية. ');
-        }
-
-        foreach($request->customer_id as $key => $data)
-        {
-            if($request->customer_id[$key] == null){
-                return redirect()->back()->with('error','يجب ادخال جميع أرقام الهوايا. ');
-            }
-        }
-
-        foreach($request->customer_id as $key => $data)
-        {
-            $customer_id = Customer::where('ID_NO',$request->customer_id[$key])->get()->first();
-            if($customer_id == null){
-                return redirect()->back()->with('error','رقم الهوية الذي ادخلته غير موجود ' . $request->customer_id[$key]);
-            }
-        }
 
 //        // Validations
         $validator = $request->validate(
@@ -323,7 +376,7 @@ class IssueController extends Controller
             if($request->case_number){
                 Issue::where('id',$request->issue_id)->update([
                     'case_number' => $request->case_number,
-                   'issue_status' =>  'بانتظار تصديق الاتفاق'
+                    'issue_status' =>  'بانتظار تصديق الاتفاق'
                 ]);
             }
 
@@ -480,7 +533,7 @@ class IssueController extends Controller
             $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
             $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
             $templateProcessor->setValue('execution_agent_against_it_name',$issue->execution_agent_against_it_idIssue->agent_name ?? null);
-            $templateProcessor->setValue('bank_name',$bank->bank_name);
+            $templateProcessor->setValue('bank_name',$bank->AgentBank->name);
             $templateProcessor->setValue('bank_branch',$bank->bank_branch);
             $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
             $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
@@ -489,7 +542,7 @@ class IssueController extends Controller
             $templateProcessor->setValue('withholding_amount',$request->withholding_amount);
             $templateProcessor->setValue('currency_type',$request->currency_type);
             if ($request->by == 'بنك'){
-                $bank_name = $customer->bank_name;
+                $bank_name = $customer->CustomerBank->name;
                 $bank_branch = $customer->bank_branch;
                 $by = $bank_name . ' - ' . $bank_branch;
             }else{
@@ -519,7 +572,7 @@ class IssueController extends Controller
             $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
             $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
             $templateProcessor->setValue('execution_agent_against_it_name',$issue->execution_agent_against_it_idIssue->agent_name ?? null);
-            $templateProcessor->setValue('bank_name',$bank->bank_name);
+            $templateProcessor->setValue('bank_name',$bank->AgentBank->name);
             $templateProcessor->setValue('bank_branch',$bank->bank_branch);
             $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
             $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
@@ -530,7 +583,7 @@ class IssueController extends Controller
             $templateProcessor->setValue('payment_type',$request->payment_type);
 
             if ($request->by == 'بنك'){
-                $bank_name = $customer->bank_name;
+                $bank_name = $customer->CustomerBank->name;
                 $bank_branch = $customer->bank_branch;
                 $by = $bank_name . ' - ' . $bank_branch;
             }else{
@@ -551,26 +604,26 @@ class IssueController extends Controller
         $issue = Issue::where('id',$issue->id)->first();
         $customer = Customer::where('id',$request->customer_id)->first();
 
-            if($issue->execution_agent_name_id == null){
-                $templateProcessor = new TemplateProcessor('wordOffice/reimbursement-n.docx');
-            }elseif($issue->execution_agent_name_id != null){
-                $templateProcessor = new TemplateProcessor('wordOffice/reimbursement-y.docx');
-            }
-            $templateProcessor->setValue('court_name',$issue->court_name);
-            $templateProcessor->setValue('case_number',$issue->case_number);
-            $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
-            $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
-            $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
-            $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
-            $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
-            $templateProcessor->setValue('customer_name',$customer->full_name);
-            $templateProcessor->setValue('customer_ID_NO',$customer->ID_NO);
+        if($issue->execution_agent_name_id == null){
+            $templateProcessor = new TemplateProcessor('wordOffice/reimbursement-n.docx');
+        }elseif($issue->execution_agent_name_id != null){
+            $templateProcessor = new TemplateProcessor('wordOffice/reimbursement-y.docx');
+        }
+        $templateProcessor->setValue('court_name',$issue->court_name);
+        $templateProcessor->setValue('case_number',$issue->case_number);
+        $templateProcessor->setValue('execution_request_name',$issue->execution_request_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('execution_request_address',$issue->execution_request_idIssue->address ?? null);
+        $templateProcessor->setValue('execution_request_ID_NO',$issue->execution_request_idIssue->ID_NO ?? null);
+        $templateProcessor->setValue('execution_agent_name',$issue->execution_agent_name_idIssue->agent_name ?? null);
+        $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
+        $templateProcessor->setValue('customer_name',$customer->full_name);
+        $templateProcessor->setValue('customer_ID_NO',$customer->ID_NO);
 
 
 
-            $fileName = $issue->issue_NO;
-            $templateProcessor->saveAs($fileName.' تسديد.docx');
-            return response()->download($fileName.' تسديد.docx')->deleteFileAfterSend(true);
+        $fileName = $issue->issue_NO;
+        $templateProcessor->saveAs($fileName.' تسديد.docx');
+        return response()->download($fileName.' تسديد.docx')->deleteFileAfterSend(true);
 
     }
 
@@ -596,7 +649,7 @@ class IssueController extends Controller
         $templateProcessor->setValue('customer_name',$customer->full_name);
         $templateProcessor->setValue('customer_ID_NO',$customer->ID_NO);
 
-        $bank_name = $customer->bank_name;
+        $bank_name = $customer->CustomerBank->name;
         $bank_branch = $customer->bank_branch;
         $by = $bank_name . ' - ' . $bank_branch;
 
@@ -628,7 +681,7 @@ class IssueController extends Controller
         $templateProcessor->setValue('created_at',Carbon::now()->format('Y/m/d'));
         $templateProcessor->setValue('agent_name',$agent->agent_name);
         $templateProcessor->setValue('agent_ID_NO',$agent->ID_NO);
-        $templateProcessor->setValue('bank_name',$bank->bank_name);
+        $templateProcessor->setValue('bank_name',$bank->AgentBank->name);
         $templateProcessor->setValue('bank_branch',$bank->bank_branch);
         $templateProcessor->setValue('bank_account_NO',$bank->bank_account_NO);
 //        $bank_name = $agent->bank_name;

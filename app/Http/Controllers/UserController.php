@@ -60,8 +60,18 @@ class UserController extends Controller
     }
 
     public function show(User $user){
+        $customers = $user->customers()->paginate(15);
+        $transactions = $user->transactions()->paginate(15);
+        $drafts = $user->drafts()->paginate(15);
+        $issues = $user->issues()->paginate(15);
+        $payments = $user->payments()->paginate(15);
         return view('users.show')->with([
             'user'  => $user,
+            'customers' =>$customers,
+            'transactions' => $transactions,
+            'drafts' => $drafts,
+            'issues' => $issues,
+            'payments' => $payments
         ]);
     }
 
@@ -82,6 +92,7 @@ class UserController extends Controller
             'mobile_number' => 'required|numeric|digits:10',
             'role_id'       =>  'required|exists:roles,id',
             'status'       =>  'required|numeric|in:0,1',
+            'income'       =>  'numeric',
         ]);
 
         DB::beginTransaction();
@@ -95,7 +106,8 @@ class UserController extends Controller
                 'mobile_number' => $request->mobile_number,
                 'role_id'       => $request->role_id,
                 'status'        => $request->status,
-                'password'      => Hash::make($request->password)
+                'password'      => Hash::make($request->password),
+                'income' => $request->income
             ]);
 
             // Delete Any Existing Role
@@ -185,6 +197,8 @@ class UserController extends Controller
             'mobile_number' => 'required|numeric|digits:10',
             'role_id'       =>  'required|exists:roles,id',
             'status'       =>  'required|numeric|in:0,1',
+            'income'       =>  'numeric',
+
         ]);
 
         DB::beginTransaction();
@@ -198,6 +212,8 @@ class UserController extends Controller
                 'mobile_number' => $request->mobile_number,
                 'role_id'       => $request->role_id,
                 'status'        => $request->status,
+                'income' => $request->income
+
             ]);
 
             // Delete Any Existing Role

@@ -44,7 +44,7 @@
 
                     {{-- Email --}}
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                        <span style="color:red;">*</span>نوع الصلاحية</label>
+                        <label><span style="color:red;">*</span>نوع الصلاحية</label>
                         <select class="form-control form-control-user @error('guard_name') is-invalid @enderror" name="guard_name">
                             <option selected disabled>اختر...</option>
                             <option value="web" selected>Web</option>

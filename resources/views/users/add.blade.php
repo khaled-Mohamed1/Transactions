@@ -128,6 +128,20 @@
                         @enderror
                     </div>
 
+                    <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                        <label>راتب الشهري </label>
+                        <input
+                            type="text"
+                            class="form-control form-control-user @error('income') is-invalid @enderror"
+                            id="income"
+                            name="income"
+                            value="{{ old('income') }}">
+                        @error('income')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+
+
                 </div>
             </div>
 

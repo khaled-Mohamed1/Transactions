@@ -15,6 +15,7 @@ class Store extends Model
         'product_name',
         'product_qty',
         'product_price',
+        'profit_ratio',
     ];
 
 

@@ -42,6 +42,7 @@
 
         <div class="col-lg-2 mb-3">
             <select name="state" id="state" style="height: 45px;" class="form-control form-control-user">
+                <option value="يومي" >يومي</option>
                 <option value="شهري" selected>شهري</option>
                 <option value="سنوي">سنوي</option>
             </select>

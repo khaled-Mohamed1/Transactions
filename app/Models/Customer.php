@@ -21,14 +21,15 @@ class Customer extends Model
         'date_of_birth',
         'marital_status',
         'number_of_children',
-        'job',
+        'job_id',
         'salary',
-        'bank_name',
+        'bank_id',
         'bank_branch',
         'bank_account_NO',
         'status',
         'created_by',
         'updated_by',
+        'updated_issue_by',
         'account',
         'notes',
         'repeater',
@@ -70,9 +71,24 @@ class Customer extends Model
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
+    public function CustomerBank(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Bank::class, 'bank_id', 'id');
+    }
+
+    public function CustomerJob(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CustomerJob::class, 'job_id', 'id');
+    }
+
     public function UserUpdateCustomer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
+
+    public function UserUpdateIssueCustomer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_issue_by', 'id');
     }
 
     public function getCreatedAtAttribute($value)

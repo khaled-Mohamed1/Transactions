@@ -4,9 +4,9 @@
 {{-- Head Before AUTH--}}
 @include('auth.includes.head')
 
-<body class="bg-gradient-primary" style="font-family: Cairo,serif; direction: rtl;">
+<body style="font-family: Cairo,serif;">
 
-    <div class="container" id="wrapper">
+    <div>
 
         {{-- Content Goes Here FOR Before AUTH --}}
         @yield('content')

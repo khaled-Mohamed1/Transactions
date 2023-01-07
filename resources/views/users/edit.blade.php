@@ -90,7 +90,7 @@
                     </div>
 
                     {{-- Role --}}
-                    <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                         <label>الوظيفة <span style="color:red;">*</span></label>
                         <select class="form-control form-control-user @error('role_id') is-invalid @enderror" name="role_id">
                             <option selected disabled>Select Role</option>
@@ -107,7 +107,7 @@
                     </div>
 
                     {{-- Status --}}
-                    <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                         <label>الحالة <span style="color:red;">*</span></label>
                         <select class="form-control form-control-user @error('status') is-invalid @enderror" name="status">
                             <option selected disabled>Select Status</option>
@@ -116,6 +116,19 @@
                         </select>
                         @error('status')
                             <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <label>راتب الشهري </label>
+                        <input
+                            type="text"
+                            class="form-control form-control-user @error('income') is-invalid @enderror"
+                            id="income"
+                            name="income"
+                            value="{{ $user->income }}">
+                        @error('income')
+                        <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
 

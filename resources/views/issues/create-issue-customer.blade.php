@@ -21,7 +21,7 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">اضافة قضية جديد</h6>
             </div>
-            <form method="POST" action="{{route('issues.store')}}">
+            <form method="POST" action="{{route('issues.store.customer')}}">
                 @csrf
                 <div class="card-body">
                     <div class="form-group row">
@@ -169,7 +169,7 @@
 
                         {{-- notes --}}
                         <div class="col-sm-10 mb-3 mt-3 mb-sm-0">
-                            <label>ملاحظات </label>
+                            <label>ملاحظات القضية</label>
                             <input
                                 style="height: 45px;"
                                 type="text"
@@ -177,6 +177,12 @@
                                 id="notes"
                                 name="notes"
                                 value="{{ old('notes') }}">
+                        </div>
+
+                        <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
+                            <label>الملاحظات العميل</label>
+                            <textarea class="form-control form-control-user" disabled
+                                      name="notes" rows="3">{{$customer->notes}}</textarea>
                         </div>
 
                         <div id="display" class="form-group row col-12">

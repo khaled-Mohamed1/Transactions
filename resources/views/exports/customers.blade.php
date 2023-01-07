@@ -47,9 +47,9 @@
             <td colspan="2">{{ $customer->date_of_birth }}</td>
             <td>{{ $customer->marital_status }}</td>
             <td>{{ $customer->number_of_children }}</td>
-            <td>{{ $customer->job }}</td>
+            <td>{{ $customer->CustomerJob->name }}</td>
             <td>{{ $customer->salary }}</td>
-            <td colspan="2">{{ $customer->bank_name }}</td>
+            <td colspan="2">{{ $customer->CustomerBank->name }}</td>
             <td colspan="2">{{ $customer->bank_branch }}</td>
             <td colspan="2">{{ $customer->bank_account_NO }}</td>
             <td scope="col" colspan="2">

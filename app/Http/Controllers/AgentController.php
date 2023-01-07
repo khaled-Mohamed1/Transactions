@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\AgentBank;
+use App\Models\Bank;
 use App\Models\Issue;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -41,7 +42,11 @@ class AgentController extends Controller
      */
     public function create()
     {
-        return view('agents.create');
+        $banks = Bank::latest()->get();
+        return view('agents.create',
+        [
+            'banks' => $banks
+        ]);
     }
 
     /**
@@ -91,7 +96,7 @@ class AgentController extends Controller
                 // Store Data
                 $bank_agent = AgentBank::create([
                     'agent_id' => $id,
-                    'bank_name' => $request->bank_name[$key],
+                    'bank_id' => $request->bank_name[$key],
                     'bank_branch'=> $request->bank_branch[$key],
                     'bank_account_NO'=> $request->bank_account_NO[$key],
                 ]);
@@ -128,10 +133,12 @@ class AgentController extends Controller
      */
     public function edit(Agent $agent)
     {
+        $banks_admin = Bank::latest()->get();
         $banks = $agent->agentBanks;
         return view('agents.edit')->with([
             'agent'  => $agent,
             'banks'  => $banks,
+            'banks_admin' =>$banks_admin
         ]);
     }
 
@@ -183,7 +190,7 @@ class AgentController extends Controller
                 // Store Data
                 $bank_agent = AgentBank::create([
                     'agent_id' => $request->agent_id,
-                    'bank_name' => $request->bank_name[$key],
+                    'bank_id' => $request->bank_name[$key],
                     'bank_branch'=> $request->bank_branch[$key],
                     'bank_account_NO'=> $request->bank_account_NO[$key],
                 ]);

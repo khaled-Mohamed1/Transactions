@@ -68,18 +68,14 @@ class AttachmentController extends Controller
         try {
 
             $customer = Customer::findOrFail($request->customer_id);
-//            $fileName = time().$request->file('file')->getClientOriginalName();
-//            $path = $request->file('file')->storeAs('attachments/'.$customer->customer_NO, $fileName,'public');
 
             $imageName = Str::random(32) . "." . $request->file->getClientOriginalExtension();
 
-
-            // Store Data move(public_path('images'), $imageName);
             $customer = Attachment::create([
                 'customer_id' => $request->customer_id,
                 'user_id'    => auth()->user()->id,
                 'title'     => $request->title,
-                'attachment'         => 'http://transaction.sellbuyltd.com/storage/app/public/attachments/' . $imageName,
+                'attachment'         => 'https://sadaqa-co.com/storage/app/public/attachments/' . $imageName,
             ]);
 
             Storage::disk('public')->put('attachments/' . $imageName, file_get_contents($request->file));

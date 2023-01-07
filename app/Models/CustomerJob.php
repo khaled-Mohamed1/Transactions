@@ -6,33 +6,23 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AgentBank extends Model
+class CustomerJob extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'agent_id',
-        'bank_id',
-        'bank_branch',
-        'bank_account_NO',
 
+    protected $fillable = [
+        'name',
     ];
 
-    public function AgentAgentBank(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function customers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsTo(Agent::class, 'agent_id', 'id');
+        return $this->hasMany(Customer::class);
     }
-
-    public function AgentBank(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Bank::class, 'bank_id', 'id');
-    }
-
 
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timezone('Asia/Gaza')->format('Y-m-d H:i');
     }
-
 
     public function getUpdatedAtAttribute($value)
     {

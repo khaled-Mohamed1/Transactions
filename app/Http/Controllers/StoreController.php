@@ -57,7 +57,8 @@ class StoreController extends Controller
             [
                 'product_name' => 'required',
                 'product_qty'     => 'required|numeric',
-                'product_price'  => 'required',
+                'product_price'  => 'required|numeric',
+                'profit_ratio'  => 'required|numeric',
 
             ],[
                 'product_name.required' => 'يجب ادخال اسم المنتج',
@@ -65,6 +66,8 @@ class StoreController extends Controller
                 'product_qty.numeric' => 'يجب ادخال كمية المنتج بالأرقام',
                 'product_price.required' => 'يجب ادخال سعر المنتج بالجملة',
                 'product_price.numeric' => 'يجب ادخال سعر المنتج بالأرقام',
+                'profit_ratio.required' => 'يجب ادخال نسبة الربح',
+                'profit_ratio.numeric' => 'يجب ادخال نسبة الربح بالأرقام',
 
             ]
         );
@@ -78,6 +81,7 @@ class StoreController extends Controller
                 'product_name'         => $request->product_name,
                 'product_qty'         => $request->product_qty,
                 'product_price'         => $request->product_price,
+                'profit_ratio'         => $request->profit_ratio,
             ]);
 
             // Commit And Redirected To Listing
@@ -127,7 +131,8 @@ class StoreController extends Controller
             [
                 'product_name' => 'required',
                 'product_qty'     => 'required|numeric',
-                'product_price'  => 'required',
+                'product_price'  => 'required|numeric',
+                'profit_ratio'  => 'required|numeric',
 
             ],[
                 'product_name.required' => 'يجب ادخال اسم المنتج',
@@ -135,6 +140,8 @@ class StoreController extends Controller
                 'product_qty.numeric' => 'يجب ادخال كمية المنتج بالأرقام',
                 'product_price.required' => 'يجب ادخال سعر المنتج بالجملة',
                 'product_price.numeric' => 'يجب ادخال سعر المنتج بالأرقام',
+                'profit_ratio.required' => 'يجب ادخال نسبة الربح',
+                'profit_ratio.numeric' => 'يجب ادخال نسبة الربح بالأرقام',
 
             ]
         );
@@ -148,6 +155,7 @@ class StoreController extends Controller
                 'product_name'         => $request->product_name,
                 'product_qty'         => $request->product_qty,
                 'product_price'         => $request->product_price,
+                'profit_ratio'         => $request->profit_ratio,
             ]);
 
             // Commit And Redirected To Listing

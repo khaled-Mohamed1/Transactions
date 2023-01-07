@@ -27,33 +27,25 @@
                     <div class="form-group row">
 
                         {{-- customer_id --}}
-{{--                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">--}}
-{{--                            <label>اسم العميل <span style="color:red;">*</span></label>--}}
-{{--                            <select name="customer_id" id="customer_id" class="form-control form-control-user @error('customer_id') is-invalid @enderror">--}}
-{{--                                <option selected disabled value="">اختار...</option>--}}
-{{--                                @foreach($customers as $customer)--}}
-{{--                                    <option value="{{$customer->id}}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>{{$customer->full_name}}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-                            <input
-                                type="hidden"
-                                class="form-control form-control-user"
-                                id="customer_id"
-                                name="customer_id"
-                                value="{{$customer->id}}">
-{{--                        </div>--}}
+
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user"
+                            id="customer_id"
+                            name="customer_id"
+                            value="{{$customer->id}}">
 
                         {{-- full_name --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>الأسم كامل</label>
+                            <label>الأسم كامل <span style="color:red;">*</span></label>
                             <input
-                                {{--                                disabled--}}
+                                disabled
                                 style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('full_name') is-invalid @enderror"
                                 id="full_name"
                                 name="full_name"
-                            value="{{$customer->full_name}}">
+                                value="{{$customer->full_name}}">
                             @error('full_name')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -61,7 +53,7 @@
 
                         {{-- customer_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>رقم الإستدلالي</label>
+                            <label>رقم الإستدلالي <span style="color:red;">*</span></label>
                             <input
                                 style="height: 45px"
                                 disabled
@@ -69,7 +61,7 @@
                                 class="form-control form-control-user @error('customer_NO') is-invalid @enderror"
                                 id="customer_NO"
                                 name="customer_NO"
-                            value="{{$customer->customer_NO}}">
+                                value="{{$customer->customer_NO}}">
                             @error('customer_NO')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -77,15 +69,15 @@
 
                         {{-- ID_NO --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                            <label>رقم الهوية</label>
+                            <label>رقم الهوية <span style="color:red;">*</span></label>
                             <input
-                                {{--                                disabled--}}
+                                disabled
                                 style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('ID_NO') is-invalid @enderror"
                                 id="ID_NO"
                                 name="ID_NO"
-                            value="{{$customer->ID_NO}}">
+                                value="{{$customer->ID_NO}}">
                             @error('ID_NO')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -94,15 +86,15 @@
 
                         {{-- phone_NO --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>رقم الجوال</label>
+                            <label>رقم الجوال <span style="color:red;">*</span></label>
                             <input
-{{--                                disabled--}}
-style="height: 45px"
+                                disabled
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('phone_NO') is-invalid @enderror"
                                 id="phone_NO"
                                 name="phone_NO"
-                            value="{{$customer->phone_NO}}">
+                                value="{{$customer->phone_NO}}">
                             @error('phone_NO')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -110,15 +102,15 @@ style="height: 45px"
 
                         {{-- region --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>المنطقة</label>
+                            <label>المنطقة <span style="color:red;">*</span></label>
                             <input
-{{--                                disabled--}}
-style="height: 45px"
+                                disabled
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('region') is-invalid @enderror"
                                 id="region"
                                 name="region"
-                            value="{{$customer->region}}">
+                                value="{{$customer->region}}">
                             @error('region')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -126,15 +118,15 @@ style="height: 45px"
 
                         {{-- address --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>العنوان</label>
+                            <label>العنوان <span style="color:red;">*</span></label>
                             <input
-{{--                                disabled--}}
-style="height: 45px"
+                                disabled
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('address') is-invalid @enderror"
                                 id="address"
                                 name="address"
-                            value="{{$customer->address}}">
+                                value="{{$customer->address}}">
                             @error('address')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -142,15 +134,15 @@ style="height: 45px"
 
                         {{-- account --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>الحساب</label>
+                            <label>الحساب <span style="color:red;">*</span></label>
                             <input
-{{--                                disabled--}}
-style="height: 45px"
+                                disabled
+                                style="height: 45px"
                                 type="text"
                                 class="form-control form-control-user @error('account') is-invalid @enderror"
                                 id="account"
                                 name="account"
-                            value="{{$customer->account}}">
+                                value="{{$customer->account}}">
                             @error('account')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
@@ -189,6 +181,7 @@ style="height: 45px"
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>تاريخ الميلاد <span style="color:red;">*</span></label>
                             <input
+                                disabled
                                 style="height: 45px"
                                 type="date"
                                 class="form-control form-control-user @error('date_of_birth') is-invalid @enderror"
@@ -204,7 +197,7 @@ style="height: 45px"
                         {{-- marital_status --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>الحالة الإجتماعية <span style="color:red;">*</span></label>
-                            <select name="marital_status" style="height: 45px" class="form-control form-control-user @error('marital_status') is-invalid @enderror">
+                            <select name="marital_status" disabled style="height: 45px" class="form-control form-control-user @error('marital_status') is-invalid @enderror">
                                 <option disabled {{ $customer->marital_status == null ? 'selected' : '' }}>اختر...</option>
                                 <option value="اعزب" {{ $customer->marital_status == 'اعزب' ? 'selected' : '' }}>اعزب</option>
                                 <option value="متزوج" {{ $customer->marital_status == 'متزوج' ? 'selected' : '' }}>متزوج</option>
@@ -221,6 +214,7 @@ style="height: 45px"
                             <label>أفراد العائلة <span style="color:red;">*</span></label>
                             <input
                                 style="height: 45px"
+                                disabled
                                 type="number"
                                 class="form-control form-control-user @error('number_of_children') is-invalid @enderror"
                                 id="examplenumber_of_children"
@@ -236,21 +230,12 @@ style="height: 45px"
                         {{-- job --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>الوظيفة <span style="color:red;">*</span></label>
-                            <select name="job"                                 style="height: 45px"
-                                    class="form-control form-control-user @error('job') is-invalid @enderror">
+                            <select name="job" style="height: 45px"
+                                    class="form-control form-control-user @error('job') is-invalid @enderror" disabled>
                                 <option disabled selected>اختر...</option>
-                                <option value="متقاعد عسكري رام الله" {{ $customer->job == 'متقاعد عسكري رام الله' ? 'selected' : '' }}>متقاعد عسكري رام الله</option>
-                                <option value="موظف عسكري رام الله" {{ $customer->job == 'موظف عسكري رام الله' ? 'selected' : '' }}>موظف عسكري رام الله</option>
-                                <option value="متقاعد مدني رام الله" {{ $customer->job == 'متقاعد مدني رام الله' ? 'selected' : '' }}>متقاعد مدني رام الله</option>
-                                <option value="موظف مدني رام الله" {{ $customer->job == 'موظف مدني رام الله' ? 'selected' : '' }}>موظف مدني رام الله</option>
-                                <option value="موظف عسكري غزة" {{ $customer->job == 'موظف عسكري غزة' ? 'selected' : '' }}>موظف عسكري غزة</option>
-                                <option value="موظف مدني غزة" {{ $customer->job == 'موظف مدني غزة' ? 'selected' : '' }}>موظف مدني غزة</option>
-                                <option value="متقاعد عسكري غزة" {{ $customer->job == 'متقاعد عسكري غزة' ? 'selected' : '' }}>متقاعد عسكري غزة</option>
-                                <option value="متقاعد مدني غزة" {{ $customer->job == 'متقاعد مدني غزة' ? 'selected' : '' }}>متقاعد مدني غزة</option>
-                                <option value="وكالة" {{ $customer->job == 'وكالة' ? 'selected' : '' }}>وكالة</option>
-                                <option value="قطاع خاص" {{ $customer->job == 'قطاع خاص' ? 'selected' : '' }}>قطاع خاص</option>
-                                <option value="بدون" {{ $customer->job == 'بدون' ? 'selected' : '' }}>بدون</option>
-
+                                @foreach($jobs as $job)
+                                    <option value="{{$job->id}}" {{ $customer->CustomerJob->name == $job->name ? 'selected' : '' }}>{{$job->name}}</option>
+                                @endforeach
                             </select>
 
                             @error('job')
@@ -260,8 +245,9 @@ style="height: 45px"
 
                         {{-- salary --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
-                            <label>الدخل</label>
+                            <label>الدخل <span style="color:red;">*</span></label>
                             <input
+                                disabled
                                 style="height: 45px"
                                 type="number"
                                 class="form-control form-control-user @error('salary') is-invalid @enderror"
@@ -279,23 +265,10 @@ style="height: 45px"
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>اسم البنك</label>
                             <select name="bank_name" style="height: 45px" class="form-control form-control-user @error('bank_name') is-invalid @enderror">
-                                <option disabled {{ $customer->bank_name == null ? 'selected' : '' }}>اختر...</option>
-                                <option value="بنك فلسطين" {{ $customer->bank_name == 'بنك فلسطين' ? 'selected' : '' }}>بنك فلسطين</option>
-                                <option value="بنك القدس" {{ $customer->bank_name == 'بنك القدس' ? 'selected' : '' }}>بنك القدس</option>
-                                <option value="البنك الإسلامي الفلسطيني" {{ $customer->bank_name == 'البنك الإسلامي الفلسطيني' ? 'selected' : '' }}>البنك الإسلامي الفلسطيني</option>
-                                <option value="البنك العقاري المصري العربي" {{ $customer->bank_name == 'البنك العقاري المصري العربي' ? 'selected' : '' }}>البنك العقاري المصري العربي</option>
-                                <option value="بنك الوطني الاسلامي" {{ $customer->bank_name == 'بنك الوطني الاسلامي' ? 'selected' : '' }}>بنك الوطني الاسلامي</option>
-                                <option value="بنك الانتاج الفلسطيني" {{ $customer->bank_name == 'بنك الانتاج الفلسطيني' ? 'selected' : '' }}>بنك الانتاج الفلسطيني</option>
-                                <option value="بنك الأردن" {{ $customer->bank_name == 'بنك الأردن' ? 'selected' : '' }}>بنك الأردن</option>
-                                <option value="بنك القاهرة عمان" {{ $customer->bank_name == 'بنك القاهرة عمان' ? 'selected' : '' }}>بنك القاهرة عمان</option>
-                                <option value="بنك الاستثمار الفلسطيني" {{ $customer->bank_name == 'بنك الاستثمار الفلسطيني' ? 'selected' : '' }}>بنك الاستثمار الفلسطيني</option>
-                                <option value="البنك العربي" {{ $customer->bank_name == 'البنك العربي' ? 'selected' : '' }}>البنك العربي</option>
-                                <option value="البنك الاسلامي العربي" {{ $customer->bank_name == 'البنك الاسلامي العربي' ? 'selected' : '' }}>البنك الاسلامي العربي</option>
-                                <option value="بنك الاسكان للتجارة والتمويل" {{ $customer->bank_name == 'بنك الاسكان للتجارة والتمويل' ? 'selected' : '' }}>بنك الاسكان للتجارة والتمويل</option>
-                                <option value="البنك التجاري الأردني" {{ $customer->bank_name == 'البنك التجاري الأردني' ? 'selected' : '' }}>البنك التجاري الأردني</option>
-                                <option value="البنك الأهلي الأردني" {{ $customer->bank_name == 'البنك الأهلي الأردني' ? 'selected' : '' }}>البنك الأهلي الأردني</option>
-                                <option value="البنك الوطني" {{ $customer->bank_name == 'البنك الوطني' ? 'selected' : '' }}>البنك الوطني</option>
-                                <option value="البريد" {{ $customer->bank_name == 'البريد' ? 'selected' : '' }}>البريد</option>
+                                <option disabled {{ $customer->CustomerBank->name == null ? 'selected' : '' }}>اختر...</option>
+                                @foreach($banks as $bank)
+                                    <option value="{{$bank->id}}" {{ $customer->CustomerBank->name == $bank->name ? 'selected' : '' }}>{{$bank->name}}</option>
+                                @endforeach
                             </select>
 
                             @error('bank_name')
@@ -339,29 +312,30 @@ style="height: 45px"
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
+                                disabled
                                 style="height: 45px"
                                 min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
                                 id="transaction_amount_Disable"
-                                name="transaction_amount">
+                                name="transaction_amount_Disable">
 
                             @error('transaction_amount')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
 
-{{--                        <input--}}
-{{--                            min="1"--}}
-{{--                            type="text"--}}
-{{--                            class="form-control form-control-user"--}}
-{{--                            id="transaction_amount"--}}
-{{--                            name="transaction_amount">--}}
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user"
+                            id="transaction_amount"
+                            name="transaction_amount">
 
                         {{-- first_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>أول دفعة <span style="color:red;">*</span></label>
                             <input
+
                                 style="height: 45px"
                                 min="1"
                                 type="number"
@@ -377,16 +351,23 @@ style="height: 45px"
                         <div class="col-sm-2 mb-3 mt-3 mb-sm-0">
                             <label>باقي قيمة المعاملة <span style="color:red;">*</span></label>
                             <input
+                                disabled
                                 style="height: 45px"
                                 min="1"
                                 type="number"
                                 class="form-control form-control-user @error('transaction_amount') is-invalid @enderror"
-                                id="transaction_rest"
-                                name="transaction_rest">
+                                id="transaction_rest_Disable"
+                                name="transaction_rest_Disable">
                             @error('transaction_rest')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
+
+                        <input
+                            type="hidden"
+                            class="form-control form-control-user"
+                            id="transaction_rest"
+                            name="transaction_rest">
 
                         {{-- monthly_payment --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
@@ -417,140 +398,40 @@ style="height: 45px"
                             @enderror
                         </div>
 
-{{--                        --}}{{-- draft_NO --}}
-{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
-{{--                            <label>عدد الكمبيالات <span style="color:red;">*</span></label>--}}
-{{--                            <input--}}
-{{--                                type="number"--}}
-{{--                                class="form-control form-control-user @error('draft_NO') is-invalid @enderror"--}}
-{{--                                id="draft_NO"--}}
-{{--                                name="draft_NO"--}}
-{{--                                min="0"--}}
-{{--                                value="4">--}}
-
-{{--                            @error('draft_NO')--}}
-{{--                            <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-
-
-{{--                        --}}{{-- agency_NO --}}
-{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
-{{--                            <label>عدد الوكالات <span style="color:red;">*</span></label>--}}
-{{--                            <input--}}
-{{--                                type="number"--}}
-{{--                                class="form-control form-control-user @error('agency_NO') is-invalid @enderror"--}}
-{{--                                id="agency_NO"--}}
-{{--                                name="agency_NO"--}}
-{{--                                min="0"--}}
-{{--                                value="4">--}}
-
-{{--                            @error('agency_NO')--}}
-{{--                            <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-
-{{--                        --}}{{-- endorsement_NO --}}
-{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
-{{--                            <label>عدد الإستقراء <span style="color:red;">*</span></label>--}}
-{{--                            <input--}}
-{{--                                type="number"--}}
-{{--                                class="form-control form-control-user @error('endorsement_NO') is-invalid @enderror"--}}
-{{--                                id="endorsement_NO"--}}
-{{--                                name="endorsement_NO"--}}
-{{--                                min="0"--}}
-{{--                                value="1">--}}
-
-{{--                            @error('endorsement_NO')--}}
-{{--                            <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-
-{{--                        --}}{{-- receipt_NO --}}
-{{--                        <div class="col-sm-3 mb-3 mt-3 mb-sm-0">--}}
-{{--                            <label>عدد الوصل <span style="color:red;">*</span></label>--}}
-{{--                            <input--}}
-{{--                                type="number"--}}
-{{--                                class="form-control form-control-user @error('receipt_NO') is-invalid @enderror"--}}
-{{--                                id="receipt_NO"--}}
-{{--                                name="receipt_NO"--}}
-{{--                                min="0"--}}
-{{--                                value="1">--}}
-
-{{--                            @error('receipt_NO')--}}
-{{--                            <span class="text-danger">{{$message}}</span>--}}
-{{--                            @enderror--}}
-{{--                        </div>--}}
-
-
                         {{-- stores--}}
                         <div class="col-sm-12 mb-3 mt-5 mb-sm-0">
-                                <h5>المنتجات</h5>
-                                <div class="p-3">
-                                    <table class="table text-center table-bordered" id="tablePest">
-                                        <thead class="text-info">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>اسم المنتج</th>
-                                            <th>الكمية</th>
-                                            <th>سعر المنتج بالجملة</th>
-                                            <th>نسبة الربح %</th>
-                                            @hasrole('المدير العام')
-                                            <th>الربح الصافي</th>
-                                            @endhasrole
-                                            @hasrole('Admin')
-                                            <th>الربح الصافي</th>
-                                            @endhasrole
-
-                                            <th><button type="button" name="add"
-                                                        class="btn btn-success btn-xs add"><i
-                                                        class="las la-plus"></i></button></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="product_body">
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                            @hasrole('المدير العام')
-
-                            <div class="p-3 col-lg-3">
-
-                                <table class="table  text-center table-bordered">
-                                <tbody>
+                            <h5>المنتجات</h5>
+                            <div class="p-3">
+                                <table class="table text-center table-bordered" id="tablePest">
+                                    <thead class="text-info">
                                     <tr>
-                                        <th class="text-info">السعر الكلي</th>
-                                        <td id="total"></td>
-                                        <input type="hidden" name="total_price" id="total_input">
+                                        <th>#</th>
+                                        <th>اسم المنتج</th>
+                                        <th>الكمية</th>
+                                        <th>سعر المنتج بالجملة</th>
+                                        @hasrole('المدير العام')
+                                        <th>الربح الصافي</th>
+                                        @endhasrole
+                                        @hasrole('Admin')
+                                        <th>الربح الصافي</th>
+                                        @endhasrole
+
+                                        <th><button type="button" name="add"
+                                                    class="btn btn-success btn-xs add"><i
+                                                    class="las la-plus"></i></button></th>
                                     </tr>
-                                </tbody>
-                            </table>
-                            </div>
-                            @endhasrole
-
-                            @hasrole('Admin')
-
-                            <div class="p-3 col-lg-3">
-
-                                <table class="table  text-center table-bordered">
-                                    <tbody>
-                                    <tr>
-                                        <th class="text-info">السعر الكلي</th>
-                                        <td id="total"></td>
-                                        <input type="hidden" name="total_price" id="total_input">
-                                    </tr>
+                                    </thead>
+                                    <tbody class="product_body">
                                     </tbody>
+
                                 </table>
                             </div>
-                            @endhasrole
-
-
                         </div>
 
                         {{-- notes --}}
                         <div class="col-sm-12 mb-3 mt-3 mb-sm-0">
                             <label>الملاحظات </label>
-                            <textarea class="form-control form-control-user"
+                            <textarea class="form-control form-control-user" disabled
                                       name="notes"  rows="3">{{ $customer->notes  }}</textarea>
                         </div>
 
@@ -576,6 +457,11 @@ style="height: 45px"
     <script type="text/javascript">
         $(document).ready(function() {
 
+            $(document).on('contextmenu', function(event) {
+                // Prevent the default context menu from appearing
+                event.preventDefault();
+            });
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -590,15 +476,16 @@ style="height: 45px"
                 count++;
                 var html = '';
                 html += `<tr id="R${++rowIdx}">`;
-                html += `<td class="row-index text-center"><p>${rowIdx}</p></td>`;
+                html += `<td class="row-index text-center" ><p>${rowIdx}</p></td>`;
                 html +=
-                    `<td><select name="product_name[]" id="product_name${count}" class="form-control form-control-user product_name" data-sub_agricultural_id="${count}" ><option value="">اختر...</option>@foreach ($stores as $store) <option value="{{ $store->id }}"> {{ $store->product_name }} @endforeach</select></td>`;
+                    `<td><select name="product_name[]" style="height: 45px" id="product_name${count}" class="form-control form-control-user product_name" data-sub_product_id="${count}" ><option value="">اختر...</option>@foreach ($stores as $store) <option value="{{ $store->id }}"> {{ $store->product_name }} @endforeach</select></td>`;
                 html +=
-                    `<td><input name="product_qty[]" id="product_qty${count}" type="number" min="1" class="form-control form-control-user product_qty${count}"></td>`;
-                html += `<td class="product_price${count} test2"</td>`;
-                html += `<td><input name="profit_ratio[]"  type="number" class="form-control form-control-user profit_ratio${count}"></td>`;
-                html += `<input name="profit[]" type="hidden" class="form-control form-control-user test hiddenProfit${count}">`;
+                    `<td><input name="product_qty[]" style="height: 45px" id="product_qty${count}" type="number" min="1" class="form-control form-control-user product_qty${count}"></td>`;
+                html += `<td class="product_price${count} test2"></td>`;
+                html += `<input type="hidden" name="profit_ratio[]" class="profit_ratio${count} test3"/>`;
+                html += `<input type="hidden" name="total[]" class="total${count} test"/>`;
                 html += `<td class="profit${count}"></td>`;
+                html += `<input type="hidden" name="hiddenProfit[]" class="hiddenProfit${count}"/>`;
                 html +=
                     `<td><button type="button" name="remove" class="btn btn-danger btn-xs remove"><i class="las la-trash-alt"></i></button></td>`;
                 $('.product_body').append(html);
@@ -613,7 +500,7 @@ style="height: 45px"
 
             $(document).on('change', '.product_name', function() {
                 var product_id = $(this).val();
-                var sub_agricultural_id = $(this).data('sub_agricultural_id');
+                var sub_product_id = $(this).data('sub_product_id');
 
                 $.ajax({
                     url: "{{ route('transactions.get.product') }}",
@@ -623,29 +510,43 @@ style="height: 45px"
                     },
                     success: function(res) {
                         if (res.status === 'success') {
-                            $('.product_price'+sub_agricultural_id).html(res.getProduct[0].product_price);
+                            console.log(res)
+                            $('.product_price'+sub_product_id).html(res.getProduct[0].product_price);
+                            $('.profit_ratio'+sub_product_id).val(res.getProduct[0].profit_ratio);
                         }
                     },
                 })
 
-                $(document).on('change', '.product_qty'+sub_agricultural_id, function() {
+                $(document).on('change', '.product_qty'+sub_product_id, function() {
                     let product_qty = $(this).val();
-                    $(document).on('change', '.profit_ratio'+sub_agricultural_id, function() {
-                        let profit_ratio = $(this).val();
-                        let product_price = $('.product_price'+sub_agricultural_id).html();
-                        let product_value = product_price * product_qty - ((product_price * product_qty) - ((product_price * product_qty) * profit_ratio) / 100)
-                        $('.hiddenProfit'+sub_agricultural_id).val(parseFloat(product_value).toFixed(2));
-                        $('.profit'+sub_agricultural_id).html(parseFloat(product_value).toFixed(2));
-                        let area_sum = 0;
-                        $('.test').each(function() {
-                            var get_value = $(this).val();
-                            if ($.isNumeric(get_value)) {
-                                area_sum += parseFloat(get_value);
-                            }
-                        });
-                        $('#total').html(area_sum.toFixed(2));
-                        $('#total_input').val(area_sum.toFixed(2));
+                    let profit_ratio = $('.profit_ratio'+sub_product_id).val();
+                    let product_price = $('.product_price'+sub_product_id).html();
+                    let product_value = product_price * product_qty - ((product_price * product_qty) - ((product_price * product_qty) * profit_ratio) / 100)
+                    $('.total'+sub_product_id).val(product_price * product_qty);
+                    $('.hiddenProfit'+sub_product_id).val(parseFloat(product_value).toFixed(2));
+                    $('.profit'+sub_product_id).html(parseFloat(product_value).toFixed(2));
+                    let product_sum = 0;
+                    $('.test').each(function() {
+                        var get_value = $(this).val();
+                        if ($.isNumeric(get_value)) {
+                            product_sum += parseFloat(get_value);
+                        }
                     });
+
+                    $('#transaction_amount_Disable').val(product_sum.toFixed(2));
+                    $('#transaction_amount').val(product_sum.toFixed(2));
+                    $('#first_payment').val('');
+                    $('#transaction_rest_Disable').val('');
+                    $('#transaction_rest').val('');
+
+                });
+
+                $(document).on('change', '#first_payment', function() {
+                    let first_payment = $(this).val();
+                    let transaction_amount = $('#transaction_amount_Disable').val();
+                    $('#transaction_rest_Disable').val(transaction_amount - first_payment);
+                    $('#transaction_rest').val(transaction_amount - first_payment);
+
                 });
 
             });

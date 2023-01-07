@@ -167,9 +167,9 @@
                                     <td>{{ $customer->date_of_birth ?? 'لم يدخل'}}</td>
                                     <td>{{ $customer->marital_status ?? 'لم يدخل'}}</td>
                                     <td>{{ $customer->number_of_children ?? 'لم يدخل'}}</td>
-                                    <td>{{ $customer->job ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->CustomerJob->name ?? 'لم يدخل'}}</td>
                                     <td>{{ $customer->salary ?? 'لم يدخل'}}</td>
-                                    <td>{{ $customer->bank_name ?? 'لم يدخل'}}</td>
+                                    <td>{{ $customer->CustomerBank->name ?? 'لم يدخل'}}</td>
                                     <td>{{ $customer->bank_branch ?? 'لم يدخل'}}</td>
                                     <td>{{ $customer->bank_account_NO ?? 'لم يدخل'}}</td>
                                 </tr>
@@ -335,10 +335,13 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">القضايا</h4>
                     <div>
-                        <a href="{{route('issues.create.issue.customer',['customer'=>$customer->id])}}"
-                           class="btn btn-primary m-2">
-                            <i class="fa fa-plus"></i>
+                        <a class="btn btn-primary m-2" href="#" data-toggle="modal" data-target="#addIssueModal">
+                            <i class="fas fa-plus"></i>
                         </a>
+{{--                        <a href="{{route('issues.create.issue.customer',['customer'=>$customer->id])}}"--}}
+{{--                           class="btn btn-primary m-2">--}}
+{{--                            <i class="fa fa-plus"></i>--}}
+{{--                        </a>--}}
                     </div>
                 </div>
 
@@ -480,11 +483,11 @@
                                     <th width="15%">اسم المنتج</th>
                                     <th width="15%">الكمية</th>
                                     @hasrole('المدير العام')
-                                    <th width="15%">نسبة %</th>
+                                    <th width="15%">نسبة الربح%</th>
                                     <th width="20%">الربح</th>
                                     @endhasrole
                                     @hasrole('Admin')
-                                    <th width="15%">نسبة %</th>
+                                    <th width="15%">نسبة الربح%</th>
                                     <th width="20%">الربح</th>
                                     @endhasrole
                                     {{--                                    <th width="10%">العمليات</th>--}}
@@ -578,6 +581,7 @@
     </div>
     @include('customers.attachment-delete')
     @include('payments.delete-modal')
+    @include('customers.add_issue_modal')
 
 
 @endsection

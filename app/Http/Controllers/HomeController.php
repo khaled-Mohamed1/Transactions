@@ -200,7 +200,7 @@ class HomeController extends Controller
                 ->whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
             $issues = Issue::whereMonth('created_at', date('m'))
                 ->whereYear('created_at', date('Y'))->get()->count();
-        }else{
+        }elseif ($request->state == 'سنوي'){
             $customers = Customer::whereYear('created_at', date('Y'))->get()->count();
             $customers_adverser = Customer::whereYear('created_at', date('Y'))->where('status','متعسر')->get()->count();
             $customers_new = Customer::whereYear('created_at', date('Y'))->where('status','جديد')->get()->count();
@@ -213,6 +213,19 @@ class HomeController extends Controller
             $drafts = Draft::whereYear('created_at', date('Y'))->get()->count();
             $drafts_tasks = Draft::whereYear('created_at', date('Y'))->whereNotNull('updated_by')->get()->count();
             $issues = Issue::whereYear('created_at', date('Y'))->get()->count();
+        }else{
+            $customers = Customer::whereDate('created_at', '=', Carbon::today())->get()->count();
+            $customers_adverser = Customer::whereDate('created_at', '=', Carbon::today())->where('status','متعسر')->get()->count();
+            $customers_new = Customer::whereDate('created_at', '=', Carbon::today())->where('status','جديد')->get()->count();
+            $customers_tasks = Customer::whereDate('created_at', '=', Carbon::today())->whereNotNull('updated_by')->get()->count();
+            $customers_follow = Customer::whereDate('created_at', '=', Carbon::today())->where('repeater',true)->get()->count();
+            $customers_rejects = Customer::whereDate('created_at', '=', Carbon::today())->where('status','مرفوض')->get()->count();
+            $customers_committed = Customer::whereDate('created_at', '=', Carbon::today())->where('status','ملتزم')->get()->count();
+            $transaction_amount = Transaction::whereDate('created_at', '=', Carbon::today())->get()->sum('transaction_amount');
+            $transactions = Transaction::whereDate('created_at', '=', Carbon::today())->get()->count();
+            $drafts = Draft::whereDate('created_at', '=', Carbon::today())->get()->count();
+            $drafts_tasks = Draft::whereDate('created_at', '=', Carbon::today())->whereNotNull('updated_by')->get()->count();
+            $issues = Issue::whereDate('created_at', '=', Carbon::today())->get()->count();
         }
 
 

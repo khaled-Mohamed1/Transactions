@@ -36,6 +36,7 @@
                                     <th width="15%">رقم الجوال</th>
                                     <th width="15%">الوظيفة</th>
                                     <th width="15%">حالة النشاط</th>
+                                    <th width="15%">راتب الشهري</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -51,7 +52,7 @@
                                             <span class="badge badge-success">نشط</span>
                                         @endif
                                     </td>
-
+                                    <td>{{$user->income}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -88,7 +89,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($user->customers->take(99) as $customer)
+                                @forelse($customers as $customer)
                                 <tr>
                                     <td>{{ $customer->customer_NO }}</td>
                                     <td>{{ $customer->full_name }}</td>
@@ -116,6 +117,8 @@
 
                                 </tbody>
                             </table>
+
+                            {{$customers->links()}}
 
                         </div>
                     </div>
@@ -153,7 +156,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($user->transactions->take(100) as $transaction)
+                                @forelse($transactions as $transaction)
 
                                     <tr>
                                         <td>{{ $transaction->transaction_NO }}</td>
@@ -176,6 +179,8 @@
 
                                 </tbody>
                             </table>
+
+                            {{$transactions->links()}}
 
                         </div>
                     </div>
@@ -210,7 +215,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                @forelse ($user->drafts->take(100) as $draft)
+                                @forelse ($drafts as $draft)
 
                                     <tr>
                                         <td>{{ $draft->draft_NO }}</td>
@@ -232,6 +237,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+
+                            {{$drafts->links()}}
 
                         </div>
                     </div>
@@ -267,7 +274,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse ($user->issues->take(100) as $issue)
+                                @forelse ($issues as $issue)
                                     <tr>
                                         <td>{{ $issue->issue_NO }}</td>
                                         <td>{{ $issue->UserIssue->full_name }}</td>
@@ -292,6 +299,8 @@
                                 @endforelse
                                 </tbody>
                             </table>
+
+                            {{$issues->links()}}
 
                         </div>
                     </div>
@@ -326,7 +335,7 @@
                                 </thead>
 
                                 <tbody>
-                                @forelse ($user->payments as $payment)
+                                @forelse ($payments as $payment)
                                     <tr>
                                         <td>{{ $payment->payment_NO }}</td>
                                         <td>{{ $payment->UserPayment->full_name }}</td>
@@ -343,11 +352,13 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8">لا يوجد بيانات</td>
+                                        <td colspan="7">لا يوجد بيانات</td>
                                     </tr>
                                 @endforelse
                                 </tbody>
                             </table>
+
+                            {{$payments->links()}}
 
                         </div>
                     </div>

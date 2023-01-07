@@ -3,72 +3,85 @@
 @section('title', 'تسجيل الدخول')
 
 @section('content')
-<div class="row justify-content-center">
+    <style>
+        .divider:after,
+        .divider:before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #eee;
+        }
+        .h-custom {
+            height: calc(100% - 73px);
+        }
+        @media (max-width: 450px) {
+            .h-custom {
+                height: 100%;
+            }
+        }
+    </style>
+    <section class="vh-100">
+        <div class="container-fluid h-custom text-right">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                         class="img-fluid" alt="Sample image">
+                </div>
 
-    <div class="text-center mt-5">
-        <h1 style="color: #4E73DF">TEST TEST TEST TEST TEST TEST</h1>
-    </div>
+                @if (session('error'))
+                    <span class="text-danger"> {{ session('error') }}</span>
+                @endif
 
-    <div class="col-xl-10 col-lg-12 col-md-9">
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">اهلا وسهلا</h1>
-                            </div>
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-                            @if (session('error'))
-                                <span class="text-danger"> {{ session('error') }}</span>
-                            @endif
+                        <div class="divider d-flex align-items-center my-4">
+                            <p class="text-center fw-bold mx-3 mb-0">تسجيل الدخول</p>
+                        </div>
 
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="form-group">
-                                    <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="ادخل البريد الإلكتروني">
-
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="email" id="form3Example3" class="form-control form-control-lg text-right
+                             @error('email') is-invalid @enderror"
+                                   name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="ادخل بريدك الإلكتروني"/>
+                            <label class="form-label mt-2" for="form3Example3">البريد الإلكتروني</label>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror
-                                </div>
-                                <div class="form-group">
-                                    <input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="كلمة السر">
+                            @enderror
+                        </div>
 
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
+                        <!-- Password input -->
+                        <div class="form-outline mb-3">
+                            <input type="password" id="form3Example4" class="form-control form-control-lg text-right
+                             @error('password') is-invalid @enderror"
+                                   name="password" required autocomplete="current-password" placeholder="ادخل كلمة السر" />
+                            <label class="form-label mt-2" for="form3Example4">كلمة السر</label>
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
-                                </div>
-{{--                                <div class="form-group">--}}
-{{--                                    <div class="custom-control custom-checkbox small">--}}
-{{--                                        <input class="custom-control-input" type="checkbox" name="remember" id="customCheck" {{ old('remember') ? 'checked' : '' }}>--}}
-
-{{--                                        <label class="custom-control-label" for="customCheck">تذكرني</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-                                <button class="btn btn-primary btn-user btn-block">
-                                    تسجيل الدخول
-                                </button>
-                            </form>
-                            <hr>
-{{--                            <div class="text-center">--}}
-{{--                                <a class="small" href="{{route('password.request')}}">Forgot Password?</a>--}}
-{{--                            </div>--}}
+                            @enderror
                         </div>
-                    </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button type="submit" class="btn btn-primary btn-lg btn-user btn-block"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">تسجيل الدخول</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+        <div
+            class="text-center text-md-start py-4 px-4 px-xl-5 bg-primary">
 
-    <div class="text-center mt-5">
-        <h6 style="color: #2C53C5">Developed By : <a style="color: #2C53C5">.....................</a></h6>
-    </div>
+            <div class="text-white mb-3 mb-md-0">
+                حقوق النشر © 2023. جميع الحقوق محفوظة.
+            </div>
+        </div>
+    </section>
 
-</div>
 @endsection

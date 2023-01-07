@@ -44,7 +44,7 @@
                                 <select name="bank_id" style="height: 45px;" class="form-control form-control-user @error('bank_id') is-invalid @enderror">
                                     <option selected disabled value="">اختر...</option>
                                     @foreach($issue->execution_request_idIssue->agentBanks as $bank)
-                                        <option value="{{ $bank->id }}">{{ $bank->bank_name }}</option>
+                                        <option value="{{ $bank->id }}">{{ $bank->AgentBank->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('bank_id')

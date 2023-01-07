@@ -44,22 +44,40 @@ class DraftController extends Controller
         return view('drafts.index',['drafts' => $drafts,'users'=>$users]);
     }
 
-    public function addTask(Request $request)
+    public function addTask(Draft $draft,Request $request)
     {
 
-        if($request->user_id === 'false'){
-            $draft = Draft::findOrFail($request->customer_id)->update([
-                'updated_by' => NULL,
-            ]);
-        }else{
-            $draft = Draft::findOrFail($request->customer_id)->update([
-                'updated_by' => $request->user_id,
-            ]);
+
+
+        DB::beginTransaction();
+        try {
+
+
+            if($request->user_id === 'false'){
+                $draft = Draft::findOrFail($draft->id)->update([
+                    'updated_by' => NULL,
+                    'notes' => $request->notes
+                ]);
+                // Commit And Redirected To Listing
+                DB::commit();
+                return redirect()->back()->with('success','تم الغاء المهمة عن الموظف!');
+            }else{
+                $draft = Draft::findOrFail($draft->id)->update([
+                    'updated_by' => $request->user_id,
+                    'notes' => $request->notes
+                ]);
+
+                // Commit And Redirected To Listing
+                DB::commit();
+                return redirect()->back()->with('success','تم انشاء اضافة المهمة للموظف بنجاح');
+            }
+
+        } catch (\Throwable $th) {
+            // Rollback and return with Error
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', $th->getMessage());
         }
 
-        return response()->json([
-            'status' => 'success',
-        ]);
     }
 
 

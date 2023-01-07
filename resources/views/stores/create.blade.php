@@ -27,7 +27,7 @@
                     <div class="form-group row">
 
                         {{-- agent_name --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>اسم الصنف <span style="color:red;">*</span></label>
                             <input
                                 type="text"
@@ -42,7 +42,7 @@
                         </div>
 
                         {{-- ID_NO --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>الكمية <span style="color:red;">*</span></label>
                             <input
                                 type="number"
@@ -58,17 +58,30 @@
                         </div>
 
                         {{-- address --}}
-                        <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
                             <label>السعر بالجملة <span style="color:red;">*</span></label>
                             <input
-                                type="number"
+                                type="text"
                                 class="form-control form-control-user customer_qty @error('product_price') is-invalid @enderror"
                                 id="product_price"
                                 name="product_price"
-                                min="1"
                                 value="{{ old('product_price') }}">
 
                             @error('product_price')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                            <label>نسبة الربح <span style="color:red;">*</span></label>
+                            <input
+                                type="text"
+                                class="form-control form-control-user customer_qty @error('profit_ratio') is-invalid @enderror"
+                                id="profit_ratio"
+                                name="profit_ratio"
+                                value="{{ old('profit_ratio') }}">
+
+                            @error('profit_ratio')
                             <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>

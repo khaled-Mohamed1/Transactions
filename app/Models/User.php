@@ -27,6 +27,7 @@ class User extends Authenticatable
         'role_id',
         'status',
         'password',
+        'income'
     ];
 
     /**
@@ -66,6 +67,11 @@ class User extends Authenticatable
     public function customers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Customer::class,'created_by','id');
+    }
+
+    public function customersIssues(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Customer::class,'updated_issue_by','id');
     }
 
     public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany

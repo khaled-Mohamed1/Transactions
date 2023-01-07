@@ -57,7 +57,7 @@
                                 <td>{{ $agent->agent_type }}</td>
                                 <td>
                                     @foreach($agent->agentBanks as $key => $bank)
-                                         {{++$key}}-  {{ $bank->bank_name }}
+                                         {{++$key}}-  {{ $bank->AgentBank->name }}
                                         <br>
                                     @endforeach
                                 </td>
@@ -73,7 +73,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6">لا يوجد بيانات</td>
+                                <td colspan="7">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>

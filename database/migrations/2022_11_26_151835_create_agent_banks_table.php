@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('agent_id')->unsigned();
             $table->foreign('agent_id')->references('id')->on('agents');
-            $table->string('bank_name')->nullable();
+//            $table->string('bank_name')->nullable();
+            $table->bigInteger('bank_id')->unsigned()->nullable();
+            $table->foreign('bank_id')->references('id')->on('banks');
             $table->string('bank_branch')->nullable();
             $table->string('bank_account_NO')->nullable();
             $table->timestamps();

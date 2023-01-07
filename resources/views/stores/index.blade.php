@@ -1,4 +1,4 @@
-@extends('layouts.app')
+    @extends('layouts.app')
 
 @section('title', 'بيانات المخزن')
 
@@ -34,11 +34,12 @@
                         <thead>
                         <tr class="text-info">
                             <th>#</th>
-                            <th width="25%">اسم الصنف</th>
-                            <th width="25%">انشاء بواسطة</th>
-                            <th width="25%">الكمية المتبقية</th>
-                            <th width="25%">السعر بالجملة</th>
-                            <th width="25%">العمليات</th>
+                            <th width="20%">اسم الصنف</th>
+                            <th width="20%">انشاء بواسطة</th>
+                            <th width="20%">الكمية المتبقية</th>
+                            <th width="20%">السعر بالجملة</th>
+                            <th width="20%">نسبة الربح</th>
+                            <th width="20%">العمليات</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -55,6 +56,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $store->product_price }}</td>
+                                <td>{{ $store->profit_ratio }}</td>
                                 <td style="display: flex">
                                     <a href="{{ route('stores.edit', ['store' => $store->id]) }}"
                                        class="btn btn-primary m-2">

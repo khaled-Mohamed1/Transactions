@@ -42,15 +42,15 @@
                             <th width="10%">نوع المستند</th>
                             <th width="10%">عدد المستند</th>
                             <th width="10%">مستند تابع</th>
-                            <th width="20%">الأطراف</th>
+                            <th width="25%">الأطراف</th>
                             <th width="10%">عدد القضايا</th>
                             <th width="10%">العمليات</th>
                             @hasrole('Admin')
-                            <th width="15%">إضافة إلى</th>
+                            <th width="10%">إضافة إلى</th>
                             @endhasrole
 
                             @hasrole('المدير العام')
-                            <th width="15%">إضافة إلى</th>
+                            <th width="10%">إضافة إلى</th>
                             @endhasrole
                         </tr>
                         </thead>
@@ -80,20 +80,12 @@
                                 <td>
                                 @if($draft->document_qty <= 0 || $draft->document_affiliate <= 0 )
                                         <span class="text-danger">لا يمكن اجراء قضية</span>
-                                @else
-                                    <form action="" method="POST" class="test">
-                                        <input type="hidden" name="customer_id" id="customer_id{{$draft->id}}" value="{{$draft->id}}">
-                                        <select name="user_id" id="select{{$draft->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
-                                            <option  value="false">إلغاء</option>
-                                            @foreach($users as $user)
-                                                <option id="option{{$draft->id}}" value="{{$user->id}}" {{old('user_id') ? ((old('user_id') == $user->id) ? 'selected' : '')
-                                                : (($user->id == $draft->updated_by) ? 'selected' : '')}}>{{$user->full_name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('user_id')
-                                        <span class="text-danger">{{$message}}</span>
-                                        @enderror
-                                    </form>
+
+                                    @else
+                                    {{$draft->updated_by != NULL ? 'تم اعطاء' : ''}}
+                                        <a class="btn btn-info m-2" href="#" data-toggle="modal" data-target="#addModal{{$draft->id}}">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
                                     @endif
 
                                     </td>
@@ -102,20 +94,12 @@
                                 <td>
                                     @if($draft->customer_qty <= 0 || $draft->document_affiliate <= 0 )
                                         <span class="text-danger">لا يمكن اجراء قضية</span>
-                                        @else
-                                        <form action="" method="POST" class="test">
-                                            <input type="hidden" name="customer_id" id="customer_id{{$draft->id}}" value="{{$draft->id}}">
-                                            <select name="user_id" id="select{{$draft->id}}"  class="form-control form-control-user @error('user_id') is-invalid @enderror">
-                                                <option  value="false">إلغاء</option>
-                                                @foreach($users as $user)
-                                                    <option id="option{{$draft->id}}" value="{{$user->id}}" {{old('user_id') ? ((old('user_id') == $user->id) ? 'selected' : '')
-                                                : (($user->id == $draft->updated_by) ? 'selected' : '')}}>{{$user->full_name}}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('user_id')
-                                            <span class="text-danger">{{$message}}</span>
-                                            @enderror
-                                        </form>
+
+                                    @else
+                                        {{$draft->updated_by != NULL ? 'تم اعطاء' : ''}}
+                                    <a class="btn btn-info m-2" href="#" data-toggle="modal" data-target="#addModal{{$draft->id}}">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
                                     @endif
 
                                 </td>
@@ -138,49 +122,7 @@
     </div>
 
     @include('drafts.delete-modal')
-
-@endsection
-
-@section('scripts')
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(document).ready(function() {
-
-            let drafts = {!! $drafts->toJson() !!};
-
-            $(".test").each(function(index) {
-                $(document).on('change', '#select'+drafts.data[index].id, function(e) {
-                    let user_id = $(this).val();
-                    let customer_id = drafts.data[index].id;
-                    if (confirm('هل تريد اضافة المهمة للموظف؟')){
-                        $.ajax({
-                            url: "{{ route('drafts.add.task') }}",
-                            method: 'POST',
-                            data: {
-                                user_id: user_id,
-                                customer_id: customer_id,
-                            },
-                            success: function(res) {
-                                if (res.status === 'success') {
-                                    location.reload();
-                                }
-                            },
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+    @include('drafts.add-modal')
 
 @endsection
 

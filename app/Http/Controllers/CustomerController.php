@@ -9,9 +9,12 @@ use App\Exports\CustomerExport;
 use App\Exports\CustomersExport;
 use App\Helpers\Helper;
 use App\Imports\CustomerImport;
+use App\Models\Attachment;
+use App\Models\Bank;
 use App\Models\Customer;
 use App\Models\CustomerDraft;
 use App\Models\CustomerIssue;
+use App\Models\CustomerJob;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Foundation\Application;
@@ -19,7 +22,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -87,7 +93,7 @@ class CustomerController extends Controller
         $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
         $customers = Customer::orderBy('customer_NO','desc')->whereNull('updated_by')->where(function ($query){
             $query->where('status','=','متعسر')->orWhere('status','=','قيد التوقيع')
-            ->orWhere('status','=','مقبول');
+                ->orWhere('status','=','مقبول');
         })->paginate(100);
         return view('customers.tasks', ['customers' => $customers,'users'=>$users]);
     }
@@ -137,6 +143,39 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function addTaskIssue(Customer $customer,Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            if($request->user_id === 'false'){
+                $customer = Customer::findOrFail($customer->id)->update([
+                    'updated_issue_by' => NULL,
+                    'notes' => $request->notes
+                ]);
+                // Commit And Redirected To Listing
+                DB::commit();
+                return redirect()->back()->with('success','تم الغاء المهمة عن الموظف!');
+            }else{
+                $customer = Customer::findOrFail($customer->id)->update([
+                    'updated_issue_by' => $request->user_id,
+                    'notes' => $request->notes
+                ]);
+
+                // Commit And Redirected To Listing
+                DB::commit();
+                return redirect()->back()->with('success','تم انشاء اضافة المهمة للموظف بنجاح');
+            }
+
+        } catch (\Throwable $th) {
+            // Rollback and return with Error
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('error', $th->getMessage());
+        }
+
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -144,7 +183,13 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customers.add');
+        $banks = Bank::latest()->get();
+        $jobs = CustomerJob::latest()->get();
+        return view('customers.add',
+            [
+                'banks' => $banks,
+                'jobs' => $jobs,
+            ]);
     }
 
     /**
@@ -155,17 +200,13 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
-
         // Validations
         $request->validate([
-                'full_name'    => 'required',
-                'ID_NO'     => 'required|numeric|digits:9',
-                'phone_NO' => 'required|numeric|digits:10',
-                'region'       =>  'required',
-                'address'       =>  'required',
+            'full_name'    => 'required',
+            'ID_NO'     => 'required|numeric|digits:9',
+            'phone_NO' => 'required|numeric|digits:10',
+            'region'       =>  'required',
+            'address'       =>  'required',
 
             'date_of_birth' =>  'required|date',
             'marital_status' =>  'required',
@@ -176,7 +217,7 @@ class CustomerController extends Controller
 //            'bank_branch'   =>  'required',
 //            'bank_account_NO'   =>  'required',
 
-            ],[
+        ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
                 'ID_NO.numeric' => 'يجب ادخال رقم الهوية بالأرقام',
@@ -204,8 +245,6 @@ class CustomerController extends Controller
         DB::beginTransaction();
         try {
 
-
-
             $repeater_customer = Customer::where('ID_NO', $request->ID_NO)->first();
             if($repeater_customer !== null){
                 $customer_updated = Customer::where('ID_NO', $request->ID_NO)->update([
@@ -215,7 +254,6 @@ class CustomerController extends Controller
                 DB::commit();
                 return redirect()->route('home')->with('warning','العميل موجود مسبقا! يتم الأن مراجعته من قبل المدير.');
             }
-
 
             // Store Data
             $customer = Customer::create([
@@ -231,9 +269,9 @@ class CustomerController extends Controller
                 'date_of_birth'     => $request->date_of_birth,
                 'marital_status'         => $request->marital_status,
                 'number_of_children' => $request->number_of_children,
-                'job'       => $request->job,
+                'job_id'       => $request->job,
                 'salary'       => $request->salary,
-                'bank_name'       => $request->bank_name,
+                'bank_id'       => $request->bank_name,
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
             ]);
@@ -243,8 +281,36 @@ class CustomerController extends Controller
                 $customer->save();
             }
 
-            // Commit And Redirected To Listing
+            $customer_id = $customer->id;
+
+
+            if($request->hasFile('files')){
+                $files = $request->file('files');
+
+                foreach ($files as $file){
+                    if ($file instanceof UploadedFile) {
+                        $imageName = Str::random(32) . "." . $file->getClientOriginalExtension();
+
+                        $customer = Attachment::create([
+                            'customer_id' => $customer_id,
+                            'user_id'    => auth()->user()->id,
+                            'title'     => $file->getClientOriginalName(),
+                            'attachment'         => 'https://sadaqa-co.com/storage/app/public/attachments/' . $imageName,
+                        ]);
+
+                        Storage::disk('public')->put('attachments/' . $imageName, file_get_contents($file));
+                    }
+
+
+
+                }
+
+            }
+
             DB::commit();
+
+
+            // Commit And Redirected To Listing
             return redirect()->route('home')->with('success','تم انشاء العميل بنجاح');
 
         } catch (\Throwable $th) {
@@ -262,6 +328,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
+        $users_issues = User::where('role_id',7)->latest()->get();
         $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
         $drafts = CustomerDraft::with('DraftCustomerDraft')->where('customer_id',$customer->id)->get();
         $issues = CustomerIssue::with('IssueCustomerIssue')->where('customer_id',$customer->id)->get();
@@ -269,7 +336,8 @@ class CustomerController extends Controller
             'customer'  => $customer,
             'drafts' => $drafts,
             'issues' => $issues,
-            'users' => $users
+            'users' => $users,
+            'users_issues' =>$users_issues
         ]);
     }
 
@@ -281,8 +349,12 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
+        $banks = Bank::latest()->get();
+        $jobs = CustomerJob::latest()->get();
         return view('customers.edit')->with([
-            'customer'  => $customer
+            'customer'  => $customer,
+            'banks' => $banks,
+            'jobs' => $jobs,
         ]);
     }
 
@@ -311,9 +383,9 @@ class CustomerController extends Controller
                 'number_of_children' =>  'required',
                 'job'   =>  'required',
                 'salary'   =>  'required',
-                'bank_name'   =>  'required',
-                'bank_branch'   =>  'required',
-                'bank_account_NO'   =>  'required',
+//                'bank_name'   =>  'required',
+//                'bank_branch'   =>  'required',
+//                'bank_account_NO'   =>  'required',
 
             ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
@@ -332,9 +404,9 @@ class CustomerController extends Controller
                 'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
                 'job.required' => 'يجب ادخال الوظيفة العميل',
                 'salary.required' => 'يجب ادخال دخل العميل',
-                'bank_name.required' => 'يجب ادخال اسم البنك',
-                'bank_branch.required' => 'يجب ادخال فرع البنك',
-                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
+//                'bank_name.required' => 'يجب ادخال اسم البنك',
+//                'bank_branch.required' => 'يجب ادخال فرع البنك',
+//                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
 
 
             ]
@@ -362,9 +434,9 @@ class CustomerController extends Controller
                 'date_of_birth'     => $request->date_of_birth,
                 'marital_status'         => $request->marital_status,
                 'number_of_children' => $request->number_of_children,
-                'job'       => $request->job,
+                'job_id'       => $request->job,
                 'salary'       => $request->salary,
-                'bank_name'       => $request->bank_name,
+                'bank_id'       => $request->bank_name,
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
             ]);
@@ -455,7 +527,7 @@ class CustomerController extends Controller
             if ($request->filled('search')) {
                 $customers = $customers->where('ID_NO', 'LIKE', '%' . $request->search . '%')
                     ->orWhere('customer_NO', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('full_name', 'LIKE', '%' . $request->search . '%');
+                    ->orWhere('full_name', 'LIKE', '%' . $request->search . '%');
             }
             $customers = $customers->get();
 
@@ -495,8 +567,8 @@ class CustomerController extends Controller
         $templateProcessor->setValue('region',$data->region);
         $templateProcessor->setValue('address',$data->address);
         $templateProcessor->setValue('reserve_phone_NO',$data->reserve_phone_NO);
-        $templateProcessor->setValue('job',$data->job);
-        $templateProcessor->setValue('bank_name',$data->bank_name);
+        $templateProcessor->setValue('job',$data->CustomerJob->name);
+        $templateProcessor->setValue('bank_name',$data->CustomerBank->name);
         $templateProcessor->setValue('bank_branch',$data->bank_branch);
 
         $parts = explode(",", $data->notes);

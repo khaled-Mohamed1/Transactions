@@ -130,6 +130,8 @@ width: 20rem !important;position: relative">
                     <h6 class="collapse-header">وظائف و الصلاحيات</h6>
                     <a class="collapse-item" href="{{ route('roles.index') }}">الوظائف</a>
                     <a class="collapse-item" href="{{ route('permissions.index') }}">الصلاحيات</a>
+                    <a class="collapse-item" href="{{ route('banks.index') }}">البنوك</a>
+                    <a class="collapse-item" href="{{ route('jobs.index') }}">وظائف العملاء</a>
                 </div>
             </div>
         </li>

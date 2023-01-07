@@ -19,7 +19,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4 text-right">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">تعديل وكيل جديد</h6>
+                <h6 class="m-0 font-weight-bold text-primary">تعديل الوكيل</h6>
             </div>
             <form method="POST" action="{{route('agents.update', ['agent' => $agent->id])}}">
                 @csrf
@@ -135,6 +135,7 @@
         $(document).ready(function() {
 
             let array = @json($banks);
+            console.log(array)
             $("#bank_qty").val(array.length)
             for (let i = 0; i < array.length; i++){
                 $("#display").append(
@@ -144,22 +145,9 @@
                             <label>اسم البنك</label>
                             <select name="bank_name[]" class="form-control form-control-user" style="height: 45px">
                                 <option disabled >اختر...</option>
-                                <option value="بنك فلسطين"${array[i].bank_name == "بنك فلسطين" ? 'selected' : ''}>بنك فلسطين</option>
-                                <option value="بنك القدس" ${array[i].bank_name == "بنك القدس" ? 'selected' : ''}>بنك القدس</option>
-                                <option value="البنك الإسلامي الفلسطيني" ${array[i].bank_name == "بنك الإسلامي الفلسطيني" ? 'selected' : ''}>البنك الإسلامي الفلسطيني</option>
-                                <option value="البنك العقاري المصري العربي" ${array[i].bank_name == "البنك العقاري المصري العربي" ? 'selected' : ''}>البنك العقاري المصري العربي</option>
-                                <option value="بنك الوطني الاسلامي"${array[i].bank_name == "بنك الوطني الاسلامي" ? 'selected' : ''} >بنك الوطني الاسلامي</option>
-                                <option value="بنك الانتاج الفلسطيني"${array[i].bank_name == "بنك الانتاج الفلسطيني" ? 'selected' : ''} >بنك الانتاج الفلسطيني</option>
-                                <option value="بنك الأردن"${array[i].bank_name == "بنك الأردن" ? 'selected' : ''}>بنك الأردن</option>
-                                <option value="بنك القاهرة عمان"${array[i].bank_name == "بنك القاهرة عمان" ? 'selected' : ''} >بنك القاهرة عمان</option>
-                                <option value="بنك الاستثمار الفلسطيني"${array[i].bank_name == "بنك الاستثمار الفلسطيني" ? 'selected' : ''} >بنك الاستثمار الفلسطيني</option>
-                                <option value="البنك العربي"${array[i].bank_name == "البنك العربي" ? 'selected' : ''} >البنك العربي</option>
-                                <option value="البنك الاسلامي العربي"${array[i].bank_name == "البنك الاسلامي العربي" ? 'selected' : ''} >البنك الاسلامي العربي</option>
-                                <option value="بنك الاسكان للتجارة والتمويل"${array[i].bank_name == "بنك الاسكان للتجارة والتمويل" ? 'selected' : ''} >بنك الاسكان للتجارة والتمويل</option>
-                                <option value="البنك التجاري الأردني"${array[i].bank_name == "البنك التجاري الأردني" ? 'selected' : ''} >البنك التجاري الأردني</option>
-                                <option value="البنك الأهلي الأردني"${array[i].bank_name == "البنك الأهلي الأردني" ? 'selected' : ''} >البنك الأهلي الأردني</option>
-                                <option value="البنك الوطني"${array[i].bank_name == "البنك الوطني" ? 'selected' : ''} >البنك الوطني</option>
-                                <option value="البريد"${array[i].bank_name == "البريد" ? 'selected' : ''}>البريد</option>
+                                @foreach($banks_admin as $bank)
+                                    <option value="{{$bank->id}}" ${array[i].bank_id === {{$bank->id}} ? 'selected' : ''}>{{$bank->name}}</option>
+                                @endforeach
                             </select>
                         </div>
 
