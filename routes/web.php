@@ -14,6 +14,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\CustomerJobController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -263,3 +264,10 @@ Route::middleware('auth')->prefix('jobs')->name('jobs.')->group(function(){
     Route::put('/update/{CustomerJob}', [CustomerJobController::class, 'update'])->name('update');
     Route::delete('/delete/{CustomerJob}', [CustomerJobController::class, 'delete'])->name('destroy');
 });
+
+Route::middleware('auth')->prefix('searches')->name('searches.')->group(function(){
+    //test
+    Route::get('/', [SearchController::class, 'index'])->name('index');
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
+});
+

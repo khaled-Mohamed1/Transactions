@@ -109,6 +109,30 @@ width: 20rem !important;position: relative">
             </div>
         </li>
 
+
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading text-right text-right text-white" style="font-size: 1.3rem">
+            البحث
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed text-right" href="#" data-toggle="collapse" data-target="#Search"
+               aria-expanded="true" aria-controls="taTpDropDown">
+                <span>بحث الشامل</span>
+                <i class="fas fa-exchange-alt"></i>
+            </a>
+            <div id="Search" class="collapse text-right" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">تحكم بالبحث:</h6>
+                    <a class="collapse-item" href="{{route('searches.index')}}">صفحة البحث</a>
+
+                </div>
+            </div>
+        </li>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 
