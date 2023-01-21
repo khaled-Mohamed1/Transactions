@@ -80,6 +80,8 @@ class PermissionSeeder extends Seeder
             'وظيفة-العميل-اضافة',
             'وظيفة-العميل-تعديل',
             'وظيفة-العميل-حذف',
+            'الصندوق-بيانات',
+            'الصندوق-اضافة'
         ];
 
         foreach($permissions as $permission){

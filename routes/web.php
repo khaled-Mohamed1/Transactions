@@ -15,6 +15,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\CustomerJobController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\FundController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -269,5 +270,12 @@ Route::middleware('auth')->prefix('searches')->name('searches.')->group(function
     //test
     Route::get('/', [SearchController::class, 'index'])->name('index');
     Route::get('/search', [SearchController::class, 'search'])->name('search');
+});
+
+Route::middleware('auth')->prefix('funds')->name('funds.')->group(function(){
+    //test
+    Route::get('/', [FundController::class, 'index'])->name('index');
+    Route::get('/create', [FundController::class, 'create'])->name('create');
+    Route::post('/store', [FundController::class, 'store'])->name('store');
 });
 

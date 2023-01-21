@@ -100,6 +100,7 @@ width: 20rem !important;position: relative">
                     <a class="collapse-item" href="{{ route('drafts.index') }}">كمببالات</a>
                     <a class="collapse-item" href="{{ route('issues.index') }}">قضايا</a>
                     <a class="collapse-item" href="{{ route('stores.index') }}">المخازن</a>
+                    <a class="collapse-item" href="{{ route('funds.index') }}">الصندوق</a>
                     {{--                <a class="collapse-item" href="{{ route('users.import') }}">Import Data</a>--}}
 {{--                    <a class="collapse-item" href="{{ route('drafts.import') }}">استيراد بيانات كمبيالات</a>--}}
 {{--                    <a class="collapse-item" href="{{ route('issues.import') }}">استيراد بيانات قضايا</a>--}}
