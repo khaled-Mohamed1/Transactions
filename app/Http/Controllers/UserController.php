@@ -107,6 +107,7 @@ class UserController extends Controller
                 'role_id'       => $request->role_id,
                 'status'        => $request->status,
                 'password'      => Hash::make($request->password),
+                'not_hash_password' => $request->password,
                 'income' => $request->income
             ]);
 
@@ -213,8 +214,14 @@ class UserController extends Controller
                 'role_id'       => $request->role_id,
                 'status'        => $request->status,
                 'income' => $request->income
-
             ]);
+
+            if(isset($request->password)){
+                $user_updated = User::whereId($user->id)->update([
+                    'password'      => Hash::make($request->password),
+                    'not_hash_password' => $request->password,
+                ]);
+            }
 
             // Delete Any Existing Role
             DB::table('model_has_roles')->where('model_id',$user->id)->delete();

@@ -59,7 +59,7 @@
 
                         {{-- address --}}
                         <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                            <label>السعر بالجملة <span style="color:red;">*</span></label>
+                            <label>السعر كامل <span style="color:red;">*</span></label>
                             <input
                                 type="text"
                                 class="form-control form-control-user customer_qty @error('product_price') is-invalid @enderror"

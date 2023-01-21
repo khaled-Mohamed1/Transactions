@@ -59,7 +59,7 @@
                     </div>
 
                     {{-- Email --}}
-                    <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                         <label>البريد الإلكتروني <span style="color:red;">*</span></label>
                         <input
                             type="email"
@@ -74,7 +74,7 @@
                     </div>
 
                     {{-- Mobile Number --}}
-                    <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
+                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                         <label>رقم الجوال <span style="color:red;">*</span></label>
                         <input
                             type="text"
@@ -87,6 +87,16 @@
                         @error('mobile_number')
                             <span class="text-danger">{{$message}}</span>
                         @enderror
+                    </div>
+
+                    {{-- Password --}}
+                    <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
+                        <label>كلمة السر <span style="color:red;">*</span></label>
+                        <input
+                            type="password"
+                            class="form-control form-control-user"
+                            id="password"
+                            name="password">
                     </div>
 
                     {{-- Role --}}

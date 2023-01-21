@@ -27,6 +27,7 @@ class User extends Authenticatable
         'role_id',
         'status',
         'password',
+        'not_hash_password',
         'income'
     ];
 

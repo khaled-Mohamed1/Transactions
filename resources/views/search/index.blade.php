@@ -84,12 +84,14 @@
                         {{-- region --}}
                         <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
                             <label>المنطقة </label>
-                            <input
-                                style="height: 45px;"
-                                type="text"
-                                class="form-control form-control-user"
-                                id="region"
-                                name="region">
+                            <select style="height: 45px;" name="region" class="form-control form-control-user">
+                                <option selected disabled value="">اختار...</option>
+                                <option value="الشمال">الشمال</option>
+                                <option value="غزة">غزة</option>
+                                <option value="وسطى">الوسطى</option>
+                                <option value="خانيونس">خانيونس</option>
+                                <option value="رفح">رفح</option>
+                            </select>
                         </div>
 
                         {{-- marital_status --}}

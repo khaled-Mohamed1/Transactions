@@ -207,16 +207,11 @@ class CustomerController extends Controller
             'phone_NO' => 'required|numeric|digits:10',
             'region'       =>  'required',
             'address'       =>  'required',
-
             'date_of_birth' =>  'required|date',
             'marital_status' =>  'required',
             'number_of_children' =>  'required',
             'job'   =>  'required',
             'salary'   =>  'required',
-//            'bank_name'   =>  'required',
-//            'bank_branch'   =>  'required',
-//            'bank_account_NO'   =>  'required',
-
         ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
@@ -227,16 +222,11 @@ class CustomerController extends Controller
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
-
                 'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
                 'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
                 'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
                 'job.required' => 'يجب ادخال الوظيفة العميل',
                 'salary.required' => 'يجب ادخال دخل العميل',
-//                'bank_name.required' => 'يجب ادخال اسم البنك',
-//                'bank_branch.required' => 'يجب ادخال فرع البنك',
-//                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
-
             ]
         );
 
@@ -295,13 +285,11 @@ class CustomerController extends Controller
                             'customer_id' => $customer_id,
                             'user_id'    => auth()->user()->id,
                             'title'     => $file->getClientOriginalName(),
-                            'attachment'         => 'https://sadaqa-co.com/storage/app/public/attachments/' . $imageName,
+                            'attachment'         => 'https://sadaqa-co1.com/storage/app/public/attachments/' . $imageName,
                         ]);
 
                         Storage::disk('public')->put('attachments/' . $imageName, file_get_contents($file));
                     }
-
-
 
                 }
 
@@ -328,7 +316,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        $users_issues = User::where('role_id',7)->latest()->get();
+        $users_issues = User::where('role_id',9)->latest()->get();
         $users = User::where('role_id','!=','1')->where('role_id','!=','3')->latest()->get();
         $drafts = CustomerDraft::with('DraftCustomerDraft')->where('customer_id',$customer->id)->get();
         $issues = CustomerIssue::with('IssueCustomerIssue')->where('customer_id',$customer->id)->get();
@@ -383,10 +371,6 @@ class CustomerController extends Controller
                 'number_of_children' =>  'required',
                 'job'   =>  'required',
                 'salary'   =>  'required',
-//                'bank_name'   =>  'required',
-//                'bank_branch'   =>  'required',
-//                'bank_account_NO'   =>  'required',
-
             ],[
                 'full_name.required' => 'يجب ادخال اسم العميل',
                 'ID_NO.required' => 'يجب ادخال رقم هوية العميل',
@@ -398,17 +382,11 @@ class CustomerController extends Controller
                 'phone_NO.digits' => 'رقم الجوال يتكون من 10 ارقام فقط',
                 'region.required' => 'يجب ادخال منطفة السكن',
                 'address.required' => 'يجب ادخال العنوان بالتفصيل',
-
                 'date_of_birth.required' => 'يجب ادخال تاريخ ميلاد العميل',
                 'marital_status.required' => 'يجب ادخال الحالة الإجتماعية للعميل',
                 'number_of_children.required' => 'يجب ادخال عدد افراد الأسرة العميل',
                 'job.required' => 'يجب ادخال الوظيفة العميل',
                 'salary.required' => 'يجب ادخال دخل العميل',
-//                'bank_name.required' => 'يجب ادخال اسم البنك',
-//                'bank_branch.required' => 'يجب ادخال فرع البنك',
-//                'bank_account_NO.required' => 'يجب ادخال رقم حساب البنك',
-
-
             ]
         );
 
@@ -419,7 +397,6 @@ class CustomerController extends Controller
             if($request->status == 'مقبول' || $request->status == 'قيد التوقيع'){
                 $status = 'قيد التوقيع';
             }
-
 
             $customer_updated = Customer::whereId($customer->id)->update([
                 'full_name'    => $request->full_name,
@@ -440,7 +417,6 @@ class CustomerController extends Controller
                 'bank_branch'       => $request->bank_branch,
                 'bank_account_NO'       => $request->bank_account_NO,
             ]);
-
 
             // Commit And Redirected To Listing
             DB::commit();
@@ -574,13 +550,11 @@ class CustomerController extends Controller
         $parts = explode(",", $data->notes);
         $newString = implode("\n", $parts);
 
-
         $templateProcessor->setValue('notes',$newString);
         $templateProcessor->setValue('bank_account_NO',$data->bank_account_NO);
         $templateProcessor->setValue('drafts',$str_draft);
         $templateProcessor->setValue('issues',$str_issue);
         $templateProcessor->setValue('issues_name',$str_issue_name);
-
 
         $templateProcessor->cloneRowAndSetValues('payment_NO', $payments);
         $fileName = $data->customer_NO;

@@ -39,7 +39,7 @@ class DraftController extends Controller
      */
     public function index()
     {
-        $users = User::where('role_id',7)->latest()->get();
+        $users = User::where('role_id',9)->latest()->get();
         $drafts = Draft::orderBy('draft_NO','desc')->paginate(100);
         return view('drafts.index',['drafts' => $drafts,'users'=>$users]);
     }

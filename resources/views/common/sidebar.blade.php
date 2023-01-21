@@ -7,7 +7,7 @@ width: 20rem !important;position: relative">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-university"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Tech-Admin</div>
+            <div class="sidebar-brand-text mx-3">Sadaqa-co1</div>
         </a>
 
         <!-- Divider -->
@@ -25,7 +25,7 @@ width: 20rem !important;position: relative">
 
         <!-- Heading -->
         <div class="sidebar-heading text-right text-white h3" style="font-size: 1.3rem">
-            تحكم
+            الموظفين
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
@@ -51,7 +51,7 @@ width: 20rem !important;position: relative">
 
         <!-- Heading -->
         <div class="sidebar-heading text-right text-right text-white" style="font-size: 1.3rem">
-            عملاء
+            العملاء
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
@@ -83,7 +83,7 @@ width: 20rem !important;position: relative">
 
         <!-- Heading -->
         <div class="sidebar-heading text-right text-right text-white" style="font-size: 1.3rem">
-            اضافات
+            الاضافات
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->

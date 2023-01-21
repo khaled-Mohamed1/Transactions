@@ -37,7 +37,7 @@
                             <th width="20%">اسم الصنف</th>
                             <th width="20%">انشاء بواسطة</th>
                             <th width="20%">الكمية المتبقية</th>
-                            <th width="20%">السعر بالجملة</th>
+                            <th width="20%">السعر كامل</th>
                             <th width="20%">نسبة الربح</th>
                             <th width="20%">العمليات</th>
                         </tr>
@@ -69,7 +69,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6">لا يوجد بيانات</td>
+                                <td colspan="7">لا يوجد بيانات</td>
                             </tr>
                         @endforelse
                         </tbody>
