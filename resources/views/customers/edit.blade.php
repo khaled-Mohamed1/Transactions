@@ -185,7 +185,7 @@
                                     class="form-control form-control-user @error('job') is-invalid @enderror">
                                 <option disabled selected>اختر...</option>
                                 @foreach($jobs as $job)
-                                    <option value="{{$job->id}}" {{ $customer->CustomerJob->name == $job->name ? 'selected' : '' }}>{{$job->name}}</option>
+                                    <option value="{{$job->id}}" {{ !empty($customer->CustomerJob) && $customer->CustomerJob->name == $job->name ? 'selected' : '' }}>{{$job->name}}</option>
                                 @endforeach
                             </select>
 
@@ -218,7 +218,7 @@
                                     class="form-control form-control-user @error('bank_name') is-invalid @enderror">
                                 <option disabled {{ $customer->bank_name == null ? 'selected' : '' }}>اختر...</option>
                                 @foreach($banks as $bank)
-                                    <option value="{{$bank->id}}" {{ $customer->CustomerBank->name == $bank->name ? 'selected' : '' }}>{{$bank->name}}</option>
+                                    <option value="{{$bank->id}}" {{ !empty($customer->CustomerBank) &&  $customer->CustomerBank->name == $bank->name ? 'selected' : '' }}>{{$bank->name}}</option>
                                 @endforeach
                             </select>
 
@@ -263,7 +263,7 @@
                         {{-- status --}}
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>الحالة </label>
-                            <select name="status" id="status" class="form-control form-control-user h-50"
+                            <select name="status" id="status" class="form-control form-control-user"  style="height: 45px"
                                     style="height: 45px">
                                 @if($customer->status == 'قيد التوقيع' || $customer->status == 'متعسر' || $customer->status == 'مكتمل')
                                     <option value="{{$customer->status}}">{{$customer->status}}</option>
@@ -281,8 +281,9 @@
                         <div class="col-sm-3 mb-3 mt-3 mb-sm-0">
                             <label>الحساب </label>
                             <input
+                                style="height: 45px"
                                 type="text"
-                                class="form-control form-control-user h-50"
+                                class="form-control form-control-user"
                                 id="exampleaccount"
                                 name="account"
                                 value="{{ old('account') ? old('account') : $customer->account}}">

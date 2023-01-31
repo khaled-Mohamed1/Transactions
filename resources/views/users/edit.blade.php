@@ -91,7 +91,7 @@
 
                     {{-- Password --}}
                     <div class="col-sm-4 mb-3 mt-3 mb-sm-0">
-                        <label>كلمة السر <span style="color:red;">*</span></label>
+                        <label>كلمة السر </label>
                         <input
                             type="password"
                             class="form-control form-control-user"

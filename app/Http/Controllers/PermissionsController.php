@@ -70,7 +70,7 @@ class PermissionsController extends Controller
             return redirect()->route('permissions.index')->with('success','تم انشاء الصلاحية بنجاح!');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('permissions.add')->with('error',$th->getMessage());
+            return redirect()->route('permissions.create')->with('error',$th->getMessage());
         }
 
     }
